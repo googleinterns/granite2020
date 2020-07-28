@@ -23,7 +23,24 @@ public class AccountData extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
     UserService userService=UserServiceFactory.getUserService();
+
+    String link;
+
+    if (userService.isUserLoggedIn()){
+      link = userService.createLogoutURL("/index.html");
+
+    }
+    else{
+      link = userService.createLoginURL("/index.html");
+
+    }
+
+    response.setContentType("application/json");
+    response.getWriter().println(convertToJsonUsingGson(link));
+
+
   }
 
 
@@ -31,11 +48,17 @@ public class AccountData extends HttpServlet {
       UserService userService = UserServiceFactory.getUserService();
       Entity userEntity = new Entity("User");
 
-      userEntity.setProperty("first-name", request.getParameter("first-name"));
-      userEntity.setProperty("last-name", request.getParameter("last-name"));
+      UserData userData = new UserData(request.getParameter("first-name"), request.getParameter("last-name"));
+      userEntity.setProperty("user-info", userData);
+      userEntity.setProperty("email",userService.getCurrentUser().getEmail());
+
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(userEntity);
+
+      response.sendRedirect("/index.html");
   }
 
-  private String convertToJsonUsingGson(ArrayList<Comment> comments) {
+  private String convertToJsonUsingGson(String comments) {
     Gson gson = new Gson();
     String json = gson.toJson(comments);
     return json;
