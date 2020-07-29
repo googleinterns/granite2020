@@ -1,6 +1,12 @@
-fetch("/account").then(response => response.json()).then(loginlink => {
-        console.log("setting link to " + loginlink) 
+$("#nav-placeholder").load("../nav.html")
 
-        $("#login").attr("href",loginlink)
+fetch("/account").then(response => response.json()).then(loginData => {
+        console.log(loginData.userData)
+        console.log("setting link to " + loginData.logInOutURL) 
+
+        $("#login").attr("href",loginData.logInOutURL)
     }
 )
+
+
+

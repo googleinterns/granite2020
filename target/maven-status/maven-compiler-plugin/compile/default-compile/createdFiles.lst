@@ -1,2 +1,3 @@
 com/google/sps/servlets/AccountData.class
 com/google/sps/servlets/UserData.class
+com/google/sps/servlets/AccountData$JsonHelper.class
