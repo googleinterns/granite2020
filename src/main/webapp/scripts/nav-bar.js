@@ -3,13 +3,13 @@ var loggedInStatus;
 var logInOutURL;
 
 function loadNav(){
-    getAccountData();
-    //$("#nav-placeholder").load("../nav.html", changeBar);
+    $("#nav-placeholder").load("../nav.html", changeBar);
 
 }
 
-function getAccountData(){
-    fetch("/account").then(response => response.json()).then(loginData => {
+function updateAccountData(){
+    
+    return fetch("/account").then(response => response.json()).then(loginData => {
         loggedInStatus = loginData.loggedIn;
         logInOutURL = loginData.logInOutURL;
 

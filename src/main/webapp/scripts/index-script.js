@@ -1,7 +1,12 @@
 
-    loadNav();
-    console.log("logged in 2"+loggedInStatus);
+    var dataPromise = getAccountData();
 
-    if(loggedInStatus){
-        $("#account-functions").css("display", "none");
-    }
+    dataPromise.then(function(){
+        loadNav();
+        console.log("logged in 2"+loggedInStatus);
+
+        if(loggedInStatus){
+            $("#account-functions").css("display", "none");
+        }
+    })
+
