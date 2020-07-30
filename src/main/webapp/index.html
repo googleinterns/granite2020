@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="scripts/nav-bar.js" async></script>
+    <script src="scripts/nav-bar.js" defer></script>
+    <script src="scripts/index-script.js" defer></script>
 
 </head>
 <body>
@@ -20,9 +21,13 @@
         <li>Seniors looking for tech assistance</li>
         <li>People who want to connect during the pandemic</li>
     </ul>
-    <a href="">Log in</a>
-    <p>Don't have an account?</p>
-    <a href="">Sign up</a>
+    <div id="account-functions">
+
+        <a href="">Log in</a>
+        <p>Don't have an account?</p>
+        <a id="signup" href="">Sign up</a>    
+
+    </div>
 
 
 </body>

@@ -1,24 +1,24 @@
-window.onload = loadPage
+
+var loggedInStatus;
 
 function loadPage(){
-    $("#nav-placeholder").load("../nav.html", changeBar)
-    gi 
-
+    $("#nav-placeholder").load("../nav.html", changeBar);
 
 }
 
 function changeBar(){
     fetch("/account").then(response => response.json()).then(loginData => {
         if(loginData.loggedIn){
-            $("#login").text("Log Out")
+            $("#login").text("Log Out");
         }
         else{
-            $("#login").text("Log In")
+            $("#login").text("Log In");
 
         }
-        console.log(loginData.userData)
-        console.log("setting link to " + loginData.logInOutURL) 
+        loggedInStatus = loginData.loggedIn;
 
-        $("#login").attr("href",loginData.logInOutURL)
+        console.log("logged in 1"+loggedInStatus);
+
+        $("#login").attr("href",loginData.logInOutURL);
     })
 }
