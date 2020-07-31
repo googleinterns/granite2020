@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+/** Servlet that returns all account related info (links to login pages/account info). */
 @WebServlet("/account")
 public class AccountData extends HttpServlet {
 
@@ -53,6 +53,10 @@ public class AccountData extends HttpServlet {
 
     if (userService.isUserLoggedIn()){
       loginLink = userService.createLogoutURL("/index.html");
+
+      Entity userEntity = getUserEntity(userService.getCurrentUser.getUserId());
+
+
 
       jsonHelper=new JsonHelper(true, loginLink, null);
 
@@ -101,18 +105,14 @@ public class AccountData extends HttpServlet {
   }
 
 
-  // private UserData getUserData(String id){
-  //   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-  //   Query query = new Query("UserInfo").setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
-  //   PreparedQuery results = datastore.prepare(query);
+  private Entity getUserEntity(String id){
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("UserInfo").setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    PreparedQuery results = datastore.prepare(query);
 
-  //   Entity entity = results.asSingleEntity();
-  //   if (entity == null) {
-  //     return null;
-  //   }
-  //   UserData userData = (UserData) entity.getProperty("user-info");
-  //   return userData;
-  // }
+    Entity entity = results.asSingleEntity();
+    return entity;
+  }
 
 
 }
