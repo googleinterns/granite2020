@@ -23,15 +23,20 @@ public class AccountData extends HttpServlet {
   public final class JsonHelper{
         private final boolean loggedIn;
         private final String logInOutURL;
-        public JsonHelper(Boolean loggedIn, String logInOutURL){
+        private final String signUpURL;
+        public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL){
             this.loggedIn=loggedIn;
             this.logInOutURL=logInOutURL;
+            this.signUpURL = signUpURL;
           }
         public boolean getLoggedIn(){
             return loggedIn;
         }
         public String getLogInOutURL(){
             return logInOutURL;
+        }
+        public String getSignUpURL(){
+          return signUpURL;
         }
     }
 
@@ -42,20 +47,24 @@ public class AccountData extends HttpServlet {
 
     UserService userService=UserServiceFactory.getUserService();
 
-    String link;
+    String loginLink;
+    String signUpLink;
     JsonHelper jsonHelper;
 
     if (userService.isUserLoggedIn()){
-      link = userService.createLogoutURL("/index.html");
+      loginLink = userService.createLogoutURL("/index.html");
 
-      jsonHelper=new JsonHelper(true, link);
+      jsonHelper=new JsonHelper(true, loginLink, null);
 
 
     }
     else{
-      link = userService.createLoginURL("/index.html");
 
-      jsonHelper = new JsonHelper(false, link);
+      loginLink = userService.createLoginURL("/index.html");
+      signUpLink = userService.createLoginURL("/signup.html");
+      
+
+      jsonHelper = new JsonHelper(false, loginLink, signUpLink);
 
     }
 
