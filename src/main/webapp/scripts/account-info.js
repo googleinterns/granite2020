@@ -1,5 +1,4 @@
-/*global updateAccountData b:true*/
-/*eslint no-undef: "error"*/
+
 
 let loggedInStatus;
 let logInOutURL;
@@ -17,3 +16,5 @@ function updateAccountData() {
     signupURL = loginData.signUpURL;
   });
 }
+
+export { updateAccountData }
