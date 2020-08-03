@@ -1,4 +1,3 @@
-import { updateAccountData } from 'account-info.js'
 
     var dataPromise = updateAccountData();
 

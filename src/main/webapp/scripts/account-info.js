@@ -14,5 +14,3 @@ function updateAccountData() {
     signupURL = loginData.signUpURL;
   });
 }
-
-export { updateAccountData }
