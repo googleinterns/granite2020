@@ -29,8 +29,4 @@ public class SuggestionServlet extends HttpServlet {
 
     response.sendRedirect("/index.html");
   }
-
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {}
-
 }
