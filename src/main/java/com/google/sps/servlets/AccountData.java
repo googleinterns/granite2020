@@ -21,30 +21,29 @@ import com.google.appengine.api.datastore.Query;
 @WebServlet("/account")
 public class AccountData extends HttpServlet {
 
-  public final class JsonHelper{
+  public final class JsonHelper {
     private final boolean loggedIn;
     private final String logInOutURL;
     private final String signUpURL;
     
-    public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL){
-      this.loggedIn=loggedIn;
-      this.logInOutURL=logInOutURL;
+    public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL) {
+      this.loggedIn = loggedIn;
+      this.logInOutURL = logInOutURL;
       this.signUpURL = signUpURL;
     }
 
-    public boolean getLoggedIn(){
+    public boolean getLoggedIn() {
       return loggedIn;
     }
 
-    public String getLogInOutURL(){
+    public String getLogInOutURL() {
       return logInOutURL;
     }
 
-    public String getSignUpURL(){
+    public String getSignUpURL() {
       return signUpURL;
     }
   }
-
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -66,7 +65,6 @@ public class AccountData extends HttpServlet {
       logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
       
-
       jsonHelper = new JsonHelper(false, logInOutLink, signUpLink);
 
     }
@@ -74,16 +72,14 @@ public class AccountData extends HttpServlet {
     response.setContentType("application/json");
     response.getWriter().println(convertToJsonUsingGson(jsonHelper));
 
-
   }
-
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
     Entity userEntity = new Entity("User");
 
-    //adds data to userentity
-    userEntity.setProperty("id",userService.getCurrentUser().getUserId());
+    // adds data to userentity
+    userEntity.setProperty("id", userService.getCurrentUser().getUserId());
     userEntity.setProperty("first-name", request.getParameter("first-name"));
     userEntity.setProperty("last-name", request.getParameter("last-name"));
     userEntity.setProperty("email", userService.getCurrentUser().getEmail());
@@ -105,7 +101,7 @@ public class AccountData extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = 
       new Query("UserInfo")
-        .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+          .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();
