@@ -18,6 +18,7 @@
   "homepage": "https://github.com/googleinterns/granite2020#readme",
   "devDependencies": {
     "eslint": "^7.6.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "htmllint-cli": "0.0.7"
   }
 }
