@@ -19,12 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/account")
 public class AccountData extends HttpServlet {
 
-  private final class JsonHelper {
+  private final class JsonAccountInfo {
     private final boolean loggedIn;
     private final String logInOutURL;
     private final String signUpURL;
 
-    public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL) {
+    public JsonAccountInfo(Boolean loggedIn, String logInOutURL, String signUpURL) {
       this.loggedIn = loggedIn;
       this.logInOutURL = logInOutURL;
       this.signUpURL = signUpURL;
@@ -50,23 +50,23 @@ public class AccountData extends HttpServlet {
 
     String logInOutLink;
     String signUpLink;
-    JsonHelper jsonHelper;
+    JsonAccountInfo jsonAccountInfo;
 
     if (userService.isUserLoggedIn()) {
       logInOutLink = userService.createLogoutURL("/index.html");
 
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
 
-      jsonHelper = new JsonHelper(true, logInOutLink, null);
+      jsonAccountInfo = new JsonAccountInfo(true, logInOutLink, null);
     } else {
 
       logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
-      jsonHelper = new JsonHelper(false, logInOutLink, signUpLink);
+      jsonAccountInfo = new JsonAccountInfo(false, logInOutLink, signUpLink);
     }
 
     response.setContentType("application/json");
-    response.getWriter().println(convertToJsonUsingGson(jsonHelper));
+    response.getWriter().println(convertToJsonUsingGson(jsonAccountInfo));
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -85,9 +85,9 @@ public class AccountData extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  private String convertToJsonUsingGson(JsonHelper jsonHelper) {
+  private String convertToJsonUsingGson(JsonAccountInfo jsonAccountInfo) {
     Gson gson = new Gson();
-    String json = gson.toJson(jsonHelper);
+    String json = gson.toJson(jsonAccountInfo);
     return json;
   }
 

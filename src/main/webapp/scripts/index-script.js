@@ -1,5 +1,5 @@
-import {updateAccountData} from 'account-info.js';
-import {loadNav} from 'nav-bar.js';
+import {updateAccountData, loggedInStatus, signupURL} from './account-info.js';
+import {loadNav} from './nav-bar.js';
 
 const dataPromise = updateAccountData();
 

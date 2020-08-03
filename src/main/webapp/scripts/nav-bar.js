@@ -1,3 +1,5 @@
+import {loggedInStatus, logInOutURL} from './account-info.js';
+
 /** Loads Nav bar from nav.html file */
 function loadNav() {
   $('#nav-placeholder').load('../nav.html', changeBar);
