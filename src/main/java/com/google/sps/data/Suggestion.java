@@ -7,7 +7,7 @@ public final class Suggestion {
   private final String addition;
   private final long timestamp;
 
-  public Suggestion( String platform, String addition, long timestamp) {
+  public Suggestion(String platform, String addition, long timestamp) {
     this.platform = platform;
     this.addition = addition;
     this.timestamp = timestamp;
