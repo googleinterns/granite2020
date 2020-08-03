@@ -1,5 +1,7 @@
 import {updateAccountData} from 'account-info.js';
-let dataPromise = updateAccountData();
+import {loadNav} from 'nav-bar.js';
+
+const dataPromise = updateAccountData();
 
 dataPromise.then(function() {
   loadNav();
