@@ -47,28 +47,28 @@ public class AccountData extends HttpServlet {
 
     UserService userService=UserServiceFactory.getUserService();
 
-    String loginLink;
+    String logInOutLink;
     String signUpLink;
     JsonHelper jsonHelper;
 
     if (userService.isUserLoggedIn()){
-      loginLink = userService.createLogoutURL("/index.html");
+      logInOutLink = userService.createLogoutURL("/index.html");
 
       Entity userEntity = getUserEntity(userService.getCurrentUser.getUserId());
 
 
 
-      jsonHelper=new JsonHelper(true, loginLink, null);
+      jsonHelper=new JsonHelper(true, logInOutLink, null);
 
 
     }
     else{
 
-      loginLink = userService.createLoginURL("/index.html");
+      logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
       
 
-      jsonHelper = new JsonHelper(false, loginLink, signUpLink);
+      jsonHelper = new JsonHelper(false, logInOutLink, signUpLink);
 
     }
 
