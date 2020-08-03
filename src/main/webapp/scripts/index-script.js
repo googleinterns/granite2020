@@ -1,12 +1,11 @@
-import { updateAccountData } from "account-info.js";
-var dataPromise = updateAccountData();
+import {updateAccountData} from 'account-info.js';
+let dataPromise = updateAccountData();
 
-dataPromise.then(function(){
+dataPromise.then(function() {
   loadNav();
 
-  if(loggedInStatus){
-    $("#account-functions").css("display", "none");
+  if (loggedInStatus) {
+    $('#account-functions').css('display', 'none');
   }
-  $("#signup").attr("href", signupURL)
-})
-
+  $('#signup').attr('href', signupURL);
+});
