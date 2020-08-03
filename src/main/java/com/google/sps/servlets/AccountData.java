@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -21,48 +22,46 @@ import com.google.appengine.api.datastore.Query;
 public class AccountData extends HttpServlet {
 
   public final class JsonHelper{
-        private final boolean loggedIn;
-        private final String logInOutURL;
-        private final String signUpURL;
-        public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL){
-            this.loggedIn=loggedIn;
-            this.logInOutURL=logInOutURL;
-            this.signUpURL = signUpURL;
-          }
-        public boolean getLoggedIn(){
-            return loggedIn;
-        }
-        public String getLogInOutURL(){
-            return logInOutURL;
-        }
-        public String getSignUpURL(){
-          return signUpURL;
-        }
+    private final boolean loggedIn;
+    private final String logInOutURL;
+    private final String signUpURL;
+    
+    public JsonHelper(Boolean loggedIn, String logInOutURL, String signUpURL){
+      this.loggedIn=loggedIn;
+      this.logInOutURL=logInOutURL;
+      this.signUpURL = signUpURL;
     }
 
+    public boolean getLoggedIn(){
+      return loggedIn;
+    }
+
+    public String getLogInOutURL(){
+      return logInOutURL;
+    }
+
+    public String getSignUpURL(){
+      return signUpURL;
+    }
+  }
 
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    UserService userService=UserServiceFactory.getUserService();
+    UserService userService = UserServiceFactory.getUserService();
 
     String logInOutLink;
     String signUpLink;
     JsonHelper jsonHelper;
 
-    if (userService.isUserLoggedIn()){
+    if (userService.isUserLoggedIn()) {
       logInOutLink = userService.createLogoutURL("/index.html");
 
-      Entity userEntity = getUserEntity(userService.getCurrentUser.getUserId());
+      Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
 
-
-
-      jsonHelper=new JsonHelper(true, logInOutLink, null);
-
-
-    }
-    else{
+      jsonHelper = new JsonHelper(true, logInOutLink, null);
+    } else {
 
       logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
@@ -80,22 +79,19 @@ public class AccountData extends HttpServlet {
 
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      UserService userService = UserServiceFactory.getUserService();
-      Entity userEntity = new Entity("User");
+    UserService userService = UserServiceFactory.getUserService();
+    Entity userEntity = new Entity("User");
 
+    //adds data to userentity
+    userEntity.setProperty("id",userService.getCurrentUser().getUserId());
+    userEntity.setProperty("first-name", request.getParameter("first-name"));
+    userEntity.setProperty("last-name", request.getParameter("last-name"));
+    userEntity.setProperty("email", userService.getCurrentUser().getEmail());
 
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(userEntity);
 
-      //adds data to userentity
-      userEntity.setProperty("id",userService.getCurrentUser().getUserId());
-      userEntity.setProperty("first-name", request.getParameter("first-name"));
-      userEntity.setProperty("last-name", request.getParameter("last-name"));
-      userEntity.setProperty("email", userService.getCurrentUser().getEmail());
-
-
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(userEntity);
-
-      response.sendRedirect("/index.html");
+    response.sendRedirect("/index.html");
   }
 
   private String convertToJsonUsingGson(JsonHelper jsonHelper) {
@@ -105,14 +101,14 @@ public class AccountData extends HttpServlet {
   }
 
 
-  private Entity getUserEntity(String id){
+  private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("UserInfo").setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+    Query query = 
+      new Query("UserInfo")
+        .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();
     return entity;
   }
-
-
 }
