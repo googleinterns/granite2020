@@ -64,7 +64,6 @@ public class AccountData extends HttpServlet {
 
       logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
-      
       jsonHelper = new JsonHelper(false, logInOutLink, signUpLink);
 
     }
@@ -100,8 +99,8 @@ public class AccountData extends HttpServlet {
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = 
-      new Query("UserInfo")
-          .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+        new Query("UserInfo")
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();
