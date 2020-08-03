@@ -10,6 +10,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Query.Filter;
+//import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
@@ -66,7 +67,7 @@ public class ForumServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    if (new_element == "true") {
+    if (new_element.equals("true")) {
 
       long parent_id = Long.parseLong(request.getParameter("parent_id"));
       String text = request.getParameter("text-input");
@@ -91,23 +92,28 @@ public class ForumServlet extends HttpServlet {
       // forumEntity.setProperty("user_id", user_id);
 
       datastore.put(forumEntity);
-      response.sendRedirect("/index.html");
+      response.sendRedirect("/forum.html");
 
     }
     else {
+      System.out.println("In servlet");
       long id = Long.parseLong(request.getParameter("id"));
+      System.out.println(id);
 
+      //Filter filter = PropertyFilter.gt("__key__", keyFactory.newKey(id));
       Filter filter = new FilterPredicate("id", FilterOperator.EQUAL, id);
-    
+
       Query query = new Query("ForumElement").setFilter(filter);
 
       PreparedQuery results = datastore.prepare(query);
 
       for (Entity entity : results.asIterable()) {
+        System.out.println("In for");
         long likes = (long) entity.getProperty("likes");
         entity.setProperty("likes", likes + 1);
         datastore.put(entity);
       }
+      response.sendRedirect("/forum.html");
     }
   }
 }
