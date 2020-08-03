@@ -1,3 +1,6 @@
+/*global updateAccountData b:true*/
+/*eslint no-undef: "error"*/
+
 let loggedInStatus;
 let logInOutURL;
 let signupURL;
