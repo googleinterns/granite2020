@@ -65,12 +65,10 @@ public class AccountData extends HttpServlet {
       logInOutLink = userService.createLoginURL("/index.html");
       signUpLink = userService.createLoginURL("/signup.html");
       jsonHelper = new JsonHelper(false, logInOutLink, signUpLink);
-
     }
 
     response.setContentType("application/json");
     response.getWriter().println(convertToJsonUsingGson(jsonHelper));
-
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -95,10 +93,9 @@ public class AccountData extends HttpServlet {
     return json;
   }
 
-
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = 
+    Query query =
         new Query("UserInfo")
             .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
