@@ -20,7 +20,7 @@
 }
 
 .clearfix {
-  clear:both;
+  clear: both;
 }
 
 .tech-button {
@@ -58,4 +58,11 @@
   margin: 0 auto;
   width: 100%;
   display: flex;
+}
+
+
+.tutorials-vid {
+  width: 560px;
+  height: 315px;
+  border: 0
 }
