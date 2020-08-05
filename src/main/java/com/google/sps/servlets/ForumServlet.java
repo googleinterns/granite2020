@@ -10,9 +10,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.sps.data.ForumElement;
 import java.io.*;
@@ -27,9 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/forum")
 public class ForumServlet extends HttpServlet {
 
-  /** Get request to the Datastore and responds with the forum elements with the parentId input  */
+  /** 
+   *  Get request to the Datastore and responds with the forum elements with 
+   *  the parentId input 
+   */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws IOException { 
     long parentId = Long.parseLong(request.getParameter("parentId"));
     List elements = getForumElements(parentId);
     Gson gson = new Gson();
@@ -37,10 +38,13 @@ public class ForumServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(elements));
   }
 
-  /** Post request to the Datastore that posts a new element or increments the likes of an element */
+  /** 
+   *  Post request to the Datastore that posts a new element or increments 
+   *  the likes of an element 
+   */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) 
-    throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
     String like = request.getParameter("like");
 
     if (like.equals("true")) {
@@ -48,8 +52,7 @@ public class ForumServlet extends HttpServlet {
       long id = Long.parseLong(request.getParameter("id"));
       incrementLikes(id);
       response.sendRedirect("/forum.html");
-    }
-    else {
+    } else {
       /* Adds new forum element */
       long parentId = Long.parseLong(request.getParameter("parentId"));
       String topic = "none";
@@ -64,8 +67,7 @@ public class ForumServlet extends HttpServlet {
 
   /** Gets a list of forum elements from Datastore with parentId given */
   private List getForumElements(long parentId) {
-    Filter filter = new FilterPredicate("parentId", FilterOperator.EQUAL, 
-      parentId);
+    Filter filter = new FilterPredicate("parentId", FilterOperator.EQUAL, parentId);
     Query query = new Query("ForumElement").setFilter(filter);
     // TODO: Add sort of likes descending
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -78,8 +80,7 @@ public class ForumServlet extends HttpServlet {
     return elements;
   }
 
-  /** Inputs an entity and returns a new forum element using the fields of 
-    * the entity */
+  /** Inputs an entity and returns a new forum element using the fields of the entity */
   private ForumElement convertEntityToForumElement(Entity entity) {
     long id = entity.getKey().getId();
     long parentId = (long) entity.getProperty("parentId");
@@ -89,16 +90,15 @@ public class ForumServlet extends HttpServlet {
     String text = (String) entity.getProperty("text");
     // TODO: Get user information
 
-    ForumElement element = new ForumElement(id, parentId, topic, timestamp, 
-      likes, text);
+    ForumElement element = new ForumElement(id, parentId, topic, timestamp, likes, text);
     return element;
-  } 
+  }
 
   /** Increments likes of element given id in Datastore */
   private void incrementLikes(long id) {
     Key key = KeyFactory.createKey("ForumElement", id);
     Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, 
-      FilterOperator.EQUAL, key);
+        FilterOperator.EQUAL, key);
     Query query = new Query("ForumElement").setFilter(filter);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -110,8 +110,7 @@ public class ForumServlet extends HttpServlet {
     }
   }
 
-  /** Creates new entitiy given parentId, topic, and text and stores in 
-    * Datastore */
+  /** Creates new entitiy given parentId, topic, and text and stores in Datastore */
   private void addForumEntity(long parentId, String topic, String text) {
     Entity forumEntity = new Entity("ForumElement");
     forumEntity.setProperty("parentId", parentId);

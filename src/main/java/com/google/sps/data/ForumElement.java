@@ -11,15 +11,15 @@ public final class ForumElement {
   private final String text;
   // private final long userId
 
-  public ForumElement(long id, long parentId, String topic, long timestamp, 
-      long likes, String text) {
+  public ForumElement(
+      long id, long parentId, String topic, long timestamp, long likes, 
+      String text) {
     this.id = id;
     this.parentId = parentId;
     this.topic = topic;
     this.timestamp = timestamp;
     this.likes = likes;
+    // TODO: Add user data to comment data
     this.text = text;
-    // this.userId = userId;
-    // TODO: Store User data
   }
 }
