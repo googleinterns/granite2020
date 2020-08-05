@@ -68,12 +68,12 @@ public class AccountData extends HttpServlet {
 
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
 
-      UserInfo userInfo = 
+      UserInfo userInfo =
           new UserInfo(
-            (String) userEntity.getProperty("email"),
-            (String) userEntity.getProperty("ID"),
-            (String) userEntity.getProperty("first-name"),
-            (String) userEntity.getProperty("last-name"));
+              (String) userEntity.getProperty("email"),
+              (String) userEntity.getProperty("ID"),
+              (String) userEntity.getProperty("first-name"),
+              (String) userEntity.getProperty("last-name"));
 
       jsonAccountInfo = new JsonAccountInfo(true, logInOutLink, userInfo);
       
@@ -86,7 +86,7 @@ public class AccountData extends HttpServlet {
 
     response.setContentType("application/json");
     response.getWriter().println(convertToJsonUsingGson(jsonAccountInfo));
-   }
+  }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
