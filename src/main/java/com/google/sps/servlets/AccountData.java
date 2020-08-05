@@ -67,12 +67,11 @@ public class AccountData extends HttpServlet {
       String logInOutLink = userService.createLogoutURL("/index.html");
 
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
-      UserInfo userInfo = new UserInfo("This","account","doesnt","exist");
+      UserInfo userInfo = new UserInfo("This", "account", "doesnt", "exist");
 
-      if(userEntity == null){
+      if(userEntity == null) {
         System.out.println("here");
-      }
-      else{
+      } else {
         userInfo =
           new UserInfo(
               (String) userEntity.getProperty("email"),
