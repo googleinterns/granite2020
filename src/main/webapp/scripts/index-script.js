@@ -6,8 +6,8 @@ const dataPromise = updateAccountData();
 
 dataPromise.then(function() {
   loadNav();
-  if (userInfo.email === "This") {
-    window.location.replace("../signup.html")
+  if (userInfo.email === 'This') {
+    window.location.replace('../signup.html');
   }
 
   if (loggedInStatus) {
