@@ -6,6 +6,8 @@
 
 #left-tutorials-button li {
   font-size: 120%;
+  display: inline-block;
+  list-style-type: none;
 }
 
 #right-forum-button {
@@ -15,11 +17,14 @@
 
 #right-forum-button li {
   font-size: 120%;
+  display: inline-block;
+  list-style-type: none;
 }
 
 #buttons {
   height: 200px;
   margin: 0 auto;
+  text-align: center;
   width: 100%;
   display: flex;
 }
@@ -51,27 +56,4 @@
 .tech-button:hover {
   background-color: #4285f4;
   color: white;
-}
-
-/* Tutorials Page Styling */
-#left-tutorials-list {
-  flex: 1;
-  width: 50%;
-}
-
-#right-tutorials-list {
-  flex: 1;
-  width: 50%;
-}
-
-#tutorials {
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-}
-
-.tutorials-vid {
-  width: 560px;
-  height: 315px;
-  border: 0;
 }
