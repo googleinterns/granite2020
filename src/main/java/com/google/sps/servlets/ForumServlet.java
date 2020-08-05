@@ -34,7 +34,7 @@ public class ForumServlet extends HttpServlet {
     response.getWriter().println(gson.toJson(elements));
   }
 
-  /** 
+  /**
    * Post request to the Datastore that posts a new element or increments the likes of an element
    */
   @Override
