@@ -78,10 +78,8 @@ public class AccountData extends HttpServlet {
                 (String) userEntity.getProperty("ID"),
                 (String) userEntity.getProperty("first-name"),
                 (String) userEntity.getProperty("last-name"));
-
       }
 
-      
       jsonAccountInfo = new JsonAccountInfo(true, logInOutLink, userInfo);
     } else {
 
