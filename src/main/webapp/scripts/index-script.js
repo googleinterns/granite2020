@@ -1,4 +1,4 @@
-import {updateAccountData, loggedInStatus, signupURL, logInOutURL} 
+import {updateAccountData, loggedInStatus, signupURL, logInOutURL}
   from './account-info.js';
 import {loadNav} from './nav-bar.js';
 
