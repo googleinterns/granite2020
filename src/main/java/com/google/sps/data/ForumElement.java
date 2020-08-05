@@ -12,8 +12,7 @@ public final class ForumElement {
   // private final long userId
 
   public ForumElement(
-      long id, long parentId, String topic, long timestamp, long likes, 
-      String text) {
+      long id, long parentId, String topic, long timestamp, long likes, String text) {
     this.id = id;
     this.parentId = parentId;
     this.topic = topic;

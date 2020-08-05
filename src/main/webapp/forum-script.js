@@ -1,39 +1,40 @@
-/** 
- *  Populates forum-placeholder with forum data 
+/**
+ *  Populates forum-placeholder with forum data
  */
 function getForum() {
   const parentId = -1;
-  var placeholder = $('#forum-placeholder');
+  const placeholder = $('#forum-placeholder');
   expandForum(placeholder, parentId);
 }
 
-/** 
- *  Populates the replies for a forum element with the given id 
+/**
+ *  Populates the replies for a forum element with the given id
  *  in the placeholder given
- *  
- *  @param placeholder the div that will hold the forum elements
- *  @param parentID the long that idntifies the parent of the forum elements
+ *
+ *  @param {S.fn.init} placeholder the div that will hold the forum elements
+ *  @param {long} parentId the long that idntifies the parent of the forum 
+ *  elements
  */
 function expandForum(placeholder, parentId) {
   placeholder.empty();
   fetch('/forum?parentId=' + parentId.toString())
-      .then(response => response.json()).then(elements => {
-    for (var i = 0; i < elements.length; i++) {
-      createForumElement(placeholder, elements[i]);
-    }
-  });
+      .then((response) => (response.json())).then((elements) => {
+        for (let i = 0; i < elements.length; i++) {
+          createForumElement(placeholder, elements[i]);
+        }
+      });
 }
 
-/** 
- *  Creates a new forum element in the placeholder populated with 
+/**
+ *  Creates a new forum element in the placeholder populated with
  *  fields of the element given
- *  
- *  @param placeholder the div that will hold the forum elements
- *  @param element the ForumElement that contains the data for the element
+ *
+ *  @param {S.fn.init} placeholder the div that will hold the forum elements
+ *  @param {ForumElement} element the ForumElement that contains the data for the element
  */
 function createForumElement(placeholder, element) {
   /* Creates a new div elements and adds to placeholder */
-  var elementDiv = $('<div></div>');
+  const elementDiv = $('<div></div>');
   const elementId = 'element-' + element.id.toString();
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
@@ -44,8 +45,7 @@ function createForumElement(placeholder, element) {
     if (element.parentId == -1) {
       $('#' + elementId).addClass('question');
       $('#' + elementId + ' .topic').text(element.topic);
-    }
-    else {
+    } else {
       $('#' + elementId).addClass('comment');
     }
     $('#' + elementId + ' .text').text(element.text);
@@ -62,25 +62,24 @@ function createForumElement(placeholder, element) {
   });
 }
 
-/** 
- *  Gets replies for a forum element given id in the handler input 
- *  
- *  @param parentIdHandler the handler object that holds the parentId as data
+/**
+ *  Gets replies for a forum element given id in the handler input
+ *
+ *  @param {S.Event} parentIdHandler the handler object that holds the parentId as data
 */
 function getReplies(parentIdHandler) {
   const parentId = parentIdHandler.data;
-  var placeholder = $('#replies-' + parentId.toString());
+  const placeholder = $('#replies-' + parentId.toString());
   expandForum(placeholder, parentId);
 }
 
 /** 
  *  Converts a timestamp in milliseconds into a date based on UTC 
  *  
- *  @param timestamp the time in milliseconds
- *  @retun a String of the time as a date
+ *  @param {long} timestamp the time in milliseconds
+ *  @return {String} a String of the time as a date
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
   return date.toUTCString();
 }
-

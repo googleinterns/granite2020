@@ -24,13 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/forum")
 public class ForumServlet extends HttpServlet {
 
-  /** 
-   *  Get request to the Datastore and responds with the forum elements with 
-   *  the parentId input 
-   */
+  /** Get request to the Datastore and responds with the forum elements with the parentId input */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws IOException { 
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     long parentId = Long.parseLong(request.getParameter("parentId"));
     List elements = getForumElements(parentId);
     Gson gson = new Gson();
@@ -39,12 +35,10 @@ public class ForumServlet extends HttpServlet {
   }
 
   /** 
-   *  Post request to the Datastore that posts a new element or increments 
-   *  the likes of an element 
+   * Post request to the Datastore that posts a new element or increments the likes of an element 
    */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String like = request.getParameter("like");
 
     if (like.equals("true")) {
@@ -97,8 +91,7 @@ public class ForumServlet extends HttpServlet {
   /** Increments likes of element given id in Datastore */
   private void incrementLikes(long id) {
     Key key = KeyFactory.createKey("ForumElement", id);
-    Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, 
-        FilterOperator.EQUAL, key);
+    Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, key);
     Query query = new Query("ForumElement").setFilter(filter);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
