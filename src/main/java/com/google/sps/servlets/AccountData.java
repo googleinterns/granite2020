@@ -76,7 +76,6 @@ public class AccountData extends HttpServlet {
               (String) userEntity.getProperty("last-name"));
 
       jsonAccountInfo = new JsonAccountInfo(true, logInOutLink, userInfo);
-      
     } else {
 
       String logInOutLink = userService.createLoginURL("/index.html");
