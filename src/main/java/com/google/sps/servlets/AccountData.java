@@ -73,11 +73,11 @@ public class AccountData extends HttpServlet {
         System.out.println("here");
       } else {
         userInfo =
-        new UserInfo(
-            (String) userEntity.getProperty("email"),
-            (String) userEntity.getProperty("ID"),
-            (String) userEntity.getProperty("first-name"),
-            (String) userEntity.getProperty("last-name"));
+            new UserInfo(
+                (String) userEntity.getProperty("email"),
+                (String) userEntity.getProperty("ID"),
+                (String) userEntity.getProperty("first-name"),
+                (String) userEntity.getProperty("last-name"));
 
       }
 
