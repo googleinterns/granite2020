@@ -69,15 +69,15 @@ public class AccountData extends HttpServlet {
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
       UserInfo userInfo = new UserInfo("This", "account", "doesnt", "exist");
 
-      if(userEntity == null) {
+      if (userEntity == null) {
         System.out.println("here");
       } else {
         userInfo =
-          new UserInfo(
-              (String) userEntity.getProperty("email"),
-              (String) userEntity.getProperty("ID"),
-              (String) userEntity.getProperty("first-name"),
-              (String) userEntity.getProperty("last-name"));
+        new UserInfo(
+            (String) userEntity.getProperty("email"),
+            (String) userEntity.getProperty("ID"),
+            (String) userEntity.getProperty("first-name"),
+            (String) userEntity.getProperty("last-name"));
 
       }
 
