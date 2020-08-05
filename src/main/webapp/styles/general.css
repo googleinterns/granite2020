@@ -1,0 +1,29 @@
+body {
+  background-color: #dcedff;
+  color: #343f3e;
+  font-family: "Google Sans";
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+h1 {
+  font-size: 300%;
+  font-weight: bold;
+  margin-top: 2%;
+  margin-bottom: 0%;
+}
+
+h2 {
+  font-size: 180%;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 170%;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 130%;
+  font-weight: normal;
+}
