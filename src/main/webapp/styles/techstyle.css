@@ -2,20 +2,25 @@
 #left-tutorials-button {
   flex: 1;
   width: 50%;
-  border: solid 1px #000;
+}
+
+#left-tutorials-button li {
+  font-size: 120%;
 }
 
 #right-forum-button {
   flex: 1;
   width: 50%;
-  border: solid 1px #000;
+}
+
+#right-forum-button li {
+  font-size: 120%;
 }
 
 #buttons {
   height: 200px;
   margin: 0 auto;
   width: 100%;
-  text-align: center;
   display: flex;
 }
 
@@ -25,19 +30,26 @@
 
 .tech-button {
   background-color: white;
-  border: 2px solid #008cba;
-  color: black;
+  border: 2px solid #4285f4;
   padding: 15px 32px;
-  text-align: center;
   text-decoration: none;
+  font-family: Google Sans, sans-serif;
+  text-align: center;
   display: inline-block;
-  font-size: 70px;
+  font-size: 200%;
   margin: 4px 2px;
   cursor: pointer;
+  justify-content: center;
+  font-weight: bold;
+  color: #4285f4;
+}
+
+.tech-button h4 {
+  text-align: center;
 }
 
 .tech-button:hover {
-  background-color: #008cba;
+  background-color: #4285f4;
   color: white;
 }
 
@@ -45,13 +57,11 @@
 #left-tutorials-list {
   flex: 1;
   width: 50%;
-  border: solid 1px #000;
 }
 
 #right-tutorials-list {
   flex: 1;
   width: 50%;
-  border: solid 1px #000;
 }
 
 #tutorials {

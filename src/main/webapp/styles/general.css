@@ -1,0 +1,35 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Google Sans, sans-serif;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+h1 {
+  font-size: 300%;
+  font-weight: bold;
+  margin-top: 2%;
+  margin-bottom: 0%;
+  color: #4285f4;
+}
+
+h2 {
+  font-size: 160%;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 150%;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 130%;
+  font-weight: normal;
+}
+
+.highlight {
+  color: #4285f4;
+  font-weight: bold;
+}
