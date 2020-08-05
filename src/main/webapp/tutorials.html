@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Seniors Connect</title>
+  <link type="text/css" rel="stylesheet" href="styles/techstyle.css">
+  <script src="scripts/login-script.js" defer></script>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <div class="content">
+    <div class="header">
+      <h1>Tutorials</h1>
+      <p>On this page you will find a list of tools that we have tutorials available for. Click a tutorial to learn more.</p>
+      <p> Watch the video to learn how to use this page </p>
+      <!-- Temporary video below, will contain video on how to navigate tutorials page-->
+      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/BDliEq_0qeQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div id="tutorials">
+      <div id="left-tutorials-list">
+        <h2> Currently Available Tutorials </h2>
+        <li><a href="zoom.html">Zoom</a></li>
+        <li><a href="https://www.facebook.com/">Facebook</a></li>
+        <li><a href="https://meet.google.com/">Google Meet</a></li>
+      </div>
+
+      <div id="right-tutorials-list">
+        <div id="suggestion">
+          <h2>Create a New Suggestion</h2>
+          <form action="/new-suggestion" method="POST">
+            <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
+            <input type="text" id="platform"><br>
+            <label for="addition">Additional Details &amp; Specific Questions:</label><br>
+            <input type="text" id="addition"><br>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
+
+        <div id="new-suggestion-logged-out">
+          <h2>Can't find what you are looking for? Make a suggestion.</h2>
+          <form action="login.html">
+            <input type="submit" value="Login" />
+          </form>
+          <h2>Don't have an Account?</h2>
+          <form action="signup.html">
+            <input type="submit" value="Sign Up" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
