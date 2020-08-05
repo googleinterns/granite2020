@@ -12,7 +12,7 @@ function getForum() {
  *  in the placeholder given
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
- *  @param {long} parentId the long that idntifies the parent of the forum 
+ *  @param {long} parentId the long that idntifies the parent of the forum
  *  elements
  */
 function expandForum(placeholder, parentId) {
@@ -30,7 +30,8 @@ function expandForum(placeholder, parentId) {
  *  fields of the element given
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
- *  @param {ForumElement} element the ForumElement that contains the data for the element
+ *  @param {ForumElement} element the ForumElement that contains the data for
+ *  the element
  */
 function createForumElement(placeholder, element) {
   /* Creates a new div elements and adds to placeholder */
@@ -39,7 +40,7 @@ function createForumElement(placeholder, element) {
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
 
-  /* Loads forumElement.html template and then populates div with the 
+  /* Loads forumElement.html template and then populates div with the
   fields from element */
   elementDiv.load('forumElement.html', function() {
     if (element.parentId == -1) {
@@ -65,7 +66,8 @@ function createForumElement(placeholder, element) {
 /**
  *  Gets replies for a forum element given id in the handler input
  *
- *  @param {S.Event} parentIdHandler the handler object that holds the parentId as data
+ *  @param {S.Event} parentIdHandler the handler object that holds the
+ *  parentId as data
 */
 function getReplies(parentIdHandler) {
   const parentId = parentIdHandler.data;
@@ -73,9 +75,9 @@ function getReplies(parentIdHandler) {
   expandForum(placeholder, parentId);
 }
 
-/** 
- *  Converts a timestamp in milliseconds into a date based on UTC 
- *  
+/**
+ *  Converts a timestamp in milliseconds into a date based on UTC
+ *
  *  @param {long} timestamp the time in milliseconds
  *  @return {String} a String of the time as a date
  */

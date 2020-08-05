@@ -26,7 +26,7 @@ public class ForumServlet extends HttpServlet {
 
   /** Get request to the Datastore and responds with the forum elements with the parentId input */
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     long parentId = Long.parseLong(request.getParameter("parentId"));
     List elements = getForumElements(parentId);
     Gson gson = new Gson();
@@ -35,7 +35,7 @@ public class ForumServlet extends HttpServlet {
   }
 
   /** 
-   * Post request to the Datastore that posts a new element or increments the likes of an element 
+   * Post request to the Datastore that posts a new element or increments the likes of an element
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
