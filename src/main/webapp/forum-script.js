@@ -1,3 +1,5 @@
+$( document ).ready( getForum );
+
 /**
  *  Populates forum-placeholder with forum data
  */
