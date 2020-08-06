@@ -4,9 +4,9 @@ $( document ).ready( getForum );
  *  Populates forum-placeholder with forum data
  */
 function getForum() {
-  const parentId = -1;
+  const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, parentId);
+  expandForum(placeholder, id);
 }
 
 /**
@@ -14,12 +14,12 @@ function getForum() {
  *  in the placeholder given
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
- *  @param {long} parentId the long that idntifies the parent of the forum
+ *  @param {long} id the long that identifies the parent of the forum
  *  elements
  */
-function expandForum(placeholder, parentId) {
+function expandForum(placeholder, id) {
   placeholder.empty();
-  fetch('/forum?parentId=' + parentId.toString())
+  fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
         for (let i = 0; i < elements.length; i++) {
           createForumElement(placeholder, elements[i]);
@@ -55,10 +55,10 @@ function createForumElement(placeholder, element) {
     $('#' + elementId + ' .date').text('Timestamp: ' +
         convertTimestampToDate(element.timestamp));
     $('#' + elementId + ' .likes').text('Likes: ' + element.likes.toString());
-    $('#' + elementId + ' .like-form').attr('action', '/forum?like=true&id=' +
-        element.id.toString());
-    $('#' + elementId + ' .response-form').attr('action',
-        '/forum?like=false&parentId=' + element.id.toString());
+    $('#' + elementId + ' .like-form').attr('action', '/forum?id=' +
+        element.id.toString() + '&like=true');
+    $('#' + elementId + ' .response-form').attr('action', '/forum?id=' + 
+        element.id.toString() + '&like=false');
     $('#' + elementId + ' .replies-button').click(element.id, getReplies);
     $('#' + elementId + ' .replies').attr('id', 'replies-' +
         element.id.toString());
@@ -68,13 +68,13 @@ function createForumElement(placeholder, element) {
 /**
  *  Gets replies for a forum element given id in the handler input
  *
- *  @param {S.Event} parentIdHandler the handler object that holds the
- *  parentId as data
+ *  @param {S.Event} idHandler the handler object that holds the
+ *  id of the element to expand as data
 */
-function getReplies(parentIdHandler) {
-  const parentId = parentIdHandler.data;
-  const placeholder = $('#replies-' + parentId.toString());
-  expandForum(placeholder, parentId);
+function getReplies(idHandler) {
+  const id = idHandler.data;
+  const placeholder = $('#replies-' + id.toString());
+  expandForum(placeholder, id);
 }
 
 /**

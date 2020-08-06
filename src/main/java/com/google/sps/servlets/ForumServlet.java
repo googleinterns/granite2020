@@ -27,8 +27,8 @@ public class ForumServlet extends HttpServlet {
   /** Get request to the Datastore and responds with the forum elements with the parentId input */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long parentId = Long.parseLong(request.getParameter("parentId"));
-    List elements = getForumElements(parentId);
+    long id = Long.parseLong(request.getParameter("id"));
+    List elements = getForumElements(id);
     Gson gson = new Gson();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(elements));
@@ -39,29 +39,28 @@ public class ForumServlet extends HttpServlet {
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    long id = Long.parseLong(request.getParameter("id"));
     String like = request.getParameter("like");
 
     if (like.equals("true")) {
       /* Increments likes of element */
-      long id = Long.parseLong(request.getParameter("id"));
       incrementLikes(id);
       response.sendRedirect("/forum.html");
     } else {
       /* Adds new forum element */
-      long parentId = Long.parseLong(request.getParameter("parentId"));
       String topic = "none";
-      if (parentId == -1) {
+      if (id == -1) {
         topic = request.getParameter("topic-input");
       }
       String text = request.getParameter("text-input");
-      addForumEntity(parentId, topic, text);
+      addForumEntity(id, topic, text);
       response.sendRedirect("/forum.html");
     }
   }
 
-  /** Gets a list of forum elements from Datastore with parentId given */
-  private List getForumElements(long parentId) {
-    Filter filter = new FilterPredicate("parentId", FilterOperator.EQUAL, parentId);
+  /** Gets a list of forum elements from Datastore with id given */
+  private List getForumElements(long id) {
+    Filter filter = new FilterPredicate("parentId", FilterOperator.EQUAL, id);
     Query query = new Query("ForumElement").setFilter(filter);
     // TODO: Add sort of likes descending
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
