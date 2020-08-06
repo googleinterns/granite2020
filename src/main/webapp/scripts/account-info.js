@@ -13,7 +13,10 @@ function updateAccountData() {
         loggedInStatus = loginData.loggedIn;
         logInOutURL = loginData.logInOutURL;
         signupURL = loginData.signUpURL;
-        userInfo = loginData.userInfo;
+        if (loggedInStatus) {
+          userInfo = loginData.userInfo;
+          console.log(userInfo);
+        }
       });
 }
 

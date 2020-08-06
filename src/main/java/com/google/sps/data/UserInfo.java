@@ -26,6 +26,6 @@ public final class UserInfo {
   }
 
   public String getLastName() {
-    return lastName; 
+    return lastName;
   }
 }
