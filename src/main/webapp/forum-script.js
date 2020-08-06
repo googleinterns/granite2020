@@ -57,7 +57,7 @@ function createForumElement(placeholder, element) {
     $('#' + elementId + ' .likes').text('Likes: ' + element.likes.toString());
     $('#' + elementId + ' .like-form').attr('action', '/forum?id=' +
         element.id.toString() + '&like=true');
-    $('#' + elementId + ' .response-form').attr('action', '/forum?id=' + 
+    $('#' + elementId + ' .response-form').attr('action', '/forum?id=' +
         element.id.toString() + '&like=false');
     $('#' + elementId + ' .replies-button').click(element.id, getReplies);
     $('#' + elementId + ' .replies').attr('id', 'replies-' +
