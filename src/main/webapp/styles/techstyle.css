@@ -49,6 +49,10 @@
   color: #4285f4;
 }
 
+#page-content {
+  clear: both;
+}
+
 .tech-button h4 {
   text-align: center;
 }
@@ -57,3 +61,14 @@
   background-color: #4285f4;
   color: white;
 }
+
+#right-forum-button iframe {
+  width: 560px;
+  height: 315px;
+}
+
+#left-tutorials-button iframe {
+  width: 560px;
+  height: 315px;
+}
+

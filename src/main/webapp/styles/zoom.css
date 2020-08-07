@@ -1,0 +1,43 @@
+/* Zoom styling */
+#header h2 {
+  margin-bottom: 10px;
+}
+
+#zoom-content {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+}
+
+#zoom-content h1 {
+  font-weight: bold;
+  font-size: 170%;
+}
+
+#zoom-content h2 {
+  font-size: 150%;
+}
+
+#zoom-content h3 {
+  font-size: 130%;
+}
+
+#zoom-content li {
+  font-size: 120%;
+  margin-bottom: 10px;
+}
+
+#helpful-links {
+  flex: 1;
+  width: 50%;
+}
+
+#helpful-videos {
+  flex: 1;
+  width: 50%;
+}
+
+#helpful-videos iframe {
+  width: 560px;
+  height: 315px;
+}

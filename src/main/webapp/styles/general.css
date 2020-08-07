@@ -36,3 +36,47 @@ h4 {
   color: #4285f4;
   font-weight: bold;
 }
+
+/* Navigation Bar Styling */
+#nav-placeholder {
+  margin-bottom: 30px;
+}
+
+#nav-placeholder a {
+  display: block;
+  color: #4285f4;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 130%;
+}
+
+#nav-placeholder a:hover {
+  background-color: #4285f4;
+  color: white;
+}
+
+span.left {
+  float: left;
+}
+
+span.right {
+  float: right;
+}
+
+/* Submit buttons ex login/signup */
+input[type=submit] {
+  background-color: white;
+  color: #4285f4;
+  border: 2px solid #4285f4;
+  align-content: center;
+  cursor: pointer;
+  padding: 16px 32px;
+  font-size: 110%;
+  font-family: Google Sans, sans-serif;
+}
+
+input[type=submit]:hover {
+  background-color: #4285f4;
+  color: white;
+}
