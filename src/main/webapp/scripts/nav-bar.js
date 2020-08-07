@@ -1,9 +1,12 @@
-import {loggedInStatus, logInOutURL} from './account-info.js';
+import {updateAccountData, loggedInStatus, logInOutURL} from './account-info.js';
+
+const dataPromise = updateAccountData();
+
 
 /** Loads Nav bar from nav.html file */
-function loadNav() {
-  $('#nav-placeholder').load('../nav.html', changeBar);
-}
+dataPromise.then(function() {
+    $('#nav-placeholder').load('../nav.html', changeBar);
+})
 
 /** Dynamically sets the content of the log in/ log out button */
 function changeBar() {
@@ -14,5 +17,3 @@ function changeBar() {
   }
   $('#login').attr('href', logInOutURL);
 }
-
-export {loadNav};

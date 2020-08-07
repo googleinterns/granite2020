@@ -1,11 +1,9 @@
 import {updateAccountData, loggedInStatus, signupURL, logInOutURL, userInfo}
   from './account-info.js';
-import {loadNav} from './nav-bar.js';
 
 const dataPromise = updateAccountData();
 
 dataPromise.then(function() {
-  loadNav();
   if (userInfo != null && userInfo.email === 'This') {
     window.location.replace('../signup.html');
   }
