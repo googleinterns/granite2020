@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns all account related info (links to login pages/account info). */
 @WebServlet("/account")
-public class AccountData extends HttpServlet {
+public class AccountDataServlet extends HttpServlet {
   private final String idProperty = "id";
 
   private static final class JsonAccountInfo {
