@@ -1,0 +1,69 @@
+/* Tutorials Page Styling */
+
+#tutorials {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+}
+
+#left-tutorials-list {
+  flex: 1;
+  width: 50%;
+}
+
+#right-tutorials-list {
+  flex: 1;
+  width: 50%;
+}
+
+#tutorials li {
+  font-size: 130%;
+  list-style-type: none;
+  margin: 3px;
+}
+
+#tutorials h3 {
+  margin-bottom: 10px;
+}
+
+.tutorials-vid {
+  width: 448px;
+  height: 252px;
+  border: 0;
+}
+
+#suggestion-form {
+  border-width: 1px;
+  border-style: solid;
+  width: 375px;
+  padding: 15px;
+  margin: 0;
+  margin-top: 15px;
+  align-content: center;
+  text-align: center;
+}
+
+#suggestion {
+  display: inline-block;
+}
+
+#suggestion-form h4 {
+  margin-bottom: 5px;
+}
+
+input[type=submit] {
+  background-color: white;
+  color: #4285f4;
+  border: 2px solid #4285f4;
+  align-content: center;
+  cursor: pointer;
+  padding: 16px 32px;
+  font-size: 110%;
+  margin-top: 20px;
+  font-family: Google Sans, sans-serif;
+}
+
+input[type=submit]:hover {
+  background-color: #4285f4;
+  color: white;
+}

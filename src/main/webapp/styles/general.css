@@ -1,9 +1,12 @@
+/* General styling for all pages on webpage */
+
 body {
   background-color: white;
   color: black;
   font-family: Google Sans, sans-serif;
   margin-left: 10%;
   margin-right: 10%;
+  background-size: cover;
 }
 
 h1 {
