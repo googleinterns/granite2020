@@ -26,7 +26,7 @@ public class AccountDataServlet extends HttpServlet {
     private final String signUpURL;
     private final UserInfo userInfo;
     private static final UserInfo INVALID_USER =
-        new UserInfo("This", "account", "doesn't", "exist");
+        new UserInfo(null, null, null, null);
 
     public JsonAccountInfo(
         Boolean loggedIn, String logInOutURL, String signUpURL, UserInfo userInfo) {
