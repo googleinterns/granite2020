@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns all account related info (links to login pages/account info). */
 @WebServlet("/account")
 public class AccountData extends HttpServlet {
+  private final String idProperty = "id";
 
   private static final class JsonAccountInfo {
     private final boolean loggedIn;
@@ -82,7 +83,7 @@ public class AccountData extends HttpServlet {
         userInfo =
             new UserInfo(
                 (String) userEntity.getProperty("email"),
-                (String) userEntity.getProperty("id"),
+                (String) userEntity.getProperty(idProperty),
                 (String) userEntity.getProperty("first-name"),
                 (String) userEntity.getProperty("last-name"));
       }
@@ -104,7 +105,7 @@ public class AccountData extends HttpServlet {
     Entity userEntity = new Entity("User");
 
     // adds data to userentity
-    userEntity.setProperty("id", userService.getCurrentUser().getUserId());
+    userEntity.setProperty(idProperty, userService.getCurrentUser().getUserId());
     userEntity.setProperty("first-name", request.getParameter("first-name"));
     userEntity.setProperty("last-name", request.getParameter("last-name"));
     userEntity.setProperty("email", userService.getCurrentUser().getEmail());
@@ -125,7 +126,7 @@ public class AccountData extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("User")
-            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+            .setFilter(new Query.FilterPredicate(idProperty, Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();
