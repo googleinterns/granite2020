@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns all account related info (links to login pages/account info). */
 @WebServlet("/account")
 public class AccountDataServlet extends HttpServlet {
-  private final String idProperty = "id";
+  private static final String ID_PROPERTY = "id";
+  private static final String FIRST_NAME_PROPERTY = "first-name";
+  private static final String LAST_NAME_PROPERTY = "last-name";
+  private static final String EMAIL_PROPERTY = "email";
 
   private static final class JsonAccountInfo {
     private final boolean loggedIn;
@@ -82,10 +85,10 @@ public class AccountDataServlet extends HttpServlet {
       } else {
         userInfo =
             new UserInfo(
-                (String) userEntity.getProperty("email"),
-                (String) userEntity.getProperty(idProperty),
-                (String) userEntity.getProperty("first-name"),
-                (String) userEntity.getProperty("last-name"));
+                (String) userEntity.getProperty(EMAIL_PROPERTY),
+                (String) userEntity.getProperty(ID_PROPERTY),
+                (String) userEntity.getProperty(FIRST_NAME_PROPERTY),
+                (String) userEntity.getProperty(LAST_NAME_PROPERTY));
       }
 
       jsonAccountInfo = JsonAccountInfo.loggedInFactory(logInOutLink, userInfo);
@@ -105,10 +108,10 @@ public class AccountDataServlet extends HttpServlet {
     Entity userEntity = new Entity("User");
 
     // adds data to userentity
-    userEntity.setProperty(idProperty, userService.getCurrentUser().getUserId());
-    userEntity.setProperty("first-name", request.getParameter("first-name"));
-    userEntity.setProperty("last-name", request.getParameter("last-name"));
-    userEntity.setProperty("email", userService.getCurrentUser().getEmail());
+    userEntity.setProperty(ID_PROPERTY, userService.getCurrentUser().getUserId());
+    userEntity.setProperty(FIRST_NAME_PROPERTY, request.getParameter("first-name"));
+    userEntity.setProperty(LAST_NAME_PROPERTY, request.getParameter("last-name"));
+    userEntity.setProperty(EMAIL_PROPERTY, userService.getCurrentUser().getEmail());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(userEntity);
@@ -126,7 +129,7 @@ public class AccountDataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("User")
-            .setFilter(new Query.FilterPredicate(idProperty, Query.FilterOperator.EQUAL, id));
+            .setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();
