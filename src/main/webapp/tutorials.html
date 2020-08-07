@@ -10,47 +10,45 @@
 <body>
   <div id="nav-placeholder"></div>
 
-  <div class="content">
-    <div class="header">
-      <h1>Tutorials</h1>
-      <h4>On this page you will find a list of tools that we have tutorials available. Click a tutorial to learn more.</h4>
+  <div id="header">
+    <h1>Tutorials</h1>
+    <h4>On this page you will find a list of tools that we have tutorials available. Click a tutorial to learn more.</h4>
+  </div>
+
+  <div id="tutorials">
+    <div id="left-tutorials-list">
+      <h3> Currently Available Tutorials </h3>
+      <li><a href="zoom.html">Zoom</a></li>
+      <li><a href="https://www.facebook.com/">Facebook</a></li>
+      <li><a href="https://meet.google.com/">Google Meet</a></li>
+
+      <h3> Watch the video to learn how to use this page </h3>
+      <!-- Temporary video below, will contain video on how to navigate tutorials page-->
+      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/BDliEq_0qeQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <div id="tutorials">
-      <div id="left-tutorials-list">
-        <h3> Currently Available Tutorials </h3>
-        <li><a href="zoom.html">Zoom</a></li>
-        <li><a href="https://www.facebook.com/">Facebook</a></li>
-        <li><a href="https://meet.google.com/">Google Meet</a></li>
+    <div id="right-tutorials-list">
+      <div id="suggestion-form">
+        <div id="suggestion">
+          <h4>Create a New Suggestion</h4>
+          <form action="/new-suggestion" method="POST">
+            <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
+            <input type="text" id="platform"><br>
+            <label for="addition">Additional Details &amp; Specific Questions:</label><br>
+            <input type="text" id="addition"><br>
+            <input type="submit" value="Submit">
+          </form>
+        </div>
 
-        <h3> Watch the video to learn how to use this page </h3>
-        <!-- Temporary video below, will contain video on how to navigate tutorials page-->
-        <iframe class="tutorials-vid" src="https://www.youtube.com/embed/BDliEq_0qeQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-
-      <div id="right-tutorials-list">
-        <div id="suggestion-form">
-          <div id="suggestion">
-            <h4>Create a New Suggestion</h4>
-            <form action="/new-suggestion" method="POST">
-              <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
-              <input type="text" id="platform"><br>
-              <label for="addition">Additional Details &amp; Specific Questions:</label><br>
-              <input type="text" id="addition"><br>
-              <input type="submit" value="Submit">
-            </form>
-          </div>
-
-          <div id="new-suggestion-logged-out">
-            <h4>Can't find what you are looking for? Make a suggestion.</h4>
-            <form action="login.html">
-              <input type="submit" value="Login" />
-            </form>
-            <h4>Don't have an Account?</h4>
-            <form action="signup.html">
-              <input type="submit" value="Sign Up" />
-            </form>
-          </div>
+        <div id="new-suggestion-logged-out">
+          <h4>Can't find what you are looking for? Make a suggestion.</h4>
+          <form action="login.html">
+            <input type="submit" value="Login" />
+          </form>
+          <h4>Don't have an Account?</h4>
+          <form action="signup.html">
+            <input type="submit" value="Sign Up" />
+          </form>
         </div>
       </div>
     </div>

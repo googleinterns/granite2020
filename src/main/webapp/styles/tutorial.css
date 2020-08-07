@@ -3,26 +3,26 @@
   margin-bottom: 10px;
 }
 
-#zoom-content {
+#tutorial-content {
   margin: 0 auto;
   width: 100%;
   display: flex;
 }
 
-#zoom-content h1 {
+#tutorial-content h1 {
   font-weight: bold;
   font-size: 170%;
 }
 
-#zoom-content h2 {
+#tutorial-content h2 {
   font-size: 150%;
 }
 
-#zoom-content h3 {
+#tutorial-content h3 {
   font-size: 130%;
 }
 
-#zoom-content li {
+#tutorial-content li {
   font-size: 120%;
   margin-bottom: 10px;
 }

@@ -10,33 +10,32 @@
 <body>
 <div id="nav-placeholder"> </div>
 
-  <div class="content">
-    <div class="header">
-      <h1>Tech Assistant</h1>
-      <h2>On this page you can navigate either to the <span class="highlight">Tutorials</span> tool or <span class="highlight">Forum</span> tool.</h2>
+  <div id="header">
+    <h1>Tech Assistant</h1>
+    <h2>On this page you can navigate either to the <span class="highlight">Tutorials</span> tool or <span class="highlight">Forum</span> tool.</h2>
+  </div>
+
+  <div id="buttons">
+    <div id="left-tutorials-button">
+      <button class="tech-button" onclick="document.location='/tutorials.html'"> Click here for Tutorials</button>
+      <ul>
+        <li>Videos, tutorials, and links to learn about tools.</li>
+        <li>Tools available including: Zoom, Google Meet, and Facebook</li>
+      </ul>
+      <h4>Watch video below to learn about the <span class="highlight">Tutorials</span> tool:</h4>
+      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/fMUxzrgZvZQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <div id="buttons">
-      <div id="left-tutorials-button">
-        <button class="tech-button" onclick="document.location='/tutorials.html'"> Click here for Tutorials</button>
-        <ul>
-          <li>Videos, tutorials, and links to learn about tools.</li>
-          <li>Tools available including: Zoom, Google Meet, and Facebook</li>
-        </ul>
-        <h4>Watch video below to learn about the <span class="highlight">Tutorials</span> tool:</h4>
-        <iframe class="tutorials-vid" src="https://www.youtube.com/embed/fMUxzrgZvZQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-
-      <div id="right-forum-button">
-        <button class="tech-button" onclick="document.location='/forum.html'"> Click here for Forum</button>
-        <ul>
-          <li>Read questions and answers about technologies.</li>
-          <li>Post questions and reply to questions about technologies.</li>
-        </ul>
-        <h4> Watch video below to learn about the <span class="highlight">Forum</span> tool: </h4>
-        <iframe class="tutorials-vid" src="https://www.youtube.com/embed/fMUxzrgZvZQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
+    <div id="right-forum-button">
+      <button class="tech-button" onclick="document.location='/forum.html'"> Click here for Forum</button>
+      <ul>
+        <li>Read questions and answers about technologies.</li>
+        <li>Post questions and reply to questions about technologies.</li>
+      </ul>
+      <h4> Watch video below to learn about the <span class="highlight">Forum</span> tool: </h4>
+      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/fMUxzrgZvZQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
+  
 </body>
 </html>
