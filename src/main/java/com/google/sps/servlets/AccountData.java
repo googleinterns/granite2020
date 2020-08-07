@@ -76,7 +76,7 @@ public class AccountData extends HttpServlet {
       String logInOutLink = userService.createLogoutURL("/index.html");
 
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
-      UserInfo userInfo; 
+      UserInfo userInfo;
       if (userEntity == null) {
         userInfo = JsonAccountInfo.INVALID_USER;
       } else {
