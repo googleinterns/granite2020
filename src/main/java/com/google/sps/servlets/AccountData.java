@@ -51,8 +51,8 @@ public class AccountData extends HttpServlet {
     }
 
     /**
-      * @return login URL redirecting to signup.html if user is logged out, empty string otherwise
-      */
+     * @return login URL redirecting to signup.html if user is logged out, empty string otherwise
+     */
     public String getSignUpURL() {
       return signUpURL;
     }
