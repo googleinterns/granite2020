@@ -25,6 +25,7 @@ public class AccountData extends HttpServlet {
     private final String logInOutURL;
     private final String signUpURL;
     private final UserInfo userInfo;
+    private static final UserInfo INVALID_USER = new UserInfo("This", "account", "doesn't", "exist");
 
     public JsonAccountInfo(
         Boolean loggedIn, String logInOutURL, String signUpURL, UserInfo userInfo) {
@@ -74,10 +75,9 @@ public class AccountData extends HttpServlet {
       String logInOutLink = userService.createLogoutURL("/index.html");
 
       Entity userEntity = getUserEntity(userService.getCurrentUser().getUserId());
-      UserInfo userInfo = new UserInfo("This", "account", "doesnt", "exist");
-
+      UserInfo userInfo; 
       if (userEntity == null) {
-        System.out.println("here");
+        userInfo = JsonAccountInfo.INVALID_USER;
       } else {
         userInfo =
             new UserInfo(
