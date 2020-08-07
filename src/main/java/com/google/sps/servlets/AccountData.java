@@ -19,24 +19,25 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/account")
 public class AccountData extends HttpServlet {
 
-  private final class JsonAccountInfo {
+  private static final class JsonAccountInfo {
     private final boolean loggedIn;
     private final String logInOutURL;
     private final String signUpURL;
     private final UserInfo userInfo;
 
-    public JsonAccountInfo(Boolean loggedIn, String logInOutURL, String signUpURL) {
+    public JsonAccountInfo(Boolean loggedIn, String logInOutURL, String signUpURL, UserInfo userInfo) {
       this.loggedIn = loggedIn;
       this.logInOutURL = logInOutURL;
       this.signUpURL = signUpURL;
-      this.userInfo = null;
+      this.userInfo = userInfo;
     }
 
-    public JsonAccountInfo(Boolean loggedIn, String logInOutURL, UserInfo userInfo) {
-      this.loggedIn = loggedIn;
-      this.logInOutURL = logInOutURL;
-      this.userInfo = userInfo;
-      this.signUpURL = null;
+    public static JsonAccountInfo loggedInFactory(String logInURL, UserInfo userInfo) {
+      return new JsonAccountInfo(true, logInURL, "", userInfo);
+    }
+
+    public static JsonAccountInfo loggedOutFactory(String logOutURL, String signUpURL) {
+      return new JsonAccountInfo(false, logOutURL, signUpURL, (UserInfo) null);
     }
 
     public boolean getLoggedIn() {
@@ -47,10 +48,16 @@ public class AccountData extends HttpServlet {
       return logInOutURL;
     }
 
+    /**
+    * @return login URL redirecting to signup.html if user is logged out, empty string otherwise
+    */
     public String getSignUpURL() {
       return signUpURL;
     }
 
+    /**
+    * @return UserInfo object relating to logged in user if logged in,null otherwise.
+    */
     public UserInfo getUserInfo() {
       return userInfo;
     }
@@ -75,17 +82,17 @@ public class AccountData extends HttpServlet {
         userInfo =
             new UserInfo(
                 (String) userEntity.getProperty("email"),
-                (String) userEntity.getProperty("ID"),
+                (String) userEntity.getProperty("id"),
                 (String) userEntity.getProperty("first-name"),
                 (String) userEntity.getProperty("last-name"));
       }
 
-      jsonAccountInfo = new JsonAccountInfo(true, logInOutLink, userInfo);
+      jsonAccountInfo = JsonAccountInfo.loggedInFactory(logInOutLink, userInfo);
     } else {
 
       String logInOutLink = userService.createLoginURL("/index.html");
       String signUpLink = userService.createLoginURL("/signup.html");
-      jsonAccountInfo = new JsonAccountInfo(false, logInOutLink, signUpLink);
+      jsonAccountInfo = JsonAccountInfo.loggedOutFactory(logInOutLink, signUpLink);
     }
 
     response.setContentType("application/json");
@@ -97,7 +104,7 @@ public class AccountData extends HttpServlet {
     Entity userEntity = new Entity("User");
 
     // adds data to userentity
-    userEntity.setProperty("ID", userService.getCurrentUser().getUserId());
+    userEntity.setProperty("id", userService.getCurrentUser().getUserId());
     userEntity.setProperty("first-name", request.getParameter("first-name"));
     userEntity.setProperty("last-name", request.getParameter("last-name"));
     userEntity.setProperty("email", userService.getCurrentUser().getEmail());
@@ -118,7 +125,7 @@ public class AccountData extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("User")
-            .setFilter(new Query.FilterPredicate("ID", Query.FilterOperator.EQUAL, id));
+            .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
     Entity entity = results.asSingleEntity();

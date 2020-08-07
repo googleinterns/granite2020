@@ -6,7 +6,7 @@ const dataPromise = updateAccountData();
 
 dataPromise.then(function() {
   loadNav();
-  if (userInfo.email === 'This') {
+  if (userInfo != null && userInfo.email === 'This') {
     window.location.replace('../signup.html');
   }
 

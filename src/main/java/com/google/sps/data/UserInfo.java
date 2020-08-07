@@ -1,5 +1,8 @@
 package com.google.sps.servlets;
 
+/**
+* Class which holds all data related to the logged in user
+ */
 public final class UserInfo {
   private final String email;
   private final String id;
