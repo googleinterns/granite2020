@@ -15,7 +15,6 @@ function updateAccountData() {
         signupURL = loginData.signUpURL;
         if (loggedInStatus) {
           userInfo = loginData.userInfo;
-          console.log(userInfo);
         }
       });
 }
