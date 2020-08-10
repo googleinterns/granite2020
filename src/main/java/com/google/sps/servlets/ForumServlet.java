@@ -23,17 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that handles forum data (questions, comments, and replies) */
 @WebServlet("/forum")
 public class ForumServlet extends HttpServlet {
-  private static final String ID_PROPERTY = "id";
-  private static final String PARENT_ID_PROPERTY = "parentId";
-  private static final String TOPIC_PROPERTY = "topic";
-  private static final String TEXT_PROPERTY = "text";
-  private static final String TIMESTAMP_PROPERTY = "timestamp";
-  private static final String LIKES_PROPERTY = "likes";
 
   /** Get request to the Datastore and responds with the forum elements with the id input */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long id = Long.parseLong(request.getParameter(ID_PROPERTY));
+    long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
     List<ForumElement> elements = getForumElements(id);
     Gson gson = new Gson();
     response.setContentType("application/json;");
@@ -45,8 +39,8 @@ public class ForumServlet extends HttpServlet {
    */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long id = Long.parseLong(request.getParameter(ID_PROPERTY));
-    String likes = request.getParameter(LIKES_PROPERTY);
+    long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
+    String likes = request.getParameter(ForumElement.LIKES_PROPERTY);
 
     if (likes.equals("true")) {
       /* Increments likes of element */
@@ -56,9 +50,9 @@ public class ForumServlet extends HttpServlet {
       /* Adds new forum element */
       String topic = "none";
       if (id == -1) {
-        topic = request.getParameter(TOPIC_PROPERTY);
+        topic = request.getParameter(ForumElement.TOPIC_PROPERTY);
       }
-      String text = request.getParameter(TEXT_PROPERTY);
+      String text = request.getParameter(ForumElement.TEXT_PROPERTY);
       addForumEntity(id, topic, text);
       response.sendRedirect("/forum.html");
     }
@@ -66,7 +60,7 @@ public class ForumServlet extends HttpServlet {
 
   /** Gets a list of forum elements from Datastore with id given */
   private List<ForumElement> getForumElements(long id) {
-    Filter filter = new FilterPredicate(PARENT_ID_PROPERTY, FilterOperator.EQUAL, id);
+    Filter filter = new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id);
     Query query = new Query("ForumElement").setFilter(filter);
     // TODO: Add sort of likes descending
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -88,8 +82,8 @@ public class ForumServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity entity : results.asIterable()) {
-      long likes = (long) entity.getProperty(LIKES_PROPERTY);
-      entity.setProperty(LIKES_PROPERTY, likes + 1);
+      long likes = (long) entity.getProperty(ForumElement.LIKES_PROPERTY);
+      entity.setProperty(ForumElement.LIKES_PROPERTY, likes + 1);
       datastore.put(entity);
     }
   }
@@ -97,12 +91,12 @@ public class ForumServlet extends HttpServlet {
   /** Creates new entitiy given parentId, topic, and text and stores in Datastore */
   private void addForumEntity(long parentId, String topic, String text) {
     Entity forumEntity = new Entity("ForumElement");
-    forumEntity.setProperty(PARENT_ID_PROPERTY, parentId);
-    forumEntity.setProperty(TOPIC_PROPERTY, topic);
+    forumEntity.setProperty(ForumElement.PARENT_ID_PROPERTY, parentId);
+    forumEntity.setProperty(ForumElement.TOPIC_PROPERTY, topic);
     long timestamp = System.currentTimeMillis();
-    forumEntity.setProperty(TIMESTAMP_PROPERTY, timestamp);
-    forumEntity.setProperty(LIKES_PROPERTY, 0);
-    forumEntity.setProperty(TEXT_PROPERTY, text);
+    forumEntity.setProperty(ForumElement.TIMESTAMP_PROPERTY, timestamp);
+    forumEntity.setProperty(ForumElement.LIKES_PROPERTY, 0);
+    forumEntity.setProperty(ForumElement.TEXT_PROPERTY, text);
     // TODO: Include User data
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
