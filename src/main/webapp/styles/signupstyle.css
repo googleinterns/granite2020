@@ -1,0 +1,15 @@
+#content {
+    margin-top: 20%;
+}
+
+input[type=text] {
+    width: 99.5%;
+    font-size: 25px;
+}
+#submit-container {
+    width: 100%;
+    text-align: right;
+    margin-top: 1%;
+    margin-right: 10%;
+}
+
