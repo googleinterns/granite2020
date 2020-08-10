@@ -30,7 +30,7 @@ public final class ForumElement {
     long timestamp = (long) entity.getProperty("timestamp");
     long likes = (long) entity.getProperty("likes");
     String text = (String) entity.getProperty("text");
-    // TODO: Get user information
+    // TODO:  Get user information
 
     return new ForumElement(id, parentId, topic, timestamp, likes, text);
   }
