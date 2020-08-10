@@ -1,5 +1,5 @@
-import com.google.appengine.api.datastore.Entity;
 package com.google.sps.data;
+import com.google.appengine.api.datastore.Entity;
 
 /** A comment or question element of the forum. */
 public final class ForumElement {
@@ -10,7 +10,7 @@ public final class ForumElement {
   private final long likes;
   private final String text;
 
-  public ForumElement(
+  private ForumElement(
       long id, long parentId, String topic, long timestamp, long likes, String text) {
     this.id = id;
     this.parentId = parentId;
