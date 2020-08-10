@@ -36,7 +36,7 @@ function expandForum(placeholder, id) {
  *  the element
  */
 function createForumElement(placeholder, element) {
-  /* Creates a new div elements and adds to placeholder */
+  /* Creates a new div and adds it to placeholder */
   const elementDiv = $('<div></div>');
   const elementId = 'element-' + element.id.toString();
   elementDiv.attr('id', elementId);
@@ -56,9 +56,9 @@ function createForumElement(placeholder, element) {
         convertTimestampToDate(element.timestamp));
     $('#' + elementId + ' .likes').text('Likes: ' + element.likes.toString());
     $('#' + elementId + ' .like-form').attr('action', '/forum?id=' +
-        element.id.toString() + '&like=true');
+        element.id.toString() + '&likes=true');
     $('#' + elementId + ' .response-form').attr('action', '/forum?id=' +
-        element.id.toString() + '&like=false');
+        element.id.toString() + '&likes=false');
     $('#' + elementId + ' .replies-button').click(element.id, getReplies);
     $('#' + elementId + ' .replies').attr('id', 'replies-' +
         element.id.toString());
