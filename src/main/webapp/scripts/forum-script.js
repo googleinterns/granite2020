@@ -44,7 +44,7 @@ function createForumElement(placeholder, element) {
 
   /* Loads forumElement.html template and then populates div with the
   fields from element */
-  elementDiv.load('forumElement.html', function() {
+  elementDiv.load('./forumElement.html', function() {
     if (element.parentId == -1) {
       $('#' + elementId).addClass('question');
       $('#' + elementId + ' .topic').text(element.topic);
