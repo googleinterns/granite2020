@@ -33,9 +33,9 @@
           <h4>Create a New Suggestion</h4>
           <form action="/new-suggestion" method="POST">
             <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
-            <input type="text" id="platform"><br>
+            <input type="text" id="platform" name="platform" placeholder="Your platform suggestion ..."><br>
             <label for="addition">Additional Details &amp; Specific Questions:</label><br>
-            <input type="text" id="addition"><br>
+            <textarea rows="5" cols="30" id="addition" name="addition" placeholder="Insert additional details ..."></textarea>
             <input type="submit" value="Submit">
           </form>
         </div>

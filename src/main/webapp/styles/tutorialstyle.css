@@ -19,7 +19,7 @@
 #suggestion-form {
   border-width: 1px;
   border-style: solid;
-  width: 375px;
+  width: 80%;
   padding: 15px;
   margin: 0;
   margin-top: 15px;
@@ -32,22 +32,38 @@
 }
 
 #suggestion-form h4 {
-  margin-bottom: 5px;
+  margin-bottom: 7px;
+  font-size: 170%;
 }
 
-input[type=submit] {
-  background-color: white;
-  color: #4285f4;
-  border: 2px solid #4285f4;
-  align-content: center;
-  cursor: pointer;
-  padding: 16px 32px;
-  font-size: 110%;
-  margin-top: 20px;
+#suggestion-form label {
+  font-size: 125%;
+}
+
+textarea {
+  font-size: 15pt;
+  font-family: Google Sans, sans-serif;
+  border: 1px solid #4285f4;
+}
+
+textarea::placeholder {
+  color: #b7b7b7;
+  font-size: 15pt;
   font-family: Google Sans, sans-serif;
 }
 
-input[type=submit]:hover {
-  background-color: #4285f4;
-  color: white;
+input[type=text] {
+  width: 90%;
+  border: 1px solid #4285f4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 20pt;
+  height: 40px;
+  margin-bottom: 15px;
+}
+
+input::placeholder {
+  color: #b7b7b7;
+  font-size: 15pt;
+  font-family: Google Sans, sans-serif;
 }

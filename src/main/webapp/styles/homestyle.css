@@ -1,4 +1,12 @@
 /* Navigation adjustments for home page */
+#header {
+  margin-top: 10%;
+}
+
+#header h1 {
+  text-align: center;
+  font-size: 500%;
+}
 
 #content-left h2 {
   font-size: 200%;
