@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Seniors Connect</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="module" src="scripts/forum-script.js"></script>
+  </head>
+  <body>
+    <div id="nav-placeholder"> </div>
+    <div class="content">
+      <div class="header">
+        <h1>Forum</h1>
+        <p>Description of Forum</p>
+      </div>
+      <div id="left-forum">
+        <div id="forum-placeholder"></div>
+      </div>
+      <div id="right-forum">
+        <div id="new-question">
+          <h1>Create a New Question</h1>
+          <form class="question-form" action="/forum?id=-1&amp;likes=false" method="POST">
+            <label for="topic-input">Topic:</label>
+            <select id="topic-input" name="topic">
+              <option value="Zoom">Zoom</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Hangouts">Google Hangouts</option>
+              <option value="Other">Other</option>
+            </select>
+            <label for="text-input">Question:</label><br>
+            <input type="text" id="text-input" name="text"><br>
+            <input type="submit" value="Post">
+          </form>
+        </div>
+        <div id="new-question-logged-out">
+          <h1>Want to Create a Question?</h1>
+          <form action="login.html">
+            <!-- TODO: Need to get login url -->
+            <input type="submit" value="Login" />
+          </form>
+          <h1>Don't have an Account?</h1>
+          <form action="signup.html">
+            <!-- TODO: Need to get signup url -->
+            <input type="submit" value="Sign Up" />
+          </form>
+        </div>
+        <div id="forum-video">Insert Video Here</div>
+      </div>
+    </div>
+  </body>
+</html>

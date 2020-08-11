@@ -1,6 +1,7 @@
 let loggedInStatus;
 let logInOutURL;
 let signupURL;
+let userInfo;
 
 /**
  * Updates global variables related to account data.
@@ -12,7 +13,10 @@ function updateAccountData() {
         loggedInStatus = loginData.loggedIn;
         logInOutURL = loginData.logInOutURL;
         signupURL = loginData.signUpURL;
+        if (loggedInStatus) {
+          userInfo = loginData.userInfo;
+        }
       });
 }
 
-export {updateAccountData, loggedInStatus, logInOutURL, signupURL};
+export {updateAccountData, loggedInStatus, logInOutURL, signupURL, userInfo};
