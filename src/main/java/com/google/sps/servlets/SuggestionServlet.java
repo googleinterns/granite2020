@@ -16,9 +16,7 @@ public class SuggestionServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String platform = request.getParameter("platform");
-    System.out.println("Platform: " + platform );
     String addition = request.getParameter("addition");
-    System.out.println("Addition: " + addition );
     long timestamp = System.currentTimeMillis();
 
     Entity suggestionEntity = new Entity("Suggestion");
