@@ -7,8 +7,9 @@ body {
   margin-left: 10%;
   margin-right: 10%;
   background-size: cover;
-  overflow-y: scroll;
-  min-width: auto;
+  width: 80%;
+  overflow-x: scroll;
+  position: absolute;
 }
 
 h1 {
