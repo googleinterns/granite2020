@@ -3,7 +3,6 @@
   box-sizing: border-box;
 }
 
-
 body {
   background-color: white;
   color: black;
@@ -71,7 +70,7 @@ span.right {
   float: right;
 }
 
-/* BUTTONS */
+/* Submit Buttons */
 input[type=submit] {
   background-color: #4285f4;
   color: white;
