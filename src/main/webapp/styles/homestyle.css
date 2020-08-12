@@ -20,6 +20,7 @@
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
+  margin-bottom: 30px;
 }
 
 #content-left iframe {
