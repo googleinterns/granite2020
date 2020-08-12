@@ -1,23 +1,22 @@
-let loggedInStatus;
-let logInOutURL;
-let signupURL;
-let userInfo;
+var profile;
 
-/**
- * Updates global variables related to account data.
- * @return {Promise} after setting global variables
- */
-function updateAccountData() {
-  return fetch('/account').then((response) => response.json()).then(
-      (loginData) => {
-        loggedInStatus = loginData.loggedIn;
-        logInOutURL = loginData.logInOutURL;
-        signupURL = loginData.signUpURL;
-        if (loggedInStatus) {
-          userInfo = loginData.userInfo;
-          console.log(userInfo);
-        }
-      });
+function onSignIn() {
+    var auth2 = gapi.auth2.init();  
+    profile = auth2.currentUser.get().getBasicProfile();
+    var id_token = auth2.currentUser.get().getAuthResponse().id_token;
+
 }
 
-export {updateAccountData, loggedInStatus, logInOutURL, signupURL, userInfo};
+export function signOut() {
+  console.log("here")
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+
+    console.log('User signed out.');
+  });
+
+}
+
+export {profile}
+
+
