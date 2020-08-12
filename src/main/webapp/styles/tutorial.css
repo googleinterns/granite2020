@@ -10,17 +10,19 @@
 }
 
 #header a {
-  font-size: 160%;
+  font-size: 140%;
 }
 
 #content-left h1 {
   font-weight: bold;
   font-size: 170%;
+  margin-top: 5%;
 }
 
 #content-right h1 {
   font-weight: bold;
   font-size: 170%;
+  margin-top: 5%;
 }
 
 #content-left h2 {
