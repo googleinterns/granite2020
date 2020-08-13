@@ -1,0 +1,112 @@
+/* General styling for all pages on webpage */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  color: black;
+  font-family: Google Sans, sans-serif;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-size: cover;
+  width: 80%;
+  overflow-x: scroll;
+  position: absolute;
+}
+
+h1 {
+  font-size: 300%;
+  font-weight: bold;
+  margin-top: 2%;
+  margin-bottom: 0%;
+  color: #4285f4;
+}
+
+h2 {
+  font-size: 160%;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 150%;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 130%;
+  font-weight: normal;
+}
+
+.highlight {
+  color: #4285f4;
+  font-weight: bold;
+}
+
+/* Navigation Bar Styling */
+#nav-placeholder {
+  margin-bottom: 30px;
+}
+
+#nav-placeholder a {
+  display: block;
+  color: #4285f4;
+  background-color: white;
+  border: 2px solid white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 130%;
+}
+
+#nav-placeholder a:hover {
+  background-color: #4285f4;
+  color: white;
+}
+
+span.left {
+  float: left;
+}
+
+span.right {
+  float: right;
+}
+
+/* Submit Buttons */
+input[type=submit] {
+  background-color: #4285f4;
+  color: white;
+  border: 2px solid #4285f4;
+  align-content: center;
+  cursor: pointer;
+  padding: 16px 32px;
+  font-size: 110%;
+  margin-top: 20px;
+  font-family: Google Sans, sans-serif;
+}
+
+input[type=submit]:hover {
+  background-color: white;
+  color: #4285f4;
+}
+
+/* General two column design */
+#header {
+  clear: both;
+}
+
+#content {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+}
+
+#content-left {
+  flex: 1;
+  width: 50%;
+}
+
+#content-right {
+  flex: 1;
+  width: 50%;
+}
