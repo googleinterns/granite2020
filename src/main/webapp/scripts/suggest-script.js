@@ -1,0 +1,1 @@
+//$.post('/forum?id=' + id.toString() + '&likes=true');
