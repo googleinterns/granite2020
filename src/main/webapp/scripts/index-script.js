@@ -1,24 +1,26 @@
+import {auth2, profile, signIn, initPromise} from "./account-info.js"
+initPromise.then(function(){
+    console.log(auth2.isSignedIn.get());
+    updatePage();
+
+    $(".sign-in").click(function(){
+      onSignIn();
+  })
+}) 
 
 
-// const dataPromise = updateAccountData();
+  function onSignIn(){
+    signIn().then(function(){
+        updatePage();
+    })
+  }
 
-// dataPromise.then(function() {
-//   if (userInfo != null && userInfo.email === 'This') {
-//     window.location.replace('../signup.html');
-//   }
+function updatePage(){
+    if(auth2.isSignedIn.get()){
+        $("#account-functions").css("display", "none")
+    }
+    else{
+        $("#account-functions").css("display", "block")
 
-//   if (loggedInStatus) {
-//     $('#account-functions').css('display', 'none');
-//   }
-//   var auth2 = gapi.auth2.init();
-//   var profile = auth2.currentUser.get().getBasicProfile();
-//   console.log("Name: "+ profile.getName());
-  
-//   $('#login-index').attr('href', logInOutURL);
-//   $('#signup').attr('href', signupURL);
-// });
-
-// function onSignIn(googleUser) {
-//   var profile = googleUser.getBasicProfile();
-//   console.log('Name: ' + profile.getName());
-// }
+    }
+}
