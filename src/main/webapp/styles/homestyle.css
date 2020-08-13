@@ -28,6 +28,7 @@
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
+  margin-bottom: 10px;
 }
 
 #for-whom ul {
@@ -45,7 +46,7 @@
   font-size: 140%;
 }
 
-/* Submit buttons ex login/signup */
+/* Submit buttons for login/signup */
 a {
   background-color: #4285f4;
   color: white;
