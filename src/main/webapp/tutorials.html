@@ -19,8 +19,8 @@
     <div id="content-left">
       <h3> Currently available tutorials</h3>
       <li><a href="zoom.html">Zoom</a></li>
-      <li><a href="https://www.facebook.com/">Facebook</a></li>
-      <li><a href="https://meet.google.com/">Google Meet</a></li>
+      <li><a href="facebook.html">Facebook</a></li>
+      <li><a href="googlemeet.html">Google Meet</a></li>
 
       <h3> Watch the video to learn how to use this page </h3>
       <!-- Temporary video below, will contain video on how to navigate tutorials page-->
@@ -33,10 +33,9 @@
           <h4>Create a new suggestion</h4>
           <form action="/new-suggestion" method="POST">
             <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
-            <input type="text" id="platform"><br>
+            <input type="text" id="platform" name="platform" placeholder="Your platform suggestion ..."><br>
             <label for="addition">Additional details &amp; specific questions:</label><br>
-            <input type="text" id="addition"><br>
-            <input type="submit" value="Submit">
+            <textarea rows="5" cols="30" id="addition" name="addition" placeholder="Insert additional details ..."></textarea>
           </form>
         </div>
 
