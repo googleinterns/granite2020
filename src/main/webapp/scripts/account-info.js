@@ -17,7 +17,6 @@ function init() {
 
 function signIn(){
   return auth2.signIn().then(function(){
-    console.log('User signed in.');
     profile = auth2.currentUser.get().getBasicProfile();
   });
 }

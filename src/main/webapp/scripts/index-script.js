@@ -1,7 +1,6 @@
 import {auth2, signIn, initPromise} from "./account-info.js"
 import {updateBar} from "./nav-bar.js"
 initPromise.then(function(){
-    console.log(auth2.isSignedIn.get());
     updatePage();
 
     $(".sign-in").click(function(){
