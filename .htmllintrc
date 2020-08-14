@@ -20,7 +20,7 @@
     "indent-width": 2,
     "indent-width-cont": false,
     "spec-char-escape": true,
-    "text-ignore-regex": "/<script\b[^>]*>([\s\S]*?)<\/script>/",
+    "text-ignore-regex": false,
     "tag-bans": [
         "style"
     ],
