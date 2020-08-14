@@ -1,4 +1,5 @@
-import {auth2, profile, signIn, initPromise} from "./account-info.js"
+import {auth2, signIn, initPromise} from "./account-info.js"
+import {updateBar} from "./nav-bar.js"
 initPromise.then(function(){
     console.log(auth2.isSignedIn.get());
     updatePage();
@@ -6,14 +7,18 @@ initPromise.then(function(){
     $(".sign-in").click(function(){
       onSignIn();
   })
+  auth2.isSignedIn.listen(updatePage);
+
 }) 
 
 
-  function onSignIn(){
-    signIn().then(function(){
+export function onSignIn(){
+    return signIn().then(function(){
         updatePage();
+        updateBar();
     })
   }
+
 
 function updatePage(){
     if(auth2.isSignedIn.get()){
@@ -21,6 +26,6 @@ function updatePage(){
     }
     else{
         $("#account-functions").css("display", "block")
-
     }
 }
+
