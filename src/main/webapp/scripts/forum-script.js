@@ -17,11 +17,11 @@ function getFilters() {
   var urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('topic')) {
     const topic = urlParams.get('topic');
-    $('#filter-form #topic-input').val(topic).change();
+    $('#filter-topic-input').val(topic).change();
   }
   if (urlParams.has('sort')) {
     const sort = urlParams.get('sort');
-    $('#filter-form #sort-input').val(sort).change();
+    $('#filter-sort-input').val(sort).change();
   }
 }
 
