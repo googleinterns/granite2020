@@ -1,26 +1,25 @@
-var auth2;
-var profile;
+let auth2;
+let profile;
+let initPromise = init();
 
-var initPromise = init()
-
-
-
-
+/**
+ * Initializes the auth2 variable
+ * @returns Promise which resolves when auth2 is initalized
+ */
 function init() {
   return new Promise(function (resolve, reject) {
     gapi.load('auth2', function(){
       auth2 = gapi.auth2.init();
       resolve();
-    })
-  })
-
+    });
+  });
 }
 
 function signIn(){
   return auth2.signIn().then(function(){
     console.log('User signed in.');
     profile = auth2.currentUser.get().getBasicProfile();
-  })
+  });
 }
 
 function signOut() {
