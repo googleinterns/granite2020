@@ -111,11 +111,11 @@ public class ForumServlet extends HttpServlet {
     if (topicFilter.equals("all") || id != -1) {
       filter = new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id);
     } else {
-      filter = 
+      filter =
           new CompositeFilter(
-              CompositeFilterOperator.AND, 
+              CompositeFilterOperator.AND,
               Arrays.asList(
-                  new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id), 
+                  new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id),
                   new FilterPredicate(
                       ForumElement.TOPIC_PROPERTY, FilterOperator.EQUAL, topicFilter)));
     }
@@ -127,7 +127,7 @@ public class ForumServlet extends HttpServlet {
       sort = ForumElement.LIKES_PROPERTY;
     }
 
-    Query query = 
+    Query query =
         new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
     return query;
   }
