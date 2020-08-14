@@ -21,6 +21,7 @@ function signIn(){
     console.log('User signed in.');
     profile = auth2.currentUser.get().getBasicProfile();
   })
+
 }
 
 function signOut() {
