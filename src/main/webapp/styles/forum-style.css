@@ -27,7 +27,9 @@ label {
   margin-bottom: 16px;
 }
 
-button, select, input[type=submit] {
+button,
+select,
+input[type=submit] {
   margin: 10px;
   background-color: white;
   color: #4285f4;
@@ -49,7 +51,7 @@ button:hover {
   color: white;
   padding: 10px 20px;
   font-size: 110%;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 #primary-button:hover {
@@ -58,8 +60,8 @@ button:hover {
 }
 
 input[type=text] {
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
@@ -74,7 +76,8 @@ input[type=text] {
   margin: auto;
 }
 
-#filters, #forum-placeholder {
+#filters,
+#forum-placeholder {
   margin: 20px;
 }
 
@@ -103,16 +106,19 @@ input[type=text] {
   padding: 10px;
 }
 
-.topic, .date {
+.topic,
+.date {
   color: #4285f4;
 }
 
-.topic, .accepted, .accept-button {
+.topic,
+.accepted,
+.accept-button {
   margin-top: 16px;
   margin-bottom: 16px;
 }
 
-.comment .text {
+.text .comment {
   font-size: 130%;
 }
 
@@ -133,16 +139,25 @@ i {
 
 /* Float formatting within individual forum element */
 
-.likes-label, .likes, .reply-button, .topic, .accepted, .accept-button, .expand-button, .response-form {
+.likes-label,
+.likes,
+.reply-button,
+.topic,
+.accepted,
+.accept-button,
+.expand-button,
+.response-form {
   float: left;
   margin-right: 10px;
 }
 
-.user, .date {
+.user,
+.date {
   float: right;
   margin-left: 10px;
 }
 
-.text, .replies {
+.text,
+.replies {
   clear: both;
 }

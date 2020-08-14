@@ -14,7 +14,7 @@ function getForum() {
  *  Sets value of select if there are set filters from the url parameters
  */
 function getFilters() {
-  var urlParams = new URLSearchParams(window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('topic')) {
     const topic = urlParams.get('topic');
     $('#filter-topic-input').val(topic).change();
@@ -61,7 +61,7 @@ function createForumElement(placeholder, element) {
   const data = createElementData(element);
 
   const template = document.getElementById('template').innerHTML;
-  var rendered = Mustache.render(template, data);
+  const rendered = Mustache.render(template, data);
   elementDiv.html(rendered);
 
   /* Add onclick functionality to mustache render */
@@ -69,7 +69,7 @@ function createForumElement(placeholder, element) {
   $('#' + elementId + ' .reply-button').click(element.id, reply);
   $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
   $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
-  // TODO: Make posting a reply not a form that redirects the page but just 
+  // TODO: Make posting a reply not a form that redirects the page but just
   // adds to the current page
   // TODO: create a method for accepting an answer, once user data is inputted
 }
@@ -82,7 +82,7 @@ function createForumElement(placeholder, element) {
  *  @return {Object} a populated json object
  */
 function createElementData(element) {
-  /* If element is a comment or question and thus whether the topic should be 
+  /* If element is a comment or question and thus whether the topic should be
    * displayed */
   let elementType = 'comment';
   let topicDisplay = 'none';
@@ -107,7 +107,7 @@ function createElementData(element) {
     likes: element.likes,
     id: element.id,
     repliesDisplay: repliesDisplay,
-    numReplies: element.numberReplies
+    numReplies: element.numberReplies,
   };
 
   console.log(data);

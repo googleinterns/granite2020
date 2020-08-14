@@ -57,7 +57,7 @@ public class ForumServlet extends HttpServlet {
       /* Increments likes of element */
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       incrementProperty(ForumElement.LIKES_PROPERTY, id);
-    } 
+    }
     
     if (action.equals(REPLY_PROPERTY)) {
       /* Adds new forum element */
@@ -93,7 +93,6 @@ public class ForumServlet extends HttpServlet {
   /** Gets a list of forum elements from Datastore with id given */
   private List<ForumElement> getForumElements(long id) {
     Query query = getQuery(id);
-    
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
@@ -108,12 +107,17 @@ public class ForumServlet extends HttpServlet {
   private Query getQuery(long id) {
     Filter filter;
     String sort;
-    
     /* Filter by topic if there is a topic filter and the filter is for questions */
     if (topicFilter.equals("all") || id != -1) {
       filter = new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id);
     } else {
-      filter = new CompositeFilter(CompositeFilterOperator.AND, Arrays.asList(new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id), new FilterPredicate(ForumElement.TOPIC_PROPERTY, FilterOperator.EQUAL, topicFilter)));
+      filter = 
+        new CompositeFilter(
+          CompositeFilterOperator.AND, 
+          Arrays.asList(
+            new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id), 
+            new FilterPredicate(
+              ForumElement.TOPIC_PROPERTY, FilterOperator.EQUAL, topicFilter)));
     }
 
     /* Determine sort property - if question use given sort property, if comment always sort by likes */
@@ -123,7 +127,8 @@ public class ForumServlet extends HttpServlet {
       sort = ForumElement.LIKES_PROPERTY;
     }
 
-    Query query = new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
+    Query query = 
+      new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
     return query;
   }
 

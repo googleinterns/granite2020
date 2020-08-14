@@ -20,7 +20,13 @@ public final class ForumElement {
   private final long numberReplies;
 
   private ForumElement(
-      long id, long parentId, String topic, long timestamp, long likes, String text, long numberReplies) {
+      long id,
+      long parentId,
+      String topic,
+      long timestamp,
+      long likes,
+      String text,
+      long numberReplies) {
     this.id = id;
     this.parentId = parentId;
     this.topic = topic;
