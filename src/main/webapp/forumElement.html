@@ -1,16 +1,23 @@
 <div class="forum-element">
-  <h1 class="text">Sample Text</h1>
-  <p class="topic"></p>
-  <p class="date"></p>
-  <p class="likes"></p>
-  <form class="like-form" method="POST">
-    <input type="submit" value="Like">
-  </form>
-  <form class="response-form" method="POST">
-    <label for="text-input">Reply:</label><br>
-    <input type="text" id="text-input" name="text"><br>
+  <div class="info-element">
+    <p class="topic"></p>
+    <p class="accepted" style="display: none">Accepted Answer</p>
+    <button class="accept-button" style="display: none">Accept Answer</button>
+    <p class="user">User Name</p>
+    <p class="date"></p>
+  </div>
+  <h3 class="text">Sample Text</h3>
+  <div class="likes-div">
+    <p class="likes-label">Likes: </p>
+    <i class="like-button fa fa-thumbs-up" style="font-size:30px"></i>
+    <p class="likes"></p>
+  </div>
+  <button class="reply-button">Reply</button>
+  <form class="response-form" style="display: none">
+    <input type="text" id="text-input" name="text">
     <input type="submit" value="Post">
   </form>
-  <button class="replies-button">See Replies</button>
+  <button class="expand-button">See Replies</button>
   <div class="replies" id="replies-id"></div>
+  <button class="collapse-button">Hide Replies</button>
 </div>

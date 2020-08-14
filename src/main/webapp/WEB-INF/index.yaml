@@ -1,0 +1,9 @@
+indexes:
+- kind: ForumElement
+  properties:
+  - name: topic
+  - name: parentId
+  - name: timestamp
+    direction: desc
+  - name: likes
+    direction: desc
