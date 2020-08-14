@@ -1,3 +1,5 @@
+import {forumTemplate} from './forum-template.js';
+
 $( document ).ready( getFilters );
 $( document ).ready( getForum );
 
@@ -60,8 +62,7 @@ function createForumElement(placeholder, element) {
 
   const data = createElementData(element);
 
-  const template = document.getElementById('template').innerHTML;
-  const rendered = Mustache.render(template, data);
+  const rendered = Mustache.render(forumTemplate, data);
   elementDiv.html(rendered);
 
   /* Add onclick functionality to mustache render */
