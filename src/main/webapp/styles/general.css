@@ -10,7 +10,7 @@ body {
   margin-left: 10%;
   margin-right: 10%;
   background-size: cover;
-  width: 80%;
+  min-width: 80%; /*smaller than this starts cutting off */
   overflow-x: scroll;
   position: absolute;
 }
@@ -80,7 +80,7 @@ input[type=submit] {
   align-content: center;
   cursor: pointer;
   padding: 16px 32px;
-  font-size: 110%;
+  font-size: 130%;
   margin-top: 20px;
   font-family: Google Sans, sans-serif;
 }
@@ -109,4 +109,4 @@ input[type=submit]:hover {
 #content-right {
   flex: 1;
   width: 50%;
-
+}
