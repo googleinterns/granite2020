@@ -58,7 +58,7 @@ public class ForumServlet extends HttpServlet {
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       incrementProperty(ForumElement.LIKES_PROPERTY, id);
     }
-    
+
     if (action.equals(REPLY_PROPERTY)) {
       /* Adds new forum element */
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
@@ -112,12 +112,12 @@ public class ForumServlet extends HttpServlet {
       filter = new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id);
     } else {
       filter = 
-        new CompositeFilter(
-          CompositeFilterOperator.AND, 
-          Arrays.asList(
-            new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id), 
-            new FilterPredicate(
-              ForumElement.TOPIC_PROPERTY, FilterOperator.EQUAL, topicFilter)));
+          new CompositeFilter(
+              CompositeFilterOperator.AND, 
+              Arrays.asList(
+                  new FilterPredicate(ForumElement.PARENT_ID_PROPERTY, FilterOperator.EQUAL, id), 
+                  new FilterPredicate(
+                      ForumElement.TOPIC_PROPERTY, FilterOperator.EQUAL, topicFilter)));
     }
 
     /* Determine sort property - if question use given sort property, if comment always sort by likes */
@@ -128,7 +128,7 @@ public class ForumServlet extends HttpServlet {
     }
 
     Query query = 
-      new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
+        new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
     return query;
   }
 
