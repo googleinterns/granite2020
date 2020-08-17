@@ -1,3 +1,6 @@
+import {forumTemplate} from './forum-template.js';
+
+$( document ).ready( getFilters );
 $( document ).ready( getForum );
 
 /**
@@ -7,6 +10,21 @@ function getForum() {
   const id = -1;
   const placeholder = $('#forum-placeholder');
   expandForum(placeholder, id);
+}
+
+/**
+ *  Sets value of select if there are set filters from the url parameters
+ */
+function getFilters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('topic')) {
+    const topic = urlParams.get('topic');
+    $('#filter-topic-input').val(topic).change();
+  }
+  if (urlParams.has('sort')) {
+    const sort = urlParams.get('sort');
+    $('#filter-sort-input').val(sort).change();
+  }
 }
 
 /**
@@ -42,39 +60,60 @@ function createForumElement(placeholder, element) {
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
 
-  /* Loads forumElement.html template and then populates div with the
-  fields from element */
-  elementDiv.load('../forumElement.html', function() {
-    if (element.parentId == -1) {
-      $('#' + elementId).addClass('question');
-      $('#' + elementId + ' .topic').text(element.topic);
-    } else {
-      $('#' + elementId).addClass('comment');
-    }
-    $('#' + elementId + ' .text').text(element.text);
-    $('#' + elementId + ' .date').text('Timestamp: ' +
-        convertTimestampToDate(element.timestamp));
-    $('#' + elementId + ' .likes').text('Likes: ' + element.likes.toString());
-    $('#' + elementId + ' .like-form').attr('action', '/forum?id=' +
-        element.id.toString() + '&likes=true');
-    $('#' + elementId + ' .response-form').attr('action', '/forum?id=' +
-        element.id.toString() + '&likes=false');
-    $('#' + elementId + ' .replies-button').click(element.id, getReplies);
-    $('#' + elementId + ' .replies').attr('id', 'replies-' +
-        element.id.toString());
-  });
+  const data = createElementData(element);
+
+  const rendered = Mustache.render(forumTemplate, data);
+  elementDiv.html(rendered);
+
+  /* Add onclick functionality to mustache render */
+  $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
+  $('#' + elementId + ' .reply-button').click(element.id, reply);
+  $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
+  $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
+  // TODO: Make posting a reply not a form that redirects the page but just
+  // adds to the current page
+  // TODO: create a method for accepting an answer, once user data is inputted
 }
 
 /**
- *  Gets replies for a forum element given id in the handler input
+ *  Creates json data for mustache render
  *
- *  @param {S.Event} idHandler the handler object that holds the
- *  id of the element to expand as data
-*/
-function getReplies(idHandler) {
-  const id = idHandler.data;
-  const placeholder = $('#replies-' + id.toString());
-  expandForum(placeholder, id);
+ *  @param {ForumElement} element the ForumElement that contains the data for
+ *  the element
+ *  @return {Object} a populated json object
+ */
+function createElementData(element) {
+  /* If element is a comment or question and thus whether the topic should be
+   * displayed */
+  let elementType = 'comment';
+  let topicDisplay = 'none';
+  if (element.parentId == -1) {
+    elementType = 'question';
+    topicDisplay = 'inline-block';
+  }
+
+  /* If the element has replies, display expand button if not no display */
+  let repliesDisplay = 'block';
+  if (element.numberReplies == 0) {
+    repliesDisplay = 'none';
+  }
+
+  /* Populate json data for the mustache render */
+  const data = {
+    elementType: elementType,
+    topicDisplay: topicDisplay,
+    topic: element.topic,
+    date: convertTimestampToDate(element.timestamp),
+    text: element.text,
+    likes: element.likes,
+    id: element.id,
+    repliesDisplay: repliesDisplay,
+    numReplies: element.numberReplies,
+  };
+
+  console.log(data);
+
+  return data;
 }
 
 /**
@@ -86,4 +125,57 @@ function getReplies(idHandler) {
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
   return date.toUTCString();
+}
+
+/**
+ *  Posts to server to increment likes for a element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function incrementLikes(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $.post('/forum?id=' + id.toString() + '&action=likes');
+  const likes = parseInt($('#' + elementId + ' .likes').text());
+  $('#' + elementId + ' .likes').text(likes + 1);
+}
+
+/**
+ *  Displays the reply form for a given element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function reply(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .response-form').css('display', 'inline-block');
+}
+
+/**
+ *  Expands the replies section, fetches from server
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function expandReplies(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  const placeholder = $('#replies-' + id.toString());
+  placeholder.css('display', 'block');
+  expandForum(placeholder, id);
+  $('#' + elementId + ' .expand-button').css('display', 'none');
+  $('#' + elementId + ' .collapse-button').css('display', 'block');
+}
+
+/**
+ *  Collapses the replies section for a specific element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function collapseReplies(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#replies-' + id.toString()).empty();
+  $('#replies-' + id.toString()).css('display', 'none');
+  $('#' + elementId + ' .expand-button').css('display', 'inline-block');
+  $('#' + elementId + ' .collapse-button').css('display', 'none');
 }
