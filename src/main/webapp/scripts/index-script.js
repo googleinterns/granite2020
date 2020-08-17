@@ -3,27 +3,31 @@ import {updateBar} from './nav-bar.js';
 initPromise.then(function() {
   updatePage();
 
-  $(".sign-in").click(function(){
+  $('.sign-in').click(function() {
     onSignIn();
-  })
+  });
   auth2.isSignedIn.listen(updatePage);
+});
 
-}) 
-
-
-export function onSignIn(){
-  return signIn().then(function(){
+/**
+ * Updates page and nav bar after sign in
+ * @return {Promise} Promise which resolves after page is updated
+ */
+export function onSignIn() {
+  return signIn().then(function() {
     updatePage();
     updateBar();
   })
 }
 
-
-function updatePage(){
-  if(auth2.isSignedIn.get()){
-    $("#account-functions").css("display", "none")
+/**
+ * Updates content on webpage alone (not nav bar)
+ */
+function updatePage() {
+  if(auth2.isSignedIn.get()) {
+    $('#account-functions').css('display', 'none');
   } else {
-    $("#account-functions").css("display", "block")
+    $('#account-functions').css('display', 'block');
   }
 }
 

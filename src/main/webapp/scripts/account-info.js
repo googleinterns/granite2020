@@ -11,8 +11,8 @@ function init() {
     gapi.load('auth2', function() {
       auth2 = gapi.auth2.init();
       resolve();
-    });});
-
+    });
+  });
 }
 
 /**
