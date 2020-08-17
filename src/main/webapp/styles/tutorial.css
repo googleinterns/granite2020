@@ -1,0 +1,38 @@
+/* Individual Tutorial styling */
+
+#header h2 {
+  font-size: 170%;
+  margin-bottom: -10px;
+}
+
+#header h3 {
+  font-size: 160%;
+}
+
+#content-left h1 {
+  font-weight: bold;
+  font-size: 170%;
+}
+
+#content-right h1 {
+  font-weight: bold;
+  font-size: 170%;
+}
+
+#content-left h2 {
+  font-size: 150%;
+}
+
+#content-left h3 {
+  font-size: 130%;
+}
+
+#content-left li {
+  font-size: 120%;
+  margin-bottom: 10px;
+}
+
+#content-right iframe {
+  width: 560px;
+  height: 315px;
+}
