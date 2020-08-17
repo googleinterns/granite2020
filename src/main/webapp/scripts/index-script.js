@@ -17,14 +17,14 @@ export function onSignIn() {
   return signIn().then(function() {
     updatePage();
     updateBar();
-  })
+  });
 }
 
 /**
  * Updates content on webpage alone (not nav bar)
  */
 function updatePage() {
-  if(auth2.isSignedIn.get()) {
+  if (auth2.isSignedIn.get()) {
     $('#account-functions').css('display', 'none');
   } else {
     $('#account-functions').css('display', 'block');

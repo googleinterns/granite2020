@@ -27,7 +27,7 @@ function signIn() {
 
 /**
  * Signs out user and clear profile variable
- * @return {Promise} Promise which resolves when user 
+ * @return {Promise} Promise which resolves when user
  * signs out and profile is set to null
  */
 function signOut() {
