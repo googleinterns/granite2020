@@ -1,13 +1,16 @@
+
 import {auth2, signIn, initPromise} from './account-info.js';
 import {updateBar} from './nav-bar.js';
 initPromise.then(function() {
   updatePage();
+
 
   $('.sign-in').click(function() {
     onSignIn();
   });
   auth2.isSignedIn.listen(updatePage);
 });
+
 
 /**
  * Updates page and nav bar after sign in
@@ -20,6 +23,7 @@ export function onSignIn() {
   });
 }
 
+
 /**
  * Updates content on webpage alone (not nav bar)
  */
@@ -30,4 +34,5 @@ function updatePage() {
     $('#account-functions').css('display', 'block');
   }
 }
+
 

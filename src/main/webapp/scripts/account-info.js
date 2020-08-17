@@ -1,11 +1,14 @@
+
 let auth2;
 let profile;
 const initPromise = init();
+
 
 /**
  * Initializes the auth2 variable
  * @return {Promise} Promise which resolves when auth2 is initalized
  */
+
 function init() {
   return new Promise(function(resolve, reject) {
     gapi.load('auth2', function() {
@@ -38,3 +41,4 @@ function signOut() {
 
 
 export {auth2, profile, signIn, initPromise, signOut};
+

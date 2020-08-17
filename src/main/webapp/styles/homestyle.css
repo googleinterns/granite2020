@@ -20,6 +20,7 @@
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
+  margin-bottom: 30px;
 }
 
 #content-left iframe {
@@ -36,6 +37,7 @@
 #account-functions a {
   background-color: white;
   color: #4285f4;
+
   border: 2px solid #4285f4;
   align-content: center;
   cursor: pointer;
@@ -48,4 +50,5 @@
 #account-functions a:hover {
   background-color: #4285f4;
   color: white;
+
 }
