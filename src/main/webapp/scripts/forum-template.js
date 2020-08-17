@@ -1,3 +1,6 @@
+// Template for mustache rendering of questions and comments on the forumn.
+// Template in Javascript because the template in HTML created linter errors.
+
 const forumTemplate = '<div class="forum-element {{elementType}}">\n' +
 '<div class="info-element">\n' +
 '<p class="topic" style="display: {{topicDisplay}}">Topic: {{topic}}</p>\n' +
