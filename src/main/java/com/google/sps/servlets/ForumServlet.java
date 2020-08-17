@@ -77,7 +77,7 @@ public class ForumServlet extends HttpServlet {
         incrementProperty(ForumElement.NUMBER_REPLIES_PROPERTY, id);
       }
 
-      response.sendRedirect("/forum.html");
+      response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter);
     }
 
     if (action.equals(FILTER_PROPERTY)) {
