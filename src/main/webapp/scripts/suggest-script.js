@@ -3,13 +3,14 @@
  */
 window.onload = function() {
   document.getElementById('make-suggestion').onclick = function() {
-    makeSuggestion()};
+    makeSuggestion()
+  };
 };
 
 /**
  * Posts to server the suggestion made by the user
  *
- * Ignoring linter otherwise makeSuggestion is unsued but it is 
+ * Ignoring linter otherwise makeSuggestion is unsued but it is
  * called in tutorials.html
  */
 function makeSuggestion() {
