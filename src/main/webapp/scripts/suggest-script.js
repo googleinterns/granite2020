@@ -2,9 +2,8 @@
  * Gets executed when button is clicked
  */
 window.onload = function() {
-  document.getElementById('make-suggestion').onclick = function() {
-    makeSuggestion()
-  };
+  document.getElementById('make-suggestion').onclick = function()
+  {makeSuggestion()};
 };
 
 /**
