@@ -10,7 +10,7 @@ body {
   margin-left: 10%;
   margin-right: 10%;
   background-size: cover;
-  min-width: 80%; /*smaller than this starts cutting off */
+  min-width: 80%;
   overflow-x: scroll;
   position: absolute;
 }
