@@ -54,39 +54,3 @@ textarea::placeholder {
   font-size: 125%;
   font-family: Google Sans, sans-serif;
 }
-
-input[type=text] {
-  width: 90%;
-  border: 0.05em solid #4285f4;
-  box-sizing: border-box;
-  border-radius: 5%;
-  font-size: 115%;
-  height: 150%;
-  margin-bottom: 5%;
-  font-family: Google Sans, sans-serif;
-}
-
-input::placeholder {
-  color: #b7b7b7;
-  font-size: 115%;
-  font-family: Google Sans, sans-serif;
-}
-
-/* Submit buttons for login/signup */
-#new-suggestion-logged-out a {
-  background-color: #4285f4;
-  color: white;
-  border: 2px solid #4285f4;
-  align-content: center;
-  cursor: pointer;
-  padding: 16px 32px;
-  font-size: 130%;
-  margin-top: 20px;
-  font-family: Google Sans, sans-serif;
-  text-decoration: none;
-}
-
-#new-suggestion-logged-out a:hover {
-  background-color: white;
-  color: #4285f4;
-}

@@ -72,24 +72,34 @@ span.right {
   float: right;
 }
 
-/* Submit Buttons */
-input[type=submit] {
+/* Submit buttons for login/signup */
+#account-functions {
+  text-align: center;
+  align-content: center;
+}
+
+#account-functions h4 {
+  font-size: 120%;
+}
+
+#account-functions a {
   background-color: #4285f4;
   color: white;
   border: 2px solid #4285f4;
   align-content: center;
   cursor: pointer;
   padding: 16px 32px;
-  font-size: 130%;
-  margin-top: 20px;
+  font-size: 150%;
   font-family: Google Sans, sans-serif;
+  text-decoration: none;
 }
 
-input[type=submit]:hover {
+#account-functions a:hover {
   background-color: white;
   color: #4285f4;
 }
 
+/* general button styling */
 button {
   background-color: #4285f4;
   color: white;
@@ -97,7 +107,7 @@ button {
   align-content: center;
   cursor: pointer;
   padding: 16px 32px;
-  font-size: 130%;
+  font-size: 150%;
   margin-top: 20px;
   font-family: Google Sans, sans-serif;
 }
