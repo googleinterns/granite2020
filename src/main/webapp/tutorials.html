@@ -6,6 +6,8 @@
   <link type="text/css" rel="stylesheet" href="styles/tutorialstyle.css">
   <link rel="stylesheet" href="styles/general.css">
   <script src="scripts/login-script.js" defer></script>
+  <script src="scripts/suggest-script.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <div id="nav-placeholder"></div>
@@ -28,28 +30,25 @@
     </div>
 
     <div id="content-right">
+      
       <div id="suggestion-form">
         <div id="suggestion">
           <h4>Create a new suggestion</h4>
-          <form action="/new-suggestion" method="POST">
-            <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
-            <input type="text" id="platform" name="platform" placeholder="Your platform suggestion ..."><br>
-            <label for="addition">Additional details &amp; specific questions:</label><br>
-            <textarea rows="5" cols="30" id="addition" name="addition" placeholder="Insert additional details ..."></textarea>
-          </form>
+          <label for="platform">Platform (ex: Zoom, Facebook etc.):</label><br>
+          <textarea rows="1" cols="30" id="platform" name="platform" placeholder="Your platform suggestion ..."></textarea><br>
+          <label for="addition">Additional details &amp; specific questions:</label><br>
+          <textarea rows="5" cols="30" id="addition" name="addition" placeholder="Insert additional details ..."></textarea><br>
+          <button id="submitFormData" onclick="makeSuggestion();" value="Submit" >Submit</button>    
         </div>
 
         <div id="new-suggestion-logged-out">
           <h4>Can't find what you are looking for? Make a suggestion.</h4>
-          <form action="login.html">
-            <input type="submit" value="Login" />
-          </form>
+          <a id="suggestion" href="">Log in</a>
           <h4>Don't have an account?</h4>
-          <form action="signup.html">
-            <input type="submit" value="Sign Up" />
-          </form>
+          <a id="suggestion" href="">Sign up</a>
         </div>
       </div>
+
     </div>
   </div>
 </body>
