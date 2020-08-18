@@ -24,6 +24,13 @@ function init() {
 function signIn() {
   return auth2.signIn().then(function() {
     profile = auth2.currentUser.get().getBasicProfile();
+    var id_token = auth2.currentUser.get().getAuthResponse().id_token
+    //send id_token to server
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/account');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('idtoken=' + id_token);
+
   });
 }
 
