@@ -1,5 +1,13 @@
 package com.google.sps.servlets;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.json.gson.GsonFactory;
+
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -12,6 +20,9 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import com.google.sps.data.ForumElement;
+
+
+
 import java.io.*;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -20,13 +31,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
-import com.google.api.client.json.gson.GsonFactory;
+
 
 /** Servlet that handles forum data (questions, comments, and replies) */
 @WebServlet("/account")
@@ -36,6 +41,7 @@ public class UserDataServlet extends HttpServlet {
   private static final String EMAIL_PROPERTY = "email";
   private static final String LIKED_PROPERTY = "liked";
   private static final String COMMENT_PROPERTY = "comments";
+  private static final String IMAGE_PROPERTY = "image";
 
   private static final String DATASTORE_USER = "User";
 
@@ -82,7 +88,7 @@ public class UserDataServlet extends HttpServlet {
 
       Entity user = getUserEntity(userId);
       if(user == null){
-        addUser(userId, name, email);
+        addUser(userId, name, email, pictureUrl);
       }
 
     } else {
@@ -103,7 +109,7 @@ public class UserDataServlet extends HttpServlet {
     return entity;
   }
 
-  private void addUser(String id, String name, String email){
+  private void addUser(String id, String name, String email, String pictureUrl){
     Entity userEntity = new Entity(DATASTORE_USER);
 
     userEntity.setProperty(ID_PROPERTY, id);
@@ -111,6 +117,7 @@ public class UserDataServlet extends HttpServlet {
     userEntity.setProperty(EMAIL_PROPERTY, email);
     userEntity.setProperty(LIKED_PROPERTY, convertToJson(new ArrayList<String>()));
     userEntity.setProperty(COMMENT_PROPERTY, convertToJson(new ArrayList<String>()));
+    userEntity.setProperty(IMAGE_PROPERTY, pictureUrl);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(userEntity);
 
