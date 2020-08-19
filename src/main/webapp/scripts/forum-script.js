@@ -4,6 +4,12 @@ $( document ).ready( function() {
   getForum();
   getFilters();
   $('#search-button').click(search);
+  $('#search-button').keyup(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      search();
+    }
+  });
 });
 
 /**
@@ -132,7 +138,8 @@ function createElementData(element) {
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
-  return date.toUTCString();
+  const indexOfYear = 16; // index before time so it is not included
+  return (date.toUTCString()).substring(0, indexOfYear);
 }
 
 /**

@@ -39,6 +39,7 @@ input[type=submit] {
   padding: 8px 16px;
   font-size: 80%;
   font-family: Google Sans, sans-serif;
+  outline: none;
 }
 
 button:hover {
@@ -65,7 +66,6 @@ input[type=text] {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  height: 30px;
   border: 2px solid black;
 }
 
@@ -165,4 +165,16 @@ i {
 .replies,
 #filters {
   clear: both;
+}
+
+/* Formatting for search bar */
+
+#search-input {
+  margin-top: 20px;
+  border-radius: 20px;
+  outline: none;
+}
+
+#search-button {
+  border-radius: 35px;
 }
