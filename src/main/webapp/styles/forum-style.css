@@ -130,6 +130,7 @@ input[type=text] {
 i {
   color: #4285f4;
   cursor: pointer;
+  font-size: 30px;
 }
 
 .replies {
