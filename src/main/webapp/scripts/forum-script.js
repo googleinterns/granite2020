@@ -1,6 +1,6 @@
 import {forumTemplate} from './forum-template.js';
 
-$( document ).ready( function () {
+$( document ).ready( function() {
   getForum();
   getFilters();
   $('#search-button').click(search);
@@ -37,6 +37,7 @@ function getFilters() {
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {long} id the long that identifies the parent of the forum
  *  elements
+ *  @param {String} search search text from user if applicable
  */
 function expandForum(placeholder, id, search) {
   placeholder.empty();
@@ -208,11 +209,11 @@ function search() {
  */
 function containsSearch(text, search) {
   const stopWords = ['a', 'to', 'and', 'how', 'the', 'when', 'what', 'why',
-      'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
+    'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
   const lowerText = text.toLowerCase();
   const lowerSearch = search.toLowerCase();
-  let words = lowerSearch.split(' ')
-  words = words.filter( function (word) {
+  let words = lowerSearch.split(' ');
+  words = words.filter( function(word) {
     return ((!stopWords.includes(word)) && (lowerText.includes(word)));
   });
   if (words.length > 0) {
