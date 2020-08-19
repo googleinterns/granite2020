@@ -1,7 +1,16 @@
 import {forumTemplate} from './forum-template.js';
 
-$( document ).ready( getFilters );
-$( document ).ready( getForum );
+$( document ).ready( function() {
+  getForum();
+  getFilters();
+  $('#search-button').click(search);
+  $('#search-button').keyup(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      search();
+    }
+  });
+});
 
 /**
  *  Populates forum-placeholder with forum data
@@ -9,7 +18,7 @@ $( document ).ready( getForum );
 function getForum() {
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id);
+  expandForum(placeholder, id, null);
 }
 
 /**
@@ -34,13 +43,20 @@ function getFilters() {
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {long} id the long that identifies the parent of the forum
  *  elements
+ *  @param {String} search search text from user if applicable
  */
-function expandForum(placeholder, id) {
+function expandForum(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
         for (let i = 0; i < elements.length; i++) {
-          createForumElement(placeholder, elements[i]);
+          if (search) {
+            if (containsSearch(elements[i].text, search)) {
+              createForumElement(placeholder, elements[i]);
+            }
+          } else {
+            createForumElement(placeholder, elements[i]);
+          }
         }
       });
 }
@@ -111,8 +127,6 @@ function createElementData(element) {
     numReplies: element.numberReplies,
   };
 
-  console.log(data);
-
   return data;
 }
 
@@ -124,7 +138,8 @@ function createElementData(element) {
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
-  return date.toUTCString();
+  const indexOfYear = 16; // index before time so it is not included
+  return (date.toUTCString()).substring(0, indexOfYear);
 }
 
 /**
@@ -161,7 +176,7 @@ function expandReplies(idHandler) {
   const elementId = 'element-' + id.toString();
   const placeholder = $('#replies-' + id.toString());
   placeholder.css('display', 'block');
-  expandForum(placeholder, id);
+  expandForum(placeholder, id, null);
   $('#' + elementId + ' .expand-button').css('display', 'none');
   $('#' + elementId + ' .collapse-button').css('display', 'block');
 }
@@ -178,4 +193,38 @@ function collapseReplies(idHandler) {
   $('#replies-' + id.toString()).css('display', 'none');
   $('#' + elementId + ' .expand-button').css('display', 'inline-block');
   $('#' + elementId + ' .collapse-button').css('display', 'none');
+}
+
+/**
+ *  Onclick handler for a user searching to reload forum with search parameter
+ */
+function search() {
+  const search = $('#search-input').val();
+  $('#search-input').val('');
+  const id = -1;
+  const placeholder = $('#forum-placeholder');
+  expandForum(placeholder, id, search);
+}
+
+/**
+ *  Returns whether a word of the search is contained with in the text
+ *
+ *  @param {String} text contents of a question
+ *  @param {String} search contents of the user search
+ *
+ *  @return {Boolean} whether there is a word of the search within the text
+ */
+function containsSearch(text, search) {
+  const stopWords = ['a', 'to', 'and', 'how', 'the', 'when', 'what', 'why',
+    'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
+  const lowerText = text.toLowerCase();
+  const lowerSearch = search.toLowerCase();
+  let words = lowerSearch.split(' ');
+  words = words.filter( function(word) {
+    return ((!stopWords.includes(word)) && (lowerText.includes(word)));
+  });
+  if (words.length > 0) {
+    return true;
+  }
+  return false;
 }
