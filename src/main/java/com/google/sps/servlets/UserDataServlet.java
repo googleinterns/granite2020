@@ -39,9 +39,12 @@ public class UserDataServlet extends HttpServlet {
 
   private static final String DATASTORE_USER = "User";
 
+  private String userId = "";
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+    response.setContentType("text/plain");
+    response.getWriter().println(userId);
   }
 
   @Override
@@ -69,7 +72,7 @@ public class UserDataServlet extends HttpServlet {
     if (idToken != null) {
       Payload payload = idToken.getPayload();
 
-      String userId = payload.getSubject();
+      userId = payload.getSubject();
       String email = payload.getEmail();
       String name = (String) payload.get("name");
       String pictureUrl = (String) payload.get("picture");
@@ -80,7 +83,6 @@ public class UserDataServlet extends HttpServlet {
       Entity user = getUserEntity(userId);
       if(user == null){
         addUser(userId, name, email);
-        System.out.println("user added!");
       }
 
     } else {
