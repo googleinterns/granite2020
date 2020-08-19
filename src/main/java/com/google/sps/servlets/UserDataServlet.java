@@ -1,13 +1,12 @@
 package com.google.sps.servlets;
 
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.json.gson.GsonFactory;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -20,9 +19,6 @@ import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import com.google.sps.data.ForumElement;
-
-
-
 import java.io.*;
 import java.util.Collections;
 import java.util.ArrayList;
