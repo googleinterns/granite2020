@@ -26,7 +26,7 @@ function signIn() {
     profile = auth2.currentUser.get().getBasicProfile();
     const idToken = auth2.currentUser.get().getAuthResponse().id_token;
     // send idToken to server
-    let xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open('POST', '/account');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('idtoken=' + idToken);
