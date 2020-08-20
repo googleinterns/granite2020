@@ -4,25 +4,17 @@ import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
-import com.google.sps.data.ForumElement;
 import java.io.*;
-import java.util.Collections;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +42,7 @@ public class UserDataServlet extends HttpServlet {
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String idTokenString = request.getParameter("idtoken");
     UrlFetchTransport transport = new UrlFetchTransport();
 
@@ -58,17 +50,17 @@ public class UserDataServlet extends HttpServlet {
 
 
 
-    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
-    // Specify the CLIENT_ID of the app that accesses the backend:
-    .setAudience(Collections.singletonList("757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
-    // Or, if multiple clients access the backend:
-    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-    .build();
+    GoogleIdTokenVerifier verifier = 
+        new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
+            .setAudience(
+                Collections.singletonList(
+                  "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+            .build();
 
     GoogleIdToken idToken;
-    try{
+    try {
       idToken = verifier.verify(idTokenString);
-    } catch(Exception e) {
+    } catch (GeneralSecurityException e) {
       idToken= null;
     }
     if (idToken != null) {
@@ -83,7 +75,7 @@ public class UserDataServlet extends HttpServlet {
       String givenName = (String) payload.get("given_name");
 
       Entity user = getUserEntity(userId);
-      if(user == null){
+      if (user == null) {
         addUser(userId, name, email, pictureUrl);
       }
 
@@ -93,7 +85,7 @@ public class UserDataServlet extends HttpServlet {
 
   }
 
-  private Entity getUserEntity(String id){
+  private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
         new Query("User")
@@ -105,7 +97,7 @@ public class UserDataServlet extends HttpServlet {
     return entity;
   }
 
-  private void addUser(String id, String name, String email, String pictureUrl){
+  private void addUser(String id, String name, String email, String pictureUrl) {
     Entity userEntity = new Entity(DATASTORE_USER);
 
     userEntity.setProperty(ID_PROPERTY, id);
@@ -119,13 +111,9 @@ public class UserDataServlet extends HttpServlet {
 
   }
 
-  private String convertToJson(ArrayList<String> arrayList){
+  private String convertToJson(ArrayList<String> arrayList) {
     Gson gson = new Gson();
     String json = gson.toJson(arrayList);
     return json;
-
   }
-
-
-
 }
