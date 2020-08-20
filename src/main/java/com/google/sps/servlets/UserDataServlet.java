@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /** Servlet that handles forum data (questions, comments, and replies) */
 @WebServlet("/account")
 public class UserDataServlet extends HttpServlet {
@@ -48,7 +47,7 @@ public class UserDataServlet extends HttpServlet {
 
     GsonFactory gsonFactory = new GsonFactory();
 
-    GoogleIdTokenVerifier verifier = 
+    GoogleIdTokenVerifier verifier =
         new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
             .setAudience(
                 Collections.singletonList(
@@ -104,7 +103,6 @@ public class UserDataServlet extends HttpServlet {
     userEntity.setProperty(IMAGE_PROPERTY, pictureUrl);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(userEntity);
-
   }
 
   private String convertToJson(ArrayList<String> arrayList) {
