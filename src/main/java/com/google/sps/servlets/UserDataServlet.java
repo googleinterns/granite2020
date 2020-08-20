@@ -48,20 +48,18 @@ public class UserDataServlet extends HttpServlet {
 
     GsonFactory gsonFactory = new GsonFactory();
 
-
-
     GoogleIdTokenVerifier verifier = 
         new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
             .setAudience(
                 Collections.singletonList(
-                  "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+                    "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
             .build();
 
     GoogleIdToken idToken;
     try {
       idToken = verifier.verify(idTokenString);
     } catch (GeneralSecurityException e) {
-      idToken= null;
+      idToken = null;
     }
     if (idToken != null) {
       Payload payload = idToken.getPayload();
@@ -78,11 +76,9 @@ public class UserDataServlet extends HttpServlet {
       if (user == null) {
         addUser(userId, name, email, pictureUrl);
       }
-
     } else {
       System.out.println("Invalid ID token.");
     }
-
   }
 
   private Entity getUserEntity(String id) {
