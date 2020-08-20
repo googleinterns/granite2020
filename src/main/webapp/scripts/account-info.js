@@ -21,7 +21,7 @@ function init() {
  * @return {Promise} Promise which resolves when profile is set
  */
 function signIn() {
-  var auth2 = gapi.auth2.getAuthInstance();
+  const auth2 = gapi.auth2.getAuthInstance();
   return auth2.signIn().then(function() {
     profile = auth2.currentUser.get().getBasicProfile();
     const idToken = auth2.currentUser.get().getAuthResponse().id_token;
@@ -39,7 +39,7 @@ function signIn() {
  * signs out and profile is set to null
  */
 function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
+  const auth2 = gapi.auth2.getAuthInstance();
   return auth2.signOut().then(function() {
     auth2.currentUser.get().disconnect();
     auth2.disconnect();
