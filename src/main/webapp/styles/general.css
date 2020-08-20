@@ -1,12 +1,19 @@
 /* General styling for all pages on webpage */
+:root {
+  --gfont:  Google Sans, sans-serif;
+  --backColor: white;
+  --mainColor: #4285f4;
+  --placeholder: #b7b7b7;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: white;
+  background-color: var(--backColor);
   color: black;
-  font-family: Google Sans, sans-serif;
+  font-family: var(--gfont);
   margin-left: 10%;
   margin-right: 10%;
   background-size: cover;
@@ -20,7 +27,7 @@ h1 {
   font-weight: bold;
   margin-top: 2%;
   margin-bottom: 0%;
-  color: #4285f4;
+  color: var(--mainColor);
 }
 
 h2 {
@@ -39,7 +46,7 @@ h4 {
 }
 
 .highlight {
-  color: #4285f4;
+  color: var(--mainColor);
   font-weight: bold;
 }
 
@@ -54,14 +61,14 @@ h4 {
 }
 
 .sign-in {
-  background-color: #4285f4;
-  color: white;
-  border: 2px solid #4285f4;
+  background-color: var(--mainColor);
+  color: var(--backColor);
+  border: medium solid var(--mainColor);
   align-content: center;
   cursor: pointer;
-  padding: 16px 32px;
+  padding: 2% 8%;
   font-size: 150%;
-  font-family: Google Sans, sans-serif;
+  font-family: var(--gfont);
   text-decoration: none;
   height: 20%;
   width: 40%;
@@ -70,34 +77,36 @@ h4 {
 }
 
 .sign-in:hover {
-  background-color: white;
-  color: #4285f4;
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 /* Navigation Bar Styling */
 #nav-placeholder {
-  margin-bottom: 30px;
+  margin-bottom: 5%;
+  margin-top: 2%;
 }
 
 #nav-placeholder a {
   display: block;
-  color: #4285f4;
-  background-color: white;
-  border: 2px solid white;
+  color: var(--mainColor);
+  background-color: var(--backColor);
+  border: medium solid var(--backColor);
   text-align: center;
-  padding: 14px 16px;
+  /* Keeping padding below in px otherwise formatting gets messed up */
+  padding: 14px 20px;
   text-decoration: none;
   font-size: 130%;
 }
 
 #nav-placeholder a:hover {
-  background-color: #4285f4;
-  color: white;
+  background-color: var(--mainColor);
+  color: var(--backColor);
 }
 
 #account-functions a:hover {
-  background-color: white;
-  color: #4285f4;
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 span.left {
@@ -110,20 +119,18 @@ span.right {
 
 /* general button styling */
 button {
-  background-color: #4285f4;
-  color: white;
-  border: 2px solid #4285f4;
+  background-color: var(--mainColor);
+  color: var(--backColor);
+  border: medium solid var(--mainColor);
   align-content: center;
   cursor: pointer;
-  padding: 16px 32px;
   font-size: 150%;
-  margin-top: 20px;
-  font-family: Google Sans, sans-serif;
+  font-family: var(--gfont);
 }
 
 button:hover {
-  background-color: white;
-  color: #4285f4;
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 /* General two column design */

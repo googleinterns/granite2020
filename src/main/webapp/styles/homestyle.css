@@ -28,11 +28,7 @@
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
-  margin-bottom: 10px;
-}
-
-#for-whom ul {
-  margin-bottom: 40px;
+  margin-bottom: 5%;
 }
 
 #content-left iframe {
