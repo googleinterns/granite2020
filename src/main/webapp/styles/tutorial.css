@@ -33,9 +33,10 @@
   font-size: 130%;
 }
 
-#content-left li {
-  font-size: 120%;
-  margin-bottom: 10px;
+#content-left a {
+  font-size: 130%;
+  margin-bottom: 2%;
+  display: inline-block;
 }
 
 #content-right iframe {
