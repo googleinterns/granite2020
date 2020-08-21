@@ -11,11 +11,9 @@ iframe {
 
 /* Formatting for create new question */
 
-#new-question {
-  margin-left: 30px;
-}
-
+#new-question,
 #new-question-logged-out {
+  margin-left: 30px;
   display: none;
 }
 

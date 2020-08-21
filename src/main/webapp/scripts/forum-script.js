@@ -1,21 +1,11 @@
 import {forumTemplate} from './forum-template.js';
-import {auth2, signIn, initPromise} from './account-info.js';
+import {signIn, initPromise} from './account-info.js';
 
 let userId;
 let userLiked;
 let userFilter = 'all';
 
 $( document ).ready( function() {
-  getForum();
-  getFilters();
-  $('#primary-button').click(postQuestion);
-  $('#search-button').click(search);
-  $('#search-button').keyup(function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      search();
-    }
-  });
   initPromise.then(function() {
     console.log(initPromise);
     
@@ -24,8 +14,11 @@ $( document ).ready( function() {
         location.reload();
       });
     });
-
+    const auth2 = gapi.auth2.getAuthInstance();
+    console.log(auth2);
+    console.log(auth2.isSignedIn.get());
     if (auth2.isSignedIn.get()) {
+      console.log('signedIn');
       userId = auth2.currentUser.get().getAuthResponse().id_token;
       console.log('UserId ' + userId);
 
@@ -47,6 +40,17 @@ $( document ).ready( function() {
       $('#filter-user-input').css('display', 'none');
     }
 
+  });
+
+  getForum();
+  getFilters();
+  $('#primary-button').click(postQuestion);
+  $('#search-button').click(search);
+  $('#search-button').keyup(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      search();
+    }
   });
 });
 

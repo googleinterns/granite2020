@@ -30,6 +30,7 @@ export function onSignIn() {
 function updatePage() {
   const auth2 = gapi.auth2.getAuthInstance();
   if (auth2.isSignedIn.get()) {
+    console.log('signedIn');
     $('#account-functions').css('display', 'none');
   } else {
     $('#account-functions').css('display', 'block');

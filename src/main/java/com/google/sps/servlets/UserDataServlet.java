@@ -54,12 +54,12 @@ public class UserDataServlet extends HttpServlet {
     if (action.equals(LIKED_PROPERTY)) {
       response.setContentType("application/json;");
       response.getWriter().println((String) entity.getProperty(LIKED_PROPERTY));
-    } 
+    }
     
   }
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String action = request.getParameter(ACTION_PROPERTY);
 
     if (action.equals(LIKED_PROPERTY)) {
@@ -79,6 +79,8 @@ public class UserDataServlet extends HttpServlet {
     if (action.equals(NEW_ACCOUNT_PROPERTY)) {
       String idTokenString = request.getParameter("idtoken");
       UrlFetchTransport transport = new UrlFetchTransport();
+
+      GsonFactory gsonFactory = new GsonFactory();
 
       GoogleIdTokenVerifier verifier =
           new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
@@ -151,3 +153,4 @@ public class UserDataServlet extends HttpServlet {
     ArrayList<String> liked = gson.fromJson(json, listType);
     return liked;
   }
+}
