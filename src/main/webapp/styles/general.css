@@ -94,7 +94,7 @@ h4 {
   border: medium solid var(--backColor);
   text-align: center;
 
-  /* Keeping padding below in px otherwise formatting gets messed up */
+  /* Keeping padding below in px for formatting */
   padding: 14px 20px;
   text-decoration: none;
   font-size: 130%;
