@@ -55,11 +55,6 @@
   text-align: center;
 }
 
-.tech-button:hover {
-  background-color: var(--backColor);
-  color: var(--mainColor);
-}
-
 #buttons iframe {
   width: 90%;
   height: 100%;

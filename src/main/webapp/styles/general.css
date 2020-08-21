@@ -1,6 +1,6 @@
 /* General styling for all pages on webpage */
 :root {
-  --gfont:  Google Sans, sans-serif;
+  --gfont: google sans, sans-serif;
   --backColor: white;
   --mainColor: #4285f4;
   --placeholder: #b7b7b7;
@@ -93,6 +93,7 @@ h4 {
   background-color: var(--backColor);
   border: medium solid var(--backColor);
   text-align: center;
+  
   /* Keeping padding below in px otherwise formatting gets messed up */
   padding: 14px 20px;
   text-decoration: none;
