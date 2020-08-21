@@ -118,7 +118,7 @@ span.right {
 }
 
 /* general button styling */
-button {
+.button {
   background-color: var(--mainColor);
   color: var(--backColor);
   border: medium solid var(--mainColor);
@@ -128,7 +128,7 @@ button {
   font-family: var(--gfont);
 }
 
-button:hover {
+.button:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
 }
