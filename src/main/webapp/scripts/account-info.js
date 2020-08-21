@@ -31,8 +31,7 @@ function signIn() {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/account');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send('idtoken=' + id_token);
-    xhr.send('action=newAccount');
+    xhr.send('action=newAccount&idtoken=' + id_token);
 
   });
 }
