@@ -1,5 +1,7 @@
 import {forumTemplate} from './forum-template.js';
 import {signIn, initPromise} from './account-info.js';
+import {updateBar} from './nav-bar.js';
+import {initPromise} from './account-info.js';
 
 let userId;
 let userLiked;
@@ -54,6 +56,16 @@ $( document ).ready( function() {
   });
 });
 
+
+initPromise.then(function(){
+  updatePage();
+  gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
+
+})
+
+function updatePage() {
+  updateBar();
+}
 /**
  *  Populates forum-placeholder with forum data
  */
