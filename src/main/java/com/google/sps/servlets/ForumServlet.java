@@ -62,6 +62,7 @@ public class ForumServlet extends HttpServlet {
     if (action.equals(REPLY_PROPERTY)) {
       /* Adds new forum element */
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
+      String userId = request.getParameter(ForumElement.USER_ID_PROPERTY);
 
       /* Obtains the topic if the element is a question with no parentId */
       String topic = "none";
@@ -70,7 +71,7 @@ public class ForumServlet extends HttpServlet {
       }
 
       String text = request.getParameter(ForumElement.TEXT_PROPERTY);
-      addForumEntity(id, topic, text);
+      addForumEntity(id, topic, text, userId);
 
       /* Increments the replies of the parent if there is a parent */
       if (id != -1) {
@@ -84,10 +85,27 @@ public class ForumServlet extends HttpServlet {
       /* Gets the new filter preferences */
       String topic = request.getParameter(ForumElement.TOPIC_PROPERTY);
       String sort = request.getParameter(SORT_PROPERTY);
+      String user = request.getParameter(ForumElement.USER_ID_PROPERTY);
       topicFilter = topic;
       sortFilter = sort;
-      response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter);
+      response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter + "&userId=" + user);
     }
+
+    if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {
+      long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
+      Entity entity = getEntity(id);
+      entity.setProperty(ForumElement.ACCEPTED_PROPERTY, true);
+    }
+  }
+
+  private Entity getEntity(long id) {
+    Key key = KeyFactory.createKey("ForumElement", id);
+    Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, key);
+    Query query = new Query("ForumElement").setFilter(filter);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    Entity entity = results.asSingleEntity();
+    return entity;
   }
 
   /** Gets a list of forum elements from Datastore with id given */
@@ -134,21 +152,15 @@ public class ForumServlet extends HttpServlet {
 
   /** Increments property of element given id in Datastore - used for likes and replies */
   private void incrementProperty(String property, long id) {
-    Key key = KeyFactory.createKey("ForumElement", id);
-    Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, key);
-    Query query = new Query("ForumElement").setFilter(filter);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-
-    for (Entity entity : results.asIterable()) {
-      long num = (long) entity.getProperty(property);
-      entity.setProperty(property, num + 1);
-      datastore.put(entity);
-    }
+    Entity entity = getEntity(id);
+    long num = (long) entity.getProperty(property);
+    entity.setProperty(property, num + 1);
+    datastore.put(entity);
   }
 
   /** Creates new entitiy given parentId, topic, and text and stores in Datastore */
-  private void addForumEntity(long parentId, String topic, String text) {
+  private void addForumEntity(long parentId, String topic, String text, String userId) {
     Entity forumEntity = new Entity("ForumElement");
     forumEntity.setProperty(ForumElement.PARENT_ID_PROPERTY, parentId);
     forumEntity.setProperty(ForumElement.TOPIC_PROPERTY, topic);
@@ -157,9 +169,25 @@ public class ForumServlet extends HttpServlet {
     forumEntity.setProperty(ForumElement.LIKES_PROPERTY, 0);
     forumEntity.setProperty(ForumElement.TEXT_PROPERTY, text);
     forumEntity.setProperty(ForumElement.NUMBER_REPLIES_PROPERTY, 0);
-    // TODO: Include User data
+    forumEntity.setProperty(ForumElement.USER_ID_PROPERTY, userId);
+    if (parentId == -1) {
+      forumEntity.setProperty(ForumElement.QUESTION_ID_PROPERTY, -1);
+    } else {
+      forumEntity.setProperty(ForumElement.QUESTION_ID_PROPERTY, getQuestionId(parentId));
+    }
+    forumEntity.setProperty(ForumElement.ACCEPTED_PROPERTY, false);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(forumEntity);
+  }
+
+  private long getQuestionId(long id) {
+    Entity entity = getEntity(id);
+    long questionId = (long) entity.getProperty(ForumElement.QUESTION_ID_PROPERTY);
+    if (questionId == -1) {
+      return id;
+    } else {
+      return questionId;
+    }
   }
 }

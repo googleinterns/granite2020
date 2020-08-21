@@ -11,7 +11,9 @@ const initPromise = init();
 function init() {
   return new Promise(function(resolve, reject) {
     gapi.load('auth2', function() {
-      auth2 = gapi.auth2.init();
+      auth2 = gapi.auth2.init({
+        client_id: '757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com'
+      });
       resolve();
     });
   });
@@ -30,6 +32,7 @@ function signIn() {
     xhr.open('POST', '/account');
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('idtoken=' + id_token);
+    xhr.send('action=newAccount');
 
   });
 }

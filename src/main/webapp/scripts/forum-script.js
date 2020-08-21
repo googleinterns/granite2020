@@ -1,14 +1,52 @@
 import {forumTemplate} from './forum-template.js';
+import {auth2, signIn, initPromise} from './account-info.js';
+
+let userId;
+let userLiked;
+let userFilter = 'all';
 
 $( document ).ready( function() {
   getForum();
   getFilters();
+  $('#primary-button').click(postQuestion);
   $('#search-button').click(search);
   $('#search-button').keyup(function(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
       search();
     }
+  });
+  initPromise.then(function() {
+    console.log(initPromise);
+    
+    $('.sign-in').click(function() {
+      signIn().then(function() {
+        location.reload();
+      });
+    });
+
+    if (auth2.isSignedIn.get()) {
+      userId = auth2.currentUser.get().getAuthResponse().id_token;
+      console.log('UserId ' + userId);
+
+      fetch('/account?action=liked&userId=' + userId).then((response) => (response.json())).then((json) => {
+        console.log(json);
+      });
+
+      $('#new-question').css('display', 'inline-block');
+      $('#new-question-logged-out').css('display', 'none');
+      $('.reply-button').css('display', 'inline-block');
+      $('#filter-user-label').css('display', 'inline-block');
+      $('#filter-user-input').css('display', 'inline-block');
+    }
+    else {
+      $('#new-question').css('display', 'none');
+      $('#new-question-logged-out').css('display', 'inline-block');
+      $('.reply-button').css('display', 'none');
+      $('#filter-user-label').css('display', 'none');
+      $('#filter-user-input').css('display', 'none');
+    }
+
   });
 });
 
@@ -34,6 +72,11 @@ function getFilters() {
     const sort = urlParams.get('sort');
     $('#filter-sort-input').val(sort).change();
   }
+  if (urlParams.has('userId')) {
+    const user = urlParams.get('userId');
+    $('#filter-user-input').val(user).change();
+    userFilter = user;
+  }
 }
 
 /**
@@ -54,7 +97,7 @@ function expandForum(placeholder, id, search) {
             if (containsSearch(elements[i].text, search)) {
               createForumElement(placeholder, elements[i]);
             }
-          } else {
+          } else if (userFilter ==='all' || elements[i].userId === userId) {
             createForumElement(placeholder, elements[i]);
           }
         }
@@ -86,9 +129,8 @@ function createForumElement(placeholder, element) {
   $('#' + elementId + ' .reply-button').click(element.id, reply);
   $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
   $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
-  // TODO: Make posting a reply not a form that redirects the page but just
-  // adds to the current page
-  // TODO: create a method for accepting an answer, once user data is inputted
+  $('#' + elementId + ' .response-button').click(element.id, postComment);
+  $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
 }
 
 /**
@@ -103,9 +145,15 @@ function createElementData(element) {
    * displayed */
   let elementType = 'comment';
   let topicDisplay = 'none';
+  let acceptedDisplay = 'none';
+  let acceptButtonDisplay = 'none';
   if (element.parentId == -1) {
     elementType = 'question';
     topicDisplay = 'inline-block';
+  } else if (element.accepted) {
+    acceptedDisplay = 'inline-block';
+  } else if (element.userId === userId) {
+    acceptButtonDisplay = 'inline-block';
   }
 
   /* If the element has replies, display expand button if not no display */
@@ -118,8 +166,11 @@ function createElementData(element) {
   const data = {
     elementType: elementType,
     topicDisplay: topicDisplay,
+    acceptedDisplay: acceptedDisplay,
+    acceptButtonDisplay: acceptButtonDisplay,
     topic: element.topic,
     date: convertTimestampToDate(element.timestamp),
+    userName: getUserName(element.userId),
     text: element.text,
     likes: element.likes,
     id: element.id,
@@ -151,6 +202,7 @@ function incrementLikes(idHandler) {
   const id = idHandler.data;
   const elementId = 'element-' + id.toString();
   $.post('/forum?id=' + id.toString() + '&action=likes');
+  $.post('/account?action=liked&id=' + userId + '&elementId=' + id.toString());
   const likes = parseInt($('#' + elementId + ' .likes').text());
   $('#' + elementId + ' .likes').text(likes + 1);
 }
@@ -227,4 +279,38 @@ function containsSearch(text, search) {
     return true;
   }
   return false;
+}
+
+function postQuestion() {
+  const text = $('#question-form #text-input').val();
+  const topic = $('#question-form #topic-input').val();
+  $('#question-form #topic-input').val('Zoom');
+  $('#question-form #text-input').val('');
+  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic + '&userId=' + userId).then(function() {
+    getForum();
+  });
+}
+
+function postComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  const text = $('#' + elementId + ' .text-input').val();
+  $('#' + elementId + ' .text-input').val('');
+  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text + '&userId=' + userId).then(function() {
+    expandReplies(idHandler);
+  });
+}
+
+function getUserName(userId) {
+  fetch('/account?action=name&userId=' + userId).then(function(response) {
+    return response;
+  });
+}
+
+function acceptComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .accept-button').css('display', 'none');
+  $('#' + elementId + ' .accepted').css('display', 'inline-block');
+  $.post('/forum?id=' + id.toString() + '&action=accepted');
 }

@@ -18,8 +18,10 @@ import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.sps.data.ForumElement;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,59 +40,89 @@ public class UserDataServlet extends HttpServlet {
   private static final String LIKED_PROPERTY = "liked";
   private static final String COMMENT_PROPERTY = "comments";
   private static final String IMAGE_PROPERTY = "image";
-
   private static final String DATASTORE_USER = "User";
+  private static final String ACTION_PROPERTY = "action";
+  private static final String NEW_ACCOUNT_PROPERTY = "newAccount";
+  private static final String ELEMENT_ID_PROPERTY = "elementId";
 
   private String userId = "";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/plain");
-    response.getWriter().println(userId);
+    String action = request.getParameter(ACTION_PROPERTY);
+    String id = request.getParameter(ID_PROPERTY);
+    Entity entity = getUserEntity(id);
+
+    if (action.equals(NAME_PROPERTY)) {
+      response.setContentType("text/plain");
+      response.getWriter().println((String) entity.getProperty(NAME_PROPERTY));
+    }
+
+    if (action.equals(LIKED_PROPERTY)) {
+      response.setContentType("application/json;");
+      response.getWriter().println((String) entity.getProperty(LIKED_PROPERTY));
+    } 
+    
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException  {
-    String idTokenString = request.getParameter("idtoken");
-    UrlFetchTransport transport = new UrlFetchTransport();
+    String action = request.getParameter(ACTION_PROPERTY);
 
-    GsonFactory gsonFactory = new GsonFactory();
-
-
-
-    GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
-    // Specify the CLIENT_ID of the app that accesses the backend:
-    .setAudience(Collections.singletonList("757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
-    // Or, if multiple clients access the backend:
-    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-    .build();
-
-    GoogleIdToken idToken;
-    try{
-      idToken = verifier.verify(idTokenString);
-    } catch(Exception e) {
-      idToken= null;
+    if (action.equals(LIKED_PROPERTY)) {
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      String id = request.getParameter(ID_PROPERTY);
+      String elementId = request.getParameter(ELEMENT_ID_PROPERTY);
+      Entity entity = getUserEntity(id);
+      String json = (String) entity.getProperty(LIKED_PROPERTY);
+      ArrayList<String> liked = convertToArrayList(json);
+      liked.add(elementId);
+      String newJson = convertToJson(liked);
+      entity.setProperty(LIKED_PROPERTY, newJson);
+      datastore.put(entity);
     }
-    if (idToken != null) {
-      Payload payload = idToken.getPayload();
 
-      userId = payload.getSubject();
-      String email = payload.getEmail();
-      String name = (String) payload.get("name");
-      String pictureUrl = (String) payload.get("picture");
-      String locale = (String) payload.get("locale");
-      String familyName = (String) payload.get("family_name");
-      String givenName = (String) payload.get("given_name");
+    if (action.equals(NEW_ACCOUNT_PROPERTY)) {
+      String idTokenString = request.getParameter("idtoken");
+      UrlFetchTransport transport = new UrlFetchTransport();
 
-      Entity user = getUserEntity(userId);
-      if(user == null){
-        addUser(userId, name, email, pictureUrl);
+      GsonFactory gsonFactory = new GsonFactory();
+
+
+
+      GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
+      // Specify the CLIENT_ID of the app that accesses the backend:
+      .setAudience(Collections.singletonList("757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+      // Or, if multiple clients access the backend:
+      //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+      .build();
+
+      GoogleIdToken idToken;
+      try{
+        idToken = verifier.verify(idTokenString);
+      } catch(Exception e) {
+        idToken= null;
       }
+      if (idToken != null) {
+        Payload payload = idToken.getPayload();
 
-    } else {
-      System.out.println("Invalid ID token.");
+        userId = payload.getSubject();
+        String email = payload.getEmail();
+        String name = (String) payload.get("name");
+        String pictureUrl = (String) payload.get("picture");
+        String locale = (String) payload.get("locale");
+        String familyName = (String) payload.get("family_name");
+        String givenName = (String) payload.get("given_name");
+
+        Entity user = getUserEntity(userId);
+        if(user == null){
+          addUser(userId, name, email, pictureUrl);
+        }
+
+      } else {
+        System.out.println("Invalid ID token.");
+      }
     }
-
   }
 
   private Entity getUserEntity(String id){
@@ -126,6 +158,11 @@ public class UserDataServlet extends HttpServlet {
 
   }
 
-
+  private ArrayList<String> convertToArrayList(String json){
+    Gson gson = new Gson();
+    Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+    ArrayList<String> liked = gson.fromJson(json, listType);
+    return liked;
+  }
 
 }

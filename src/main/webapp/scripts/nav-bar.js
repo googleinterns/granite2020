@@ -4,6 +4,7 @@ import {auth2, signOut, signIn, initPromise} from './account-info.js';
 $(document).ready(function() {
   $('#nav-placeholder').load('../nav.html', updateBar);
   initPromise.then(function() {
+    updateBar();
     auth2.isSignedIn.listen(updateBar);
   });
 });
