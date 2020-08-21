@@ -1,5 +1,18 @@
+import {updateBar} from './nav-bar.js';
+import {initPromise} from './account-info.js';
+
+
 $( document ).ready( getForum );
 
+initPromise.then(function(){
+  updatePage();
+  gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
+
+})
+
+function updatePage() {
+  updateBar();
+}
 /**
  *  Populates forum-placeholder with forum data
  */
