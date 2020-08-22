@@ -1,15 +1,15 @@
-var gmeetData = {
-  toolName: "Google Meet",
-  toolDescription: "Video Communication Service",
-  toolLink: "https://meet.google.com/",
-  usefulLinks: [
-  {   linkTitle: "Google Meet Tools",
+const gmeetData = {
+  toolName: 'Google Meet',
+  toolDescription: 'Video Communication Service',
+  toolLink: 'https://meet.google.com/',
+    usefulLinks: [
+    {linkTitle: 'Google Meet Tools',
       links: [
-        { url: "https://support.google.com/meet/?hl=en#topic=7306097",
-          linkName: "Google Meet help center"
+        {url: 'https://support.google.com/meet/?hl=en#topic=7306097',
+          linkName: 'Google Meet help center'
         },
-        { url: "https://support.google.com/a/users/answer/9300131?hl=en",
-          linkName: "Google Meet cheat sheet"
+        {url: 'https://support.google.com/a/users/answer/9300131?hl=en',
+          linkName: 'Google Meet cheat sheet'
         }
       ]
   },
