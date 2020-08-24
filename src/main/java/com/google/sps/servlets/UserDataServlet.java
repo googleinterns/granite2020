@@ -37,25 +37,29 @@ public class UserDataServlet extends HttpServlet {
   private static final String ACTION_PROPERTY = "action";
   private static final String NEW_ACCOUNT_PROPERTY = "newAccount";
   private static final String ELEMENT_ID_PROPERTY = "elementId";
+  private static final String ID_TOKEN_PROPERTY = "idtoken";
 
   private String userId = "";
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String action = request.getParameter(ACTION_PROPERTY);
-    String id = request.getParameter(ID_PROPERTY);
-    Entity entity = getUserEntity(id);
+    String userId = request.getParameter(ID_PROPERTY);
+
+    Entity entity = getUserEntity(userId);
 
     if (action.equals(NAME_PROPERTY)) {
-      response.setContentType("text/plain");
-      response.getWriter().println((String) entity.getProperty(NAME_PROPERTY));
+      response.setContentType("application/json;");
+      Gson gson = new Gson();
+      String name = (String) entity.getProperty(NAME_PROPERTY);
+      response.getWriter().println(gson.toJson(name));
     }
 
     if (action.equals(LIKED_PROPERTY)) {
       response.setContentType("application/json;");
-      response.getWriter().println((String) entity.getProperty(LIKED_PROPERTY));
+      String liked = (String) entity.getProperty(LIKED_PROPERTY);
+      response.getWriter().println(liked);
     }
-    
   }
 
   @Override
@@ -63,42 +67,26 @@ public class UserDataServlet extends HttpServlet {
     String action = request.getParameter(ACTION_PROPERTY);
 
     if (action.equals(LIKED_PROPERTY)) {
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      String id = request.getParameter(ID_PROPERTY);
       String elementId = request.getParameter(ELEMENT_ID_PROPERTY);
-      Entity entity = getUserEntity(id);
+      String userId = request.getParameter(ID_PROPERTY);
+      Entity entity = getUserEntity(userId);
+
       String json = (String) entity.getProperty(LIKED_PROPERTY);
       ArrayList<String> liked = convertToArrayList(json);
       liked.add(elementId);
       String newJson = convertToJson(liked);
       entity.setProperty(LIKED_PROPERTY, newJson);
+
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(entity);
     }
 
-
     if (action.equals(NEW_ACCOUNT_PROPERTY)) {
-      String idTokenString = request.getParameter("idtoken");
-      UrlFetchTransport transport = new UrlFetchTransport();
-
-      GsonFactory gsonFactory = new GsonFactory();
-
-      GoogleIdTokenVerifier verifier =
-          new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
-              .setAudience(
-                  Collections.singletonList(
-                      "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
-              .build();
-
-      GoogleIdToken idToken;
-      try {
-        idToken = verifier.verify(idTokenString);
-      } catch (GeneralSecurityException e) {
-        idToken = null;
-      }
+      String idTokenString = request.getParameter(ID_TOKEN_PROPERTY);
+      GoogleIdToken idToken = getGoogleIdToken(idTokenString);
       if (idToken != null) {
         Payload payload = idToken.getPayload();
-
-        userId = payload.getSubject();
+        String userId = payload.getSubject();
         String email = payload.getEmail();
         String name = (String) payload.get("name");
         String pictureUrl = (String) payload.get("picture");
@@ -111,9 +99,31 @@ public class UserDataServlet extends HttpServlet {
           addUser(userId, name, email, pictureUrl);
         }
       } else {
-        System.out.println("Invalid ID token.");
+        System.out.println("Invalid ID token for POST.");
       }
     }
+  }
+
+  private GoogleIdToken getGoogleIdToken(String idTokenString) {
+    UrlFetchTransport transport = new UrlFetchTransport();
+    GsonFactory gsonFactory = new GsonFactory();
+
+    GoogleIdTokenVerifier verifier =
+        new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
+            .setAudience(
+                Collections.singletonList(
+                    "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+            .build();
+
+    GoogleIdToken idToken;
+
+    try {
+      idToken = verifier.verify(idTokenString);
+    } catch (Exception e) {
+      idToken = null;
+    }
+    
+    return idToken;
   }
 
   private Entity getUserEntity(String id) {

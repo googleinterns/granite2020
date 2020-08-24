@@ -24,6 +24,7 @@ function signIn() {
   const auth2 = gapi.auth2.getAuthInstance();
   return auth2.signIn().then(function() {
     profile = auth2.currentUser.get().getBasicProfile();
+    console.log(profile);
     const idToken = auth2.currentUser.get().getAuthResponse().id_token;
     // send idToken to server
     const xhr = new XMLHttpRequest();

@@ -1,70 +1,55 @@
 import {forumTemplate} from './forum-template.js';
 import {signIn, initPromise} from './account-info.js';
 import {updateBar} from './nav-bar.js';
-import {initPromise} from './account-info.js';
 
+let signedIn;
 let userId;
 let userLiked;
 let userFilter = 'all';
 
 $( document ).ready( function() {
-  initPromise.then(function() {
-    console.log(initPromise);
-    
+  initPromise.then(function(){
+    updatePage();
+    gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
     $('.sign-in').click(function() {
       signIn().then(function() {
-        location.reload();
+        updatePage();
       });
     });
-    const auth2 = gapi.auth2.getAuthInstance();
-    console.log(auth2);
-    console.log(auth2.isSignedIn.get());
-    if (auth2.isSignedIn.get()) {
-      console.log('signedIn');
-      userId = auth2.currentUser.get().getAuthResponse().id_token;
-      console.log('UserId ' + userId);
-
-      fetch('/account?action=liked&userId=' + userId).then((response) => (response.json())).then((json) => {
-        console.log(json);
-      });
-
-      $('#new-question').css('display', 'inline-block');
-      $('#new-question-logged-out').css('display', 'none');
-      $('.reply-button').css('display', 'inline-block');
-      $('#filter-user-label').css('display', 'inline-block');
-      $('#filter-user-input').css('display', 'inline-block');
-    }
-    else {
-      $('#new-question').css('display', 'none');
-      $('#new-question-logged-out').css('display', 'inline-block');
-      $('.reply-button').css('display', 'none');
-      $('#filter-user-label').css('display', 'none');
-      $('#filter-user-input').css('display', 'none');
-    }
-
   });
-
-  getForum();
+  createSearch();
   getFilters();
   $('#primary-button').click(postQuestion);
-  $('#search-button').click(search);
-  $('#search-button').keyup(function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      search();
-    }
-  });
 });
 
 
-initPromise.then(function(){
-  updatePage();
-  gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
-
-})
-
 function updatePage() {
-  updateBar();
+  updateBar();  
+  const auth2 = gapi.auth2.getAuthInstance();
+
+  if (auth2.isSignedIn.get()) {
+    signedIn = true;
+    userId = auth2.currentUser.get().getBasicProfile().getId();
+
+    fetch('/account?action=liked&id=' + userId).then((response) => (response.json())).then((json) => {
+      userLiked = json;
+    }).then(getForum);
+
+    $('#new-question').css('display', 'inline-block');
+    $('#new-question-logged-out').css('display', 'none');
+    $('.reply-button').css('display', 'inline-block');
+    $('#filter-user-label').css('display', 'inline-block');
+    $('#filter-user-input').css('display', 'inline-block');
+  }
+  else {
+    signedIn = false;
+    getForum();
+    $('#new-question').css('display', 'none');
+    $('#new-question-logged-out').css('display', 'inline-block');
+    $('.reply-button').css('display', 'none');
+    $('#filter-user-label').css('display', 'none');
+    $('#filter-user-input').css('display', 'none');
+  }
 }
 /**
  *  Populates forum-placeholder with forum data
@@ -134,19 +119,27 @@ function createForumElement(placeholder, element) {
   const elementId = 'element-' + element.id.toString();
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
+  
+  let data;
+  fetch('/account?action=name&id=' + element.userId).then((response) => (response.json())).then((json) => {
+    data = createElementData(element, json);
+  }).then(function() {
+    const rendered = Mustache.render(forumTemplate, data);
+    elementDiv.html(rendered);
 
-  const data = createElementData(element);
+    /* Add onclick functionality to mustache render */
+    if (signedIn && !userLiked.includes(element.id.toString())) {
+      $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
+      $('#' + elementId + ' .like-button').css('color', '#4285f4');
+      $('#' + elementId + ' .like-button').css('cursor', 'pointer');
+    }
 
-  const rendered = Mustache.render(forumTemplate, data);
-  elementDiv.html(rendered);
-
-  /* Add onclick functionality to mustache render */
-  $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
-  $('#' + elementId + ' .reply-button').click(element.id, reply);
-  $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
-  $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
-  $('#' + elementId + ' .response-button').click(element.id, postComment);
-  $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+    $('#' + elementId + ' .reply-button').click(element.id, reply);
+    $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
+    $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
+    $('#' + elementId + ' .response-button').click(element.id, postComment);
+    $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+  });
 }
 
 /**
@@ -156,7 +149,7 @@ function createForumElement(placeholder, element) {
  *  the element
  *  @return {Object} a populated json object
  */
-function createElementData(element) {
+function createElementData(element, userName) {
   /* If element is a comment or question and thus whether the topic should be
    * displayed */
   let elementType = 'comment';
@@ -186,7 +179,7 @@ function createElementData(element) {
     acceptButtonDisplay: acceptButtonDisplay,
     topic: element.topic,
     date: convertTimestampToDate(element.timestamp),
-    userName: getUserName(element.userId),
+    userName: userName,
     text: element.text,
     likes: element.likes,
     id: element.id,
@@ -195,6 +188,16 @@ function createElementData(element) {
   };
 
   return data;
+}
+
+function createSearch() {
+  $('#search-button').click(search);
+  $('#search-button').keyup(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      search();
+    }
+  });
 }
 
 /**
@@ -221,6 +224,9 @@ function incrementLikes(idHandler) {
   $.post('/account?action=liked&id=' + userId + '&elementId=' + id.toString());
   const likes = parseInt($('#' + elementId + ' .likes').text());
   $('#' + elementId + ' .likes').text(likes + 1);
+  $('#' + elementId + ' .like-button').css('color', 'black');
+  $('#' + elementId + ' .like-button').css('cursor', 'auto');
+  $('#' + elementId + ' .like-button').off('click');
 }
 
 /**
@@ -314,12 +320,6 @@ function postComment(idHandler) {
   $('#' + elementId + ' .text-input').val('');
   $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text + '&userId=' + userId).then(function() {
     expandReplies(idHandler);
-  });
-}
-
-function getUserName(userId) {
-  fetch('/account?action=name&userId=' + userId).then(function(response) {
-    return response;
   });
 }
 
