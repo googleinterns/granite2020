@@ -46,7 +46,7 @@ function getFilters() {
  *  elements
  */
 function expandForum(placeholder, id) {
-  // Call expandForumWithSearch with the search parameter as null so that 
+  // Call expandForumWithSearch with the search parameter as null so that
   // no search is considered
   expandForumWithSearch(placeholder, id, null);
 }
@@ -157,7 +157,7 @@ function convertTimestampToDate(timestamp) {
   const month = date.getMonth() + 1; // Add one because the month is zero index
   const year = date.getFullYear();
   const dateString = month + '/' + day + '/' + year;
-  return (date.toUTCString()).substring(0, indexOfYear);
+  return dateString;
 }
 
 /**
