@@ -19,7 +19,7 @@ $( document ).ready( function() {
 function getForum() {
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id, null);
+  expandForum(placeholder, id);
 }
 
 /**
@@ -156,8 +156,7 @@ function convertTimestampToDate(timestamp) {
   const day = date.getDate();
   const month = date.getMonth() + 1; // Add one because the month is zero index
   const year = date.getFullYear();
-  const dateString = month + '/' + day + '/' + year;
-  return dateString;
+  return (month + '/' + day + '/' + year);
 }
 
 /**
@@ -194,7 +193,7 @@ function expandReplies(idHandler) {
   const elementId = 'element-' + id.toString();
   const placeholder = $('#replies-' + id.toString());
   placeholder.css('display', 'block');
-  expandForum(placeholder, id, null);
+  expandForum(placeholder, id);
   $('#' + elementId + ' .expand-button').css('display', 'none');
   $('#' + elementId + ' .collapse-button').css('display', 'block');
 }
@@ -221,7 +220,7 @@ function search() {
   $('#search-input').val('');
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id, search);
+  expandForumWithSearch(placeholder, id, search);
 }
 
 /**
