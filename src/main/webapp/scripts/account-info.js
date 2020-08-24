@@ -12,11 +12,11 @@ var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+var SCOPES = "https://www.googleapis.com/auth/calendar";
 
 function init() {
   return new Promise(function(resolve, reject) {
-    gapi.load('auth2', function() {
+    gapi.load('client:auth2', function() {
       gapi.auth2.init({
         apiKey: API_KEY,
         clientId: CLIENT_ID,
