@@ -14,7 +14,8 @@ window.onload = function() {
 function makeSuggestion() {
   const platformElement = document.getElementById('platform');
   const additionElement = document.getElementById('addition');
-  $.post('/new-suggestion?platform=' + platformElement.value + '&addition=' + additionElement.value);
+  $.post('/new-suggestion?platform=' + platformElement.value + 
+    '&addition=' + additionElement.value);
   platformElement.value = '';
   additionElement.value = '';
 }
