@@ -5,8 +5,8 @@ const tutorialTemplate =
 '<div id="header">\n' +
 '<h1>{{toolName}}</h1>\n' +
 '<h2>{{toolDescription}}</h2>\n' +
-'<a href="{{toolLink}}" target="_blank" rel="noopener">{{toolName}} \
-Link</a>\n' +
+'<a href="{{toolLink}}" target="_blank" rel="noopener"\
+>{{toolName}} Link</a>\n' +
 '</div>\n' +
 '<div id="content">\n' +
 '<div id="content-left">\n' +
@@ -24,7 +24,7 @@ Link</a>\n' +
 '<h1>Useful Videos</h1>\n' +
 '{{#usefulVids}}\n' +
 '<h2>{{linkTitle}}</h2>\n' +
-'<iframe class="tutorials-vid" src="{{vidLink}}" allow="accelerometer; \
+'<iframe class="tutorials-vid" src="{{vidLink}}" allow="accelerometer;\
 autoplay; encrypted-media; gyroscope; picture-in-picture" \
 allowfullscreen></iframe>\n' +
 '{{/usefulVids}}\n' +

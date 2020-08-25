@@ -40,7 +40,7 @@ const facebookData = {
         {url: 'https://buffer.com/resources/facebook-reactions/#:~:text=To%20add%20a%20Reaction%2C%20hold,%2C%20Wow%2C%20Sad%20or%20Angry.',
           linkName: 'Adding a reaction on Facebook',
         },
-      ]
+      ],
     },
 
     {linkTitle: 'Adding Friends',
