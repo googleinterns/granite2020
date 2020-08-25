@@ -25,7 +25,8 @@ const tutorialTemplate =
 '<h1>Useful Videos</h1>\n' +
 '{{#usefulVids}}\n' +
 '<h2>{{linkTitle}}</h2>\n' +
-'<iframe class="tutorials-vid" src="{{vidLink}}" allow="accelerometer; autoplay;\n' +
+'<iframe class="tutorials-vid" src="{{vidLink}}"\n' +
+'allow="accelerometer; autoplay;\n' +
 'encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n' +
 '{{/usefulVids}}\n' +
 '</div>\n' +
