@@ -8,6 +8,7 @@ let userLiked;
 let userFilter = 'all';
 
 $( document ).ready( function() {
+  // Add user data to forum
   initPromise.then(function(){
     updatePage();
     gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
@@ -17,20 +18,30 @@ $( document ).ready( function() {
       });
     });
   });
+
+  // Add search functionality
   createSearch();
+
+  // Populates filters
   getFilters();
+
+  // Add functionality to post question
   $('#primary-button').click(postQuestion);
 });
 
-
+/**
+ *  Updates page based on whether the user is signed in
+ */
 function updatePage() {
   updateBar();  
   const auth2 = gapi.auth2.getAuthInstance();
 
   if (auth2.isSignedIn.get()) {
+    // The user is signed in
     signedIn = true;
     userId = auth2.currentUser.get().getBasicProfile().getId();
 
+    // Get user likes and generate forum
     fetch('/account?action=liked&id=' + userId).then((response) => (response.json())).then((json) => {
       userLiked = json;
     }).then(getForum);
@@ -42,6 +53,7 @@ function updatePage() {
     $('#filter-user-input').css('display', 'inline-block');
   }
   else {
+    // The user is not signed in
     signedIn = false;
     getForum();
     $('#new-question').css('display', 'none');
@@ -51,6 +63,7 @@ function updatePage() {
     $('#filter-user-input').css('display', 'none');
   }
 }
+
 /**
  *  Populates forum-placeholder with forum data
  */
@@ -190,6 +203,9 @@ function createElementData(element, userName) {
   return data;
 }
 
+/**
+ *  Creates a search functionality when page is loaded
+ */
 function createSearch() {
   $('#search-button').click(search);
   $('#search-button').keyup(function(event) {
@@ -303,6 +319,9 @@ function containsSearch(text, search) {
   return false;
 }
 
+/**
+ *  Post question to datastore
+ */
 function postQuestion() {
   const text = $('#question-form #text-input').val();
   const topic = $('#question-form #topic-input').val();
@@ -313,6 +332,11 @@ function postQuestion() {
   });
 }
 
+/**
+ *  Post comment basedd on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
 function postComment(idHandler) {
   const id = idHandler.data;
   const elementId = 'element-' + id.toString();
@@ -323,6 +347,11 @@ function postComment(idHandler) {
   });
 }
 
+/**
+ *  Accepts comment based on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
 function acceptComment(idHandler) {
   const id = idHandler.data;
   const elementId = 'element-' + id.toString();

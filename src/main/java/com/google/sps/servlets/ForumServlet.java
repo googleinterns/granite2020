@@ -181,6 +181,7 @@ public class ForumServlet extends HttpServlet {
     datastore.put(forumEntity);
   }
 
+  /** Gets the question id (the id of the parent question) for a forum element */
   private long getQuestionId(long id) {
     Entity entity = getEntity(id);
     long questionId = (long) entity.getProperty(ForumElement.QUESTION_ID_PROPERTY);

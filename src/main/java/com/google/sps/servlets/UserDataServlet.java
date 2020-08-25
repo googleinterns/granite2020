@@ -41,6 +41,7 @@ public class UserDataServlet extends HttpServlet {
 
   private String userId = "";
 
+  /** Get request to the Datastore and responds with user property given the id input */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String action = request.getParameter(ACTION_PROPERTY);
@@ -49,6 +50,7 @@ public class UserDataServlet extends HttpServlet {
     Entity entity = getUserEntity(userId);
 
     if (action.equals(NAME_PROPERTY)) {
+      // Get user name based on id
       response.setContentType("application/json;");
       Gson gson = new Gson();
       String name = (String) entity.getProperty(NAME_PROPERTY);
@@ -56,17 +58,20 @@ public class UserDataServlet extends HttpServlet {
     }
 
     if (action.equals(LIKED_PROPERTY)) {
+      // Get user likes based on id
       response.setContentType("application/json;");
       String liked = (String) entity.getProperty(LIKED_PROPERTY);
       response.getWriter().println(liked);
     }
   }
 
+  /** Post request to the Datastore to post new user or update likes */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String action = request.getParameter(ACTION_PROPERTY);
 
     if (action.equals(LIKED_PROPERTY)) {
+      // Adds to user likes
       String elementId = request.getParameter(ELEMENT_ID_PROPERTY);
       String userId = request.getParameter(ID_PROPERTY);
       Entity entity = getUserEntity(userId);
@@ -82,6 +87,7 @@ public class UserDataServlet extends HttpServlet {
     }
 
     if (action.equals(NEW_ACCOUNT_PROPERTY)) {
+      // Adds new user account
       String idTokenString = request.getParameter(ID_TOKEN_PROPERTY);
       GoogleIdToken idToken = getGoogleIdToken(idTokenString);
       if (idToken != null) {
@@ -104,6 +110,7 @@ public class UserDataServlet extends HttpServlet {
     }
   }
 
+  /** Gets Google Id Token based on idtoken string */
   private GoogleIdToken getGoogleIdToken(String idTokenString) {
     UrlFetchTransport transport = new UrlFetchTransport();
     GsonFactory gsonFactory = new GsonFactory();
@@ -126,6 +133,7 @@ public class UserDataServlet extends HttpServlet {
     return idToken;
   }
 
+  /** Gets user entity based on user id */
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
@@ -138,6 +146,7 @@ public class UserDataServlet extends HttpServlet {
     return entity;
   }
 
+  /** Adds user to datastore based on properties */
   private void addUser(String id, String name, String email, String pictureUrl) {
     Entity userEntity = new Entity(DATASTORE_USER);
 
@@ -151,12 +160,14 @@ public class UserDataServlet extends HttpServlet {
     datastore.put(userEntity);
   }
 
+  /** Convert arrayList to Json */
   private String convertToJson(ArrayList<String> arrayList) {
     Gson gson = new Gson();
     String json = gson.toJson(arrayList);
     return json;
   }
 
+  /** Convert Json to arrayList */
   private ArrayList<String> convertToArrayList(String json) {
     Gson gson = new Gson();
     Type listType = new TypeToken<ArrayList<String>>(){}.getType();
