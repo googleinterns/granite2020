@@ -1,4 +1,3 @@
-/* Individual Tutorial styling */
 
 #header h2 {
   font-size: 170%;
@@ -11,6 +10,13 @@
 
 #header a {
   font-size: 140%;
+  text-decoration: none;
+  color: var(--gRed);
+  font-weight: bold;
+}
+
+#header a:hover {
+  text-decoration: underline;
 }
 
 #content-left h1 {
@@ -33,13 +39,22 @@
   font-size: 130%;
 }
 
+#content-left li {
+  list-style-type: none;
+}
 #content-left a {
   font-size: 130%;
   margin-bottom: 2%;
   display: inline-block;
+  text-decoration: none;
+  color: var(--mainColor);
+}
+
+#content-left a:hover {
+  text-decoration: underline;
 }
 
 #content-right iframe {
-  width: 90%;
+  width: 100%;
   height: 50%;
 }

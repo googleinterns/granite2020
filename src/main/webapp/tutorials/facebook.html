@@ -5,52 +5,15 @@
   <title>Seniors Connect</title>
   <link rel="stylesheet" href="../styles/general.css">
   <link rel="stylesheet" href="../styles/tutorial.css">
+  <link rel="import" href="../nav.html" />
   <script src="scripts/login-script.js" defer></script>
+  <script src="https://unpkg.com/mustache@latest"></script>
+  <script type="module" src="../scripts/tutorial-scripts/tutorial-template.js"></script>
+  <script type="module" src="../scripts/tutorial-scripts/facebook-template.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <div id="nav-placeholder"> </div>
-
-  <div id="header">
-    <h1>Facebook</h1>
-    <h2>Social Media Tool</h2>
-    <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
-  </div>
-
-  <div id="content">
-    <div id="content-left">
-      <h1>Useful Links</h1>
-      
-      <h3> Getting started with facebook </h3>
-      <a href="https://www.wikihow.com/Use-Facebook" target="_blank" rel="noopener">How to Use Facebook</a>
-
-      <h3>Privacy</h3>
-      <a href="https://www.lifewire.com/steps-to-make-facebook-private-2654416" target="_blank" rel="noopener">How to make your Facebook account private</a>
-      
-      <h3>Posting &#38; Sharing on Facebook</h3>
-      <a href="https://www.wikihow.com/Post-to-Facebook" target="_blank" rel="noopener">How to Post to Facebook</a>
-      <a href="https://www.facebook.com/help/170116376402147" target="_blank" rel="noopener">How do I share something on Facebook?</a>
-
-      <h3>Commenting &#38; Reacting on Facebook</h3>
-      <a href="https://www.facebook.com/help/187302991320347" target="_blank" rel="noopener">How do I comment on something I see on Facebook?</a>
-      <a href="https://buffer.com/resources/facebook-reactions/#:~:text=To%20add%20a%20Reaction%2C%20hold,%2C%20Wow%2C%20Sad%20or%20Angry." target="_blank" rel="noopener">Adding a reaction on Facebook</a>
-      
-      <h3>Adding Friends</h3>
-      <a href="https://www.facebook.com/help/246750422356731/?helpref=hc_fnav" target="_blank" rel="noopener">Questions on adding friends</a>
-      <a href="https://www.facebook.com/help/273948399619967/?helpref=hc_fnav" target="_blank" rel="noopener">Control Who Can Friend and Follow You</a>
-      <a href="https://www.facebook.com/help/1000976436606344/?helpref=hc_fnav" target="_blank" rel="noopener">Unfriending or Blocking Someone</a>
-
-    </div>
-
-    <div id="content-right">
-      <h1>Useful Videos</h1>
-      <h2>How to use Facebook</h2>
-      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/fGcHOcj1SQA" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <h2>Facebook basics tutorial for beginners &#38; seniors</h2>
-      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/wkVf8BlE8rI" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <h2>How to share Facebook posts</h2>
-      <iframe class="tutorials-vid" src="https://www.youtube.com/embed/zvFaJ7aIh1w" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-  </div>
-
+  <div id="facebook-placeholder"></div>
 </body>
 </html>
