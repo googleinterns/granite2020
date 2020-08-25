@@ -152,6 +152,25 @@ public class ForumServlet extends HttpServlet {
 
   /** Increments property of element given id in Datastore - used for likes and replies */
   private void incrementProperty(String property, long id) {
+    Key key = KeyFactory.createKey("ForumElement", id);
+    Filter filter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY, FilterOperator.EQUAL, key);
+    Query query = new Query("ForumElement").setFilter(filter);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      long num = (long) entity.getProperty(property);
+      entity.setProperty(property, num + 1);
+      datastore.put(entity);
+    }
+
+    Query query =
+        new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
+    return query;
+  }
+
+  /** Increments property of element given id in Datastore - used for likes and replies */
+  private void incrementProperty(String property, long id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity entity = getEntity(id);
     long num = (long) entity.getProperty(property);
@@ -176,6 +195,7 @@ public class ForumServlet extends HttpServlet {
       forumEntity.setProperty(ForumElement.QUESTION_ID_PROPERTY, getQuestionId(parentId));
     }
     forumEntity.setProperty(ForumElement.ACCEPTED_PROPERTY, false);
+
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(forumEntity);
