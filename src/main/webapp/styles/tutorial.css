@@ -15,6 +15,14 @@
   font-weight: bold;
 }
 
+#content-left a {
+  font-size: 130%;
+  margin-bottom: 2%;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--mainColor);
+}
+
 #header a:hover {
   text-decoration: underline;
 }
@@ -41,13 +49,6 @@
 
 #content-left li {
   list-style-type: none;
-}
-#content-left a {
-  font-size: 130%;
-  margin-bottom: 2%;
-  display: inline-block;
-  text-decoration: none;
-  color: var(--mainColor);
 }
 
 #content-left a:hover {
