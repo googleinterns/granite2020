@@ -7,10 +7,12 @@ const gmeetData = {
   usefulLinks: [
     {linkTitle: 'Google Meet Tools',
       links: [
-        {url: 'https://support.google.com/meet/?hl=en#topic=7306097',
+        {
+          url: 'https://support.google.com/meet/?hl=en#topic=7306097',
           linkName: 'Google Meet help center',
         },
-        {url: 'https://support.google.com/a/users/answer/9300131?hl=en',
+        {
+          url: 'https://support.google.com/a/users/answer/9300131?hl=en',
           linkName: 'Google Meet cheat sheet',
         },
       ],

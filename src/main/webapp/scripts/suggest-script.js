@@ -2,9 +2,7 @@
  * Gets executed when button is clicked
  */
 window.onload = function() {
-  document.getElementById('make-suggestion').onclick = function() {
-    makeSuggestion();
-  };
+  document.getElementById('make-suggestion').onclick = makeSuggestion;
 };
 
 /**
@@ -14,11 +12,9 @@ window.onload = function() {
  * called in tutorials.html
  */
 function makeSuggestion() {
-  const platElem = document.getElementById('platform').value;
-  const addElem = document.getElementById('addition').value;
-  $.post('/new-suggestion?platform=' + platElem + '&addition=' + addElem);
-
-  // clears fields after submission
-  document.getElementById('platform').value = '';
-  document.getElementById('addition').value = '';
+  const platformElement = document.getElementById('platform');
+  const additionElement = document.getElementById('addition');
+  $.post('/new-suggestion?platform=' + platformElement.value + '&addition=' + additionElement.value);
+  platformElement.value = '';
+  additionElement.value = '';
 }
