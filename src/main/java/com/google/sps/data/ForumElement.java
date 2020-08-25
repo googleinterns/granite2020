@@ -61,6 +61,7 @@ public final class ForumElement {
     long questionId = (long) entity.getProperty(QUESTION_ID_PROPERTY);
     boolean accepted = (boolean) entity.getProperty(ACCEPTED_PROPERTY);
 
-    return new ForumElement(id, parentId, topic, timestamp, likes, text, numberReplies, userId, questionId, accepted);
+    return new ForumElement(
+        id, parentId, topic, timestamp, likes, text, numberReplies, userId, questionId, accepted);
   }
 }

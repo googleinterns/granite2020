@@ -12,11 +12,8 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.sps.data.ForumElement;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.Collections;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.servlet.annotation.WebServlet;
@@ -129,7 +126,7 @@ public class UserDataServlet extends HttpServlet {
     } catch (Exception e) {
       idToken = null;
     }
-    
+
     return idToken;
   }
 
@@ -170,7 +167,7 @@ public class UserDataServlet extends HttpServlet {
   /** Convert Json to arrayList */
   private ArrayList<String> convertToArrayList(String json) {
     Gson gson = new Gson();
-    Type listType = new TypeToken<ArrayList<String>>(){}.getType();
+    Type listType = new TypeToken<ArrayList<String>>() {}.getType();
     ArrayList<String> liked = gson.fromJson(json, listType);
     return liked;
   }

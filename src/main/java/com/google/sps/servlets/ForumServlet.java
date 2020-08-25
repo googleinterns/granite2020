@@ -88,7 +88,8 @@ public class ForumServlet extends HttpServlet {
       String user = request.getParameter(ForumElement.USER_ID_PROPERTY);
       topicFilter = topic;
       sortFilter = sort;
-      response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter + "&userId=" + user);
+      response.sendRedirect(
+          "/forum.html?topic=" + topicFilter + "&sort=" + sortFilter + "&userId=" + user);
     }
 
     if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {

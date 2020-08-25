@@ -4,7 +4,8 @@
 const forumTemplate = '<div class="forum-element {{elementType}}">\n' +
 '<div class="info-element">\n' +
 '<p class="topic" style="display: {{topicDisplay}}">Topic: {{topic}}</p>\n' +
-'<p class="accepted" style="display: {{acceptedDisplay}}">Accepted Answer</p>\n' +
+'<p class="accepted" style="display: {{acceptedDisplay}}">Accepted Answer' +
+'</p>\n' +
 '<button class="accept-button" style="display: {{acceptButtonDisplay}}">' +
 'Accept Answer</button>\n' +
 '<p class="date">{{date}}</p>\n' +
