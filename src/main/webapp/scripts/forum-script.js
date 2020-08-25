@@ -94,21 +94,6 @@ function getFilters() {
 }
 
 /**
- *  Sets value of select if there are set filters from the url parameters
- */
-function getFilters() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('topic')) {
-    const topic = urlParams.get('topic');
-    $('#filter-topic-input').val(topic).change();
-  }
-  if (urlParams.has('sort')) {
-    const sort = urlParams.get('sort');
-    $('#filter-sort-input').val(sort).change();
-  }
-}
-
-/**
  *  Populates the replies for a forum element with the given id
  *  in the placeholder given
  *

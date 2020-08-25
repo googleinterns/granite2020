@@ -197,7 +197,6 @@ public class ForumServlet extends HttpServlet {
     }
     forumEntity.setProperty(ForumElement.ACCEPTED_PROPERTY, false);
 
-
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(forumEntity);
   }
