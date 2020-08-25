@@ -13,7 +13,7 @@ const gmeetData = {
         {url: 'https://support.google.com/a/users/answer/9300131?hl=en',
           linkName: 'Google Meet cheat sheet',
         },
-      ]
+      ],
     },
 
     {linkTitle: 'Starting',
@@ -27,39 +27,39 @@ const gmeetData = {
         {url: 'https://support.google.com/meet/answer/9303164?hl=en&amp;ref_topic=7192926',
           linkName: 'Add or remove people from a Google Meet video meeting',
         },
-      ]
+      ],
     },
 
     {linkTitle: 'Video & Audio Settings',
       links: [
         {url: 'https://support.google.com/meet/answer/9302964?hl=en&amp;ref_topic=7294099',
-          linkName: 'Change your computer’s video and audio settings'
+          linkName: 'Change your computer’s video and audio settings',
         },
         {url: 'https://support.google.com/meet/answer/9584655?hl=en&amp;ref_topic=7294099',
           linkName: 'Change your mobile camera or audio for Meet',
         },
-      ]
+      ],
     },
 
     {linkTitle: 'Meeting Settings',
       links: [
         {url: 'https://support.google.com/meet/answer/9292748?hl=en&amp;ref_topic=7290350',
-          linkName: 'How to view people in the meeting'
+          linkName: 'How to view people in the meeting',
         },
         {url: 'https://support.google.com/meet/answer/7501121?hl=en&amp;ref_topic=7290350',
-          linkName: 'Pin, mute, or remove Google Meet participants'
+          linkName: 'Pin, mute, or remove Google Meet participants',
         },
         {url: 'https://support.google.com/meet/answer/9300310?hl=en&amp;ref_topic=7290350',
-          linkName: 'Use captions in a video meeting'
+          linkName: 'Use captions in a video meeting',
         },
         {url: 'https://support.google.com/meet/answer/9308856?hl=en&amp;ref_topic=7290350',
-          linkName: 'Present during a video meeting'
+          linkName: 'Present during a video meeting',
         },
         {url: 'https://support.google.com/meet/answer/7290353?hl=en&amp;ref_topic=7290350',
           linkName: 'View meeting details and attachments',
         },
-      ]
-    }
+      ],
+    },
   ],
 
   usefulVids: [
