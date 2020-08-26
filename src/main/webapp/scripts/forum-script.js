@@ -43,7 +43,7 @@ function updatePage() {
 
     // Get user likes and generate forum
     fetch('/account?action=liked&id=' + userId).then((response) =>
-        (response.json())).then((json) => {
+      (response.json())).then((json) => {
       userLiked = json;
     }).then(getForum);
 
@@ -132,10 +132,10 @@ function createForumElement(placeholder, element) {
   const elementId = 'element-' + element.id.toString();
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
-  
+
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
-      (response.json())).then((json) => {
+    (response.json())).then((json) => {
     data = createElementData(element, json);
   }).then(function() {
     const rendered = Mustache.render(forumTemplate, data);
@@ -161,6 +161,7 @@ function createForumElement(placeholder, element) {
  *
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
+ *  @param {String} userName the name of the user who posted the element
  *  @return {Object} a populated json object
  */
 function createElementData(element, userName) {
