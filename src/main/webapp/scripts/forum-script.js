@@ -9,7 +9,7 @@ let userFilter = 'all';
 
 $( document ).ready( function() {
   // Add user data to forum
-  initPromise.then(function(){
+  initPromise.then(function() {
     updatePage();
     gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
     $('.sign-in').click(function() {
@@ -33,7 +33,7 @@ $( document ).ready( function() {
  *  Updates page based on whether the user is signed in
  */
 function updatePage() {
-  updateBar();  
+  updateBar();
   const auth2 = gapi.auth2.getAuthInstance();
 
   if (auth2.isSignedIn.get()) {
@@ -42,7 +42,8 @@ function updatePage() {
     userId = auth2.currentUser.get().getBasicProfile().getId();
 
     // Get user likes and generate forum
-    fetch('/account?action=liked&id=' + userId).then((response) => (response.json())).then((json) => {
+    fetch('/account?action=liked&id=' + userId).then((response) =>
+        (response.json())).then((json) => {
       userLiked = json;
     }).then(getForum);
 
@@ -51,8 +52,7 @@ function updatePage() {
     $('.reply-button').css('display', 'inline-block');
     $('#filter-user-label').css('display', 'inline-block');
     $('#filter-user-input').css('display', 'inline-block');
-  }
-  else {
+  } else {
     // The user is not signed in
     signedIn = false;
     getForum();
@@ -134,7 +134,8 @@ function createForumElement(placeholder, element) {
   placeholder.append(elementDiv);
   
   let data;
-  fetch('/account?action=name&id=' + element.userId).then((response) => (response.json())).then((json) => {
+  fetch('/account?action=name&id=' + element.userId).then((response) =>
+      (response.json())).then((json) => {
     data = createElementData(element, json);
   }).then(function() {
     const rendered = Mustache.render(forumTemplate, data);
@@ -327,7 +328,8 @@ function postQuestion() {
   const topic = $('#question-form #topic-input').val();
   $('#question-form #topic-input').val('Zoom');
   $('#question-form #text-input').val('');
-  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic + '&userId=' + userId).then(function() {
+  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic +
+      '&userId=' + userId).then(function() {
     getForum();
   });
 }
@@ -342,7 +344,8 @@ function postComment(idHandler) {
   const elementId = 'element-' + id.toString();
   const text = $('#' + elementId + ' .text-input').val();
   $('#' + elementId + ' .text-input').val('');
-  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text + '&userId=' + userId).then(function() {
+  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
+      '&userId=' + userId).then(function() {
     expandReplies(idHandler);
   });
 }
