@@ -4,13 +4,7 @@ $( document ).ready( function() {
   getForum();
   getFilters();
   $('#search-button').click(search);
-  $('#search-button').keyup(function(event) {
-    const enterKey = 13;
-    if (event.keyCode === enterKey) {
-      event.preventDefault();
-      search();
-    }
-  });
+  $('#search-input').keyup(search);
 });
 
 /**
@@ -217,7 +211,6 @@ function collapseReplies(idHandler) {
  */
 function search() {
   const search = $('#search-input').val();
-  $('#search-input').val('');
   const id = -1;
   const placeholder = $('#forum-placeholder');
   expandForumWithSearch(placeholder, id, search);
@@ -240,8 +233,5 @@ function containsSearch(text, search) {
   words = words.filter( function(word) {
     return ((!stopWords.includes(word)) && (lowerText.includes(word)));
   });
-  if (words.length > 0) {
-    return true;
-  }
-  return false;
+  return words.length > 0;
 }
