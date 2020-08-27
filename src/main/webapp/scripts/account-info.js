@@ -1,22 +1,52 @@
-let loggedInStatus;
-let logInOutURL;
-let signupURL;
-let userInfo;
+
+let profile;
+const initPromise = init();
+
 
 /**
- * Updates global variables related to account data.
- * @return {Promise} after setting global variables
+ * Initializes the auth2 variable
+ * @return {Promise} Promise which resolves when auth2 is initalized
  */
-function updateAccountData() {
-  return fetch('/account').then((response) => response.json()).then(
-      (loginData) => {
-        loggedInStatus = loginData.loggedIn;
-        logInOutURL = loginData.logInOutURL;
-        signupURL = loginData.signUpURL;
-        if (loggedInStatus) {
-          userInfo = loginData.userInfo;
-        }
-      });
+function init() {
+  return new Promise(function(resolve, reject) {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+      resolve();
+    });
+  });
 }
 
-export {updateAccountData, loggedInStatus, logInOutURL, signupURL, userInfo};
+/**
+ * Signs user in and sets profile variable
+ * @return {Promise} Promise which resolves when profile is set
+ */
+function signIn() {
+  const auth2 = gapi.auth2.getAuthInstance();
+  return auth2.signIn().then(function() {
+    profile = auth2.currentUser.get().getBasicProfile();
+    const idToken = auth2.currentUser.get().getAuthResponse().id_token;
+    // send idToken to server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/account');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('idtoken=' + idToken);
+  });
+}
+
+/**
+ * Signs out user and clear profile variable
+ * @return {Promise} Promise which resolves when user
+ * signs out and profile is set to null
+ */
+function signOut() {
+  const auth2 = gapi.auth2.getAuthInstance();
+  return auth2.signOut().then(function() {
+    auth2.currentUser.get().disconnect();
+    auth2.disconnect();
+    profile = null;
+  });
+}
+
+
+export {profile, signIn, initPromise, signOut};
+
