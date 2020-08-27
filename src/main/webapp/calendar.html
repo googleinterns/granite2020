@@ -4,18 +4,19 @@
     <title>Google Calendar API Quickstart</title>
     <meta charset="utf-8" />
     <script src="https://apis.google.com/js/platform.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
     <script type="module" src="scripts/calendar-script.js" defer></script>
     <script type="module" src="scripts/nav-bar.js"></script>
   </head>
   <body>
+    <div id="nav-placeholder"> </div>
+
     <p>Google Calendar API Quickstart</p>
 
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
+    <ul id="open-events">
 
-    <pre id="content" style="white-space: pre-wrap;"></pre>
+    </ul>
 
   </body>
 </html>

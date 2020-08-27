@@ -22,8 +22,7 @@ function init() {
         clientId: CLIENT_ID,
         discoveryDocs: DISCOVERY_DOCS,
         scope: SCOPES
-      });
-      resolve();
+      }).then(resolve);
     });
   });
 }
