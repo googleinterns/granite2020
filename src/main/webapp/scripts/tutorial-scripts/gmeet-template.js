@@ -1,3 +1,5 @@
+/* Google Meet tutorial template data. Contains help links for Google Meet. */
+
 import {tutorialTemplate} from './tutorial-template.js';
 
 const gmeetData = {

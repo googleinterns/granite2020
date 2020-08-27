@@ -1,3 +1,5 @@
+/* Facebook tutorial template data. Contains help links for Facebook. */
+
 import {tutorialTemplate} from './tutorial-template.js';
 
 const facebookData = {

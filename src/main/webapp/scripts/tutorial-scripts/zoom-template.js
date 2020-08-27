@@ -1,3 +1,5 @@
+/* Zoom tutorial template data. Contains help links for Zoom. */
+
 import {tutorialTemplate} from './tutorial-template.js';
 
 const zoomData = {
