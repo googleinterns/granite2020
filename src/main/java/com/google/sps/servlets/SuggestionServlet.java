@@ -27,6 +27,6 @@ public class SuggestionServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(suggestionEntity);
 
-    response.sendRedirect("/index.html");
+    response.sendRedirect("/tutorials.html");
   }
 }
