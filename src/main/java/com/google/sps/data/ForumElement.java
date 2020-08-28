@@ -11,6 +11,9 @@ public final class ForumElement {
   public static final String TIMESTAMP_PROPERTY = "timestamp";
   public static final String LIKES_PROPERTY = "likes";
   public static final String NUMBER_REPLIES_PROPERTY = "numberReplies";
+  public static final String USER_ID_PROPERTY = "userId";
+  public static final String QUESTION_ID_PROPERTY = "questionId";
+  public static final String ACCEPTED_PROPERTY = "accepted";
   private final long id;
   private final long parentId;
   private final String topic;
@@ -18,6 +21,9 @@ public final class ForumElement {
   private final long likes;
   private final String text;
   private final long numberReplies;
+  private final String userId;
+  private final long questionId;
+  private final boolean accepted;
 
   private ForumElement(
       long id,
@@ -26,7 +32,10 @@ public final class ForumElement {
       long timestamp,
       long likes,
       String text,
-      long numberReplies) {
+      long numberReplies,
+      String userId,
+      long questionId,
+      boolean accepted) {
     this.id = id;
     this.parentId = parentId;
     this.topic = topic;
@@ -34,7 +43,9 @@ public final class ForumElement {
     this.likes = likes;
     this.text = text;
     this.numberReplies = numberReplies;
-    // TODO: Add user data to comment data and accepted answer
+    this.userId = userId;
+    this.questionId = questionId;
+    this.accepted = accepted;
   }
 
   /** Inputs an entity and returns a new forum element using the fields of the entity */
@@ -46,8 +57,11 @@ public final class ForumElement {
     long likes = (long) entity.getProperty(LIKES_PROPERTY);
     String text = (String) entity.getProperty(TEXT_PROPERTY);
     long numberReplies = (long) entity.getProperty(NUMBER_REPLIES_PROPERTY);
-    // TODO: Get user information
+    String userId = (String) entity.getProperty(USER_ID_PROPERTY);
+    long questionId = (long) entity.getProperty(QUESTION_ID_PROPERTY);
+    boolean accepted = (boolean) entity.getProperty(ACCEPTED_PROPERTY);
 
-    return new ForumElement(id, parentId, topic, timestamp, likes, text, numberReplies);
+    return new ForumElement(
+        id, parentId, topic, timestamp, likes, text, numberReplies, userId, questionId, accepted);
   }
 }

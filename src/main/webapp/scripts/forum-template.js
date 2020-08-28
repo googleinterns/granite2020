@@ -4,23 +4,23 @@
 const forumTemplate = '<div class="forum-element {{elementType}}">\n' +
 '<div class="info-element">\n' +
 '<p class="topic" style="display: {{topicDisplay}}">Topic: {{topic}}</p>\n' +
-'<p class="accepted" style="display: none">Accepted Answer</p>\n' +
-'<button class="accept-button" style="display: none">' +
+'<p class="accepted" style="display: {{acceptedDisplay}}">Accepted Answer' +
+'</p>\n' +
+'<button class="accept-button" style="display: {{acceptButtonDisplay}}">' +
 'Accept Answer</button>\n' +
 '<p class="date">{{date}}</p>\n' +
-'<p class="user">User Name</p>\n' +
+'<p class="user">{{userName}}</p>\n' +
 '</div>\n' +
 '<h3 class="text">{{text}}</h3>\n' +
 '<div class="options-element">\n' +
-'<p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up" ' +
-'style="font-size:30px"></i></p>\n' +
+'<p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up">' +
+'</i></p>\n' +
 '<p class="likes">{{likes}}</p>\n' +
 '<button class="reply-button">Reply</button>\n' +
-'<form class="response-form" style="display: none" ' +
-'action="/forum?id={{id}}&amp;action=reply" method="POST">\n' +
+'<div class="response-form" style="display: none">\n' +
 '<input type="text" class="text-input" name="text">\n' +
-'<input type="submit" value="Post">\n' +
-'</form>\n' +
+'<button class="response-button">Post</button>\n' +
+'</div>\n' +
 '<button class="expand-button" style="display: {{repliesDisplay}}">' +
 'See {{numReplies}} Replies</button>\n' +
 '</div>\n' +
