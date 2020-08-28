@@ -32,7 +32,7 @@ public class UserDataServlet extends HttpServlet {
 
   private static final String DATASTORE_USER = "User";
 
-  private static final CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
+  private static final String CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
 
   private String userId = "";
 
