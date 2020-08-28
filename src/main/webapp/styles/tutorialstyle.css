@@ -55,7 +55,7 @@ h3::after {
 
 .tutorials-vid {
   width: 100%;
-  height: 360px;
+  height: 400px;
 }
 
 /* Suggestion Styling */
@@ -69,10 +69,12 @@ h3::after {
 #suggestion {
   display: inline-block;
   box-sizing: border-box;
-  border-width: 0.05em;
-  border-style: solid;
   padding: 5%;
   width: 75%;
+  border-left-style: solid;
+  border-width: 0.05em;
+  border-color: var(--gLGray);
+  padding-left: 4%;
 }
 
 #suggestion-form label {
@@ -111,6 +113,7 @@ textarea {
   margin-bottom: 2%;
   resize: vertical;
   padding: 2%;
+  width: 90%;
 }
 
 textarea:focus {
@@ -126,9 +129,10 @@ textarea::placeholder {
 }
 
 #account-functions {
+  border-left-style: solid;
   border-width: 0.05em;
-  border-style: solid;
-  padding: 5%;
+  border-color: var(--gLGray);
+  padding-left: 4%;
   width: 75%;
   margin-top: 5%;
   display: inline-block;
