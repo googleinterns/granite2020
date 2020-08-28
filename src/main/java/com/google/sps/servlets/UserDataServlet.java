@@ -32,6 +32,8 @@ public class UserDataServlet extends HttpServlet {
 
   private static final String DATASTORE_USER = "User";
 
+  private static final CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
+
   private String userId = "";
 
   @Override
@@ -50,8 +52,7 @@ public class UserDataServlet extends HttpServlet {
     GoogleIdTokenVerifier verifier =
         new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
             .setAudience(
-                Collections.singletonList(
-                    "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+                Collections.singletonList(CLIENT_ID))
             .build();
 
     GoogleIdToken idToken;
@@ -67,10 +68,6 @@ public class UserDataServlet extends HttpServlet {
       String email = payload.getEmail();
       String name = (String) payload.get("name");
       String pictureUrl = (String) payload.get("picture");
-      String locale = (String) payload.get("locale");
-      String familyName = (String) payload.get("family_name");
-      String givenName = (String) payload.get("given_name");
-
       Entity user = getUserEntity(userId);
       if (user == null) {
         addUser(userId, name, email, pictureUrl);
@@ -83,7 +80,7 @@ public class UserDataServlet extends HttpServlet {
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
-        new Query("User")
+        new Query(DATASTORE_USER)
             .setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
