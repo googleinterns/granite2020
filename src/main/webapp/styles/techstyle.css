@@ -20,6 +20,10 @@
   display: flex;
 }
 
+.tech-button h4 {
+  text-align: center;
+}
+
 #buttons h4 {
   font-size: 150%;
 }
@@ -43,10 +47,6 @@
 .tech-button:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
-}
-
-.tech-button h4 {
-  text-align: center;
 }
 
 #page-content {
