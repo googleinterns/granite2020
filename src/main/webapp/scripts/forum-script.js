@@ -59,11 +59,7 @@ function expandForumWithSearch(placeholder, id, search) {
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
         for (let i = 0; i < elements.length; i++) {
-          if (search) {
-            if (containsSearch(elements[i].text, search)) {
-              createForumElement(placeholder, elements[i]);
-            }
-          } else {
+          if (!search || containsSearch(elements[i].text, search)) {
             createForumElement(placeholder, elements[i]);
           }
         }
