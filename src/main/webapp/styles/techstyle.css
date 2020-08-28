@@ -4,8 +4,8 @@
   width: 50%;
 }
 
-#left-tutorials-button li {
-  font-size: 120%;
+#buttons li {
+  font-size: 150%;
   display: inline-block;
   list-style-type: none;
 }
@@ -15,15 +15,13 @@
   width: 50%;
 }
 
-#right-forum-button li {
-  font-size: 120%;
-  display: inline-block;
-  list-style-type: none;
-}
-
 #buttons {
   text-align: center;
   display: flex;
+}
+
+#buttons h4 {
+  font-size: 150%;
 }
 
 .clearfix {

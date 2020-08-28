@@ -4,7 +4,6 @@ import {tutorialTemplate} from './tutorial-template.js';
 
 const facebookData = {
   toolName: 'Facebook',
-  toolDescription: 'Social Media Tool',
   toolLink: 'https://www.facebook.com/',
   usefulLinks: [
     {linkTitle: 'Getting started with Facebook',

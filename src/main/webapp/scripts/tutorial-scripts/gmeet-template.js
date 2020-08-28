@@ -4,7 +4,6 @@ import {tutorialTemplate} from './tutorial-template.js';
 
 const gmeetData = {
   toolName: 'Google Meet',
-  toolDescription: 'Video Communication Service',
   toolLink: 'https://meet.google.com/',
   usefulLinks: [
     {linkTitle: 'Google Meet Tools',

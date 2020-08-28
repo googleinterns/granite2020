@@ -4,18 +4,16 @@
 const tutorialTemplate =
 '<div id="header">' +
   '<h1>{{toolName}}</h1>' +
-  '<h2>{{toolDescription}}</h2>' +
   `<a href="{{toolLink}}" target="_blank" rel="noopener"
   >{{toolName}} Link</a>` +
 '</div>' +
-
 '<div id="content">' +
   '<div id="content-left">' +
     '<h1>Useful Links</h1>' +
     '{{#usefulLinks}}' +
       '<h3>{{linkTitle}}</h3>'+
       '{{#links}}' +
-      '<li>' +
+      '<li id="link-list">' +
         `<a href="{{url}}" target="_blank" rel="noopener"
         >{{linkName}}</a>` +
       '<li>' +
