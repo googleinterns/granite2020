@@ -40,6 +40,10 @@
   font-family: var(--gfont);
 }
 
+.tech-button h4 {
+  text-align: center;
+}
+
 .tech-button:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
@@ -47,10 +51,6 @@
 
 #page-content {
   clear: both;
-}
-
-.tech-button h4 {
-  text-align: center;
 }
 
 #buttons iframe {
