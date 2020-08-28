@@ -13,12 +13,6 @@
   box-sizing: border-box;
 }
 
-#header {
-  margin-top: 4%;
-  margin-bottom: 1%;
-}
-
-
 body {
   background-color: var(--backColor);
   color: black;
@@ -70,10 +64,6 @@ h4 {
 
 .highlight {
   font-weight: bold;
-}
-
-#header h1 {
-  font-size: 375%;
 }
 
 /* Submit buttons for login/signup */
@@ -167,8 +157,15 @@ span.right {
 }
 
 /* General two column design */
+
 #header {
+  margin-top: 4%;
+  margin-bottom: 1%;
   clear: both;
+}
+
+#header h1 {
+  font-size: 375%;
 }
 
 #content {
