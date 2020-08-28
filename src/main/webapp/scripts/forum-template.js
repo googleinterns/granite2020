@@ -12,8 +12,8 @@ const forumTemplate = '<div class="forum-element {{elementType}}">\n' +
 '</div>\n' +
 '<h3 class="text">{{text}}</h3>\n' +
 '<div class="options-element">\n' +
-'<p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up" ' +
-'style="font-size:30px"></i></p>\n' +
+'<p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up">' +
+'</i></p>\n' +
 '<p class="likes">{{likes}}</p>\n' +
 '<button class="reply-button">Reply</button>\n' +
 '<form class="response-form" style="display: none" ' +
