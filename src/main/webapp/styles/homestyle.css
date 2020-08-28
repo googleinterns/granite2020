@@ -1,4 +1,12 @@
 /* Navigation adjustments for home page */
+#header {
+  margin-top: 10%;
+}
+
+#header h1 {
+  text-align: center;
+  font-size: 500%;
+}
 
 #content-left h2 {
   font-size: 200%;
@@ -15,21 +23,15 @@
   font-weight: normal;
 }
 
-#for-whom li {
-  font-size: 180%;
+#content-right li {
+  font-size: 200%;
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
-  margin-bottom: 30px;
+  margin-bottom: 5%;
 }
 
 #content-left iframe {
-  width: 560px;
-  height: 315px;
-}
-
-#account-functions {
-  text-align: center;
-  align-content: center;
-  font-size: 140%;
+  width: 87%;
+  height: 90%;
 }

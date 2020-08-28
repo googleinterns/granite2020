@@ -94,6 +94,21 @@ function getFilters() {
 }
 
 /**
+ *  Sets value of select if there are set filters from the url parameters
+ */
+function getFilters() {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('topic')) {
+    const topic = urlParams.get('topic');
+    $('#filter-topic-input').val(topic).change();
+  }
+  if (urlParams.has('sort')) {
+    const sort = urlParams.get('sort');
+    $('#filter-sort-input').val(sort).change();
+  }
+}
+
+/**
  *  Populates the replies for a forum element with the given id
  *  in the placeholder given
  *
@@ -362,4 +377,57 @@ function acceptComment(idHandler) {
   $('#' + elementId + ' .accept-button').css('display', 'none');
   $('#' + elementId + ' .accepted').css('display', 'inline-block');
   $.post('/forum?id=' + id.toString() + '&action=accepted');
+}
+
+/**
+ *  Posts to server to increment likes for a element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function incrementLikes(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $.post('/forum?id=' + id.toString() + '&action=likes');
+  const likes = parseInt($('#' + elementId + ' .likes').text());
+  $('#' + elementId + ' .likes').text(likes + 1);
+}
+
+/**
+ *  Displays the reply form for a given element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function reply(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .response-form').css('display', 'inline-block');
+}
+
+/**
+ *  Expands the replies section, fetches from server
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function expandReplies(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  const placeholder = $('#replies-' + id.toString());
+  placeholder.css('display', 'block');
+  expandForum(placeholder, id);
+  $('#' + elementId + ' .expand-button').css('display', 'none');
+  $('#' + elementId + ' .collapse-button').css('display', 'block');
+}
+
+/**
+ *  Collapses the replies section for a specific element
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function collapseReplies(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#replies-' + id.toString()).empty();
+  $('#replies-' + id.toString()).css('display', 'none');
+  $('#' + elementId + ' .expand-button').css('display', 'inline-block');
+  $('#' + elementId + ' .collapse-button').css('display', 'none');
 }

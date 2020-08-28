@@ -36,6 +36,8 @@ public class UserDataServlet extends HttpServlet {
   private static final String ELEMENT_ID_PROPERTY = "elementId";
   private static final String ID_TOKEN_PROPERTY = "idtoken";
 
+  private static final CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
+
   private String userId = "";
 
   /** Get request to the Datastore and responds with user property given the id input */
@@ -115,8 +117,7 @@ public class UserDataServlet extends HttpServlet {
     GoogleIdTokenVerifier verifier =
         new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
             .setAudience(
-                Collections.singletonList(
-                    "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+                Collections.singletonList(CLIENT_ID))
             .build();
 
     GoogleIdToken idToken;
@@ -134,7 +135,7 @@ public class UserDataServlet extends HttpServlet {
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
-        new Query("User")
+        new Query(DATASTORE_USER)
             .setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
