@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Collections;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +31,7 @@ public class UserDataServlet extends HttpServlet {
 
   private static final String DATASTORE_USER = "User";
 
-  private static final String CLIENT_ID = 
+  private static final String CLIENT_ID =
       "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
 
   private String userId = "";
