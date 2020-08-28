@@ -39,7 +39,11 @@
   width: 50%;
 }
 
-#content-left a {
+#content-left {
+  padding-right: 5%;
+}
+
+#content-right a {
   font-size: 145%;
   margin-bottom: 2%;
   display: inline-block;
@@ -51,23 +55,23 @@
   text-decoration: underline;
 }
 
-#content-left h2 {
+#content-right h2 {
   font-size: 150%;
 }
 
-#content-left h3 {
+#content-right h3 {
   font-size: 150%;
 }
 
-#content-left li {
+#content-right li {
   list-style-type: none;
 }
 
-#content-left a:hover {
+#content-right a:hover {
   text-decoration: underline;
 }
 
-#content-right iframe {
+#content-left iframe {
   width: 100%;
   height: 50%;
 }
