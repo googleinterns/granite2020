@@ -38,18 +38,81 @@ function getCalendarEvents(id, deleted){
 
 function addEventToPage(event) {
   const summary = event.summary;
-  const startTime = event.start.dateTime;
-  const endTime = event.end.dateTime;
+  const startDateTime = event.start.dateTime;
+  const endDateTime = event.end.dateTime;
   const description = event.description;
 
-  const displayedText = summary + " " + description;
   const listElement = document.createElement("LI");
-  listElement.appendChild(document.createTextNode(displayedText));
-  document.getElementById("open-events").appendChild(listElement)
-  listElement.addEventListener("click", function(){
+
+  //summary
+  const heading = document.createElement("h3");
+  heading.appendChild(document.createTextNode(summary));
+  listElement.appendChild(heading);
+
+  //Time
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  const timeNode = document.createElement("h4");
+  const start = new Date(startDateTime);
+  const end = new Date(endDateTime);
+  const startDate = monthNames[start.getMonth()]+" "+start.getDate()+", "+start.getFullYear();
+  const endDate = monthNames[end.getMonth()]+" "+end.getDate()+", "+end.getFullYear();
+
+  
+  let startTime = "";
+  if((start.getHours()%12)==0){
+    startTime+="12"
+  } else {
+    startTime+=start.getHours()%12
+  }  
+  startTime+=":";
+  if(start.getMinutes()<10){
+    startTime+="0"+start.getMinutes();
+  } else {
+    startTime+=start.getMinutes();
+  }
+
+  let endTime = "";
+  if((end.getHours()%12)==0){
+    endTime+="12"
+  } else {
+    endTime+=end.getHours()%12
+  }  
+  endTime+=":";
+  if(end.getMinutes()<10){
+    endTime+="0"+end.getMinutes();
+  } else {
+    endTime+=end.getMinutes();
+  }
+
+  if (startDate == endDate){
+    timeNode.appendChild(document.createTextNode(startDate+ " " + startTime + " - " + endTime))
+  }
+  listElement.appendChild(timeNode);  
+
+
+  //description
+  const descriptionNode = document.createElement("p");
+  if(description){
+    descriptionNode.appendChild(document.createTextNode(description));
+  } else {
+    descriptionNode.appendChild(document.createTextNode("No Description Available"));
+
+  }
+  listElement.appendChild(descriptionNode)
+
+  //button
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode("Add to Calendar"))
+  button.addEventListener("click", function(){
     addEventToCalendar(event, "primary")
+    this.disabled = true;
+    this.innerText="Event Added!"
     alert("Event Added!")
   })
+  listElement.appendChild(button);
+
+  $("#open-events").append(listElement) 
+
 }
 
 function addEventToCalendar(eventToAdd, calendarID) {
