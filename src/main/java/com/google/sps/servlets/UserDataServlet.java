@@ -36,7 +36,7 @@ public class UserDataServlet extends HttpServlet {
   private static final String ELEMENT_ID_PROPERTY = "elementId";
   private static final String ID_TOKEN_PROPERTY = "idtoken";
 
-  private static final CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
+  private static final String CLIENT_ID = "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
 
   private String userId = "";
 
