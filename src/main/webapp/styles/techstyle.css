@@ -1,0 +1,61 @@
+/* Tech Assistant Page Styling */
+#left-tutorials-button {
+  flex: 1;
+  width: 50%;
+}
+
+#left-tutorials-button li {
+  font-size: 120%;
+  display: inline-block;
+  list-style-type: none;
+}
+
+#right-forum-button {
+  flex: 1;
+  width: 50%;
+}
+
+#right-forum-button li {
+  font-size: 120%;
+  display: inline-block;
+  list-style-type: none;
+}
+
+#buttons {
+  text-align: center;
+  display: flex;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.tech-button {
+  background-color: var(--mainColor);
+  color: var(--backColor);
+  border: medium solid var(--mainColor);
+  align-content: center;
+  cursor: pointer;
+  padding: 2.5% 5%;
+  font-size: 200%;
+  font-weight: bold;
+  font-family: var(--gfont);
+}
+
+.tech-button:hover {
+  background-color: var(--backColor);
+  color: var(--mainColor);
+}
+
+#page-content {
+  clear: both;
+}
+
+.tech-button h4 {
+  text-align: center;
+}
+
+#buttons iframe {
+  width: 90%;
+  height: 100%;
+}

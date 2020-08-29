@@ -1,0 +1,37 @@
+/* Navigation adjustments for home page */
+#header {
+  margin-top: 10%;
+}
+
+#header h1 {
+  text-align: center;
+  font-size: 500%;
+}
+
+#content-left h2 {
+  font-size: 200%;
+  font-weight: normal;
+}
+
+#content-right h2 {
+  font-size: 200%;
+  font-weight: normal;
+}
+
+#for-whom h2 {
+  font-size: 200%;
+  font-weight: normal;
+}
+
+#content-right li {
+  font-size: 200%;
+  font-weight: normal;
+  list-style-type: none;
+  display: inline-block;
+  margin-bottom: 5%;
+}
+
+#content-left iframe {
+  width: 87%;
+  height: 90%;
+}

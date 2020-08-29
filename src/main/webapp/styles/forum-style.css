@@ -1,0 +1,181 @@
+/* Formatting for instructional youtube video */
+
+#content-left {
+  text-align: center;
+}
+
+iframe {
+  width: 70%;
+  height: 90%;
+}
+
+/* Formatting for create new question */
+
+#new-question {
+  margin-left: 30px;
+}
+
+#new-question-logged-out {
+  display: none;
+}
+
+/* Standard formatting for labels and clickable features */
+
+label {
+  font-size: 130%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+button,
+select,
+input[type=submit] {
+  margin: 10px;
+  background-color: white;
+  color: #4285f4;
+  border: 2px solid #4285f4;
+  align-content: center;
+  cursor: pointer;
+  padding: 8px 16px;
+  font-size: 80%;
+  font-family: Google Sans, sans-serif;
+  outline: none;
+}
+
+button:hover {
+  background-color: #4285f4;
+  color: white;
+}
+
+#primary-button {
+  background-color: #4285f4;
+  color: white;
+  padding: 10px 20px;
+  font-size: 110%;
+  margin-left: 0;
+}
+
+#primary-button:hover {
+  background-color: white;
+  color: #4285f4;
+}
+
+input[type=text] {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid black;
+}
+
+/* Formatting for filters and forum */
+
+#forum {
+  width: 80%;
+  margin: auto;
+}
+
+#search,
+#filters,
+#forum-placeholder {
+  margin: 20px;
+}
+
+#filters {
+  background-color: rgb(240, 236, 236);
+  padding: 10px;
+}
+
+/* Formatting for individual forum elements */
+
+.forum-element {
+  overflow: auto;
+}
+
+.question {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  border-left: 5px solid #4285f4;
+  background-color: rgb(240, 236, 236);
+  padding: 20px;
+}
+
+.comment {
+  margin: 20px;
+  border-left: 5px solid rgb(240, 236, 236);
+  padding: 10px;
+}
+
+.topic,
+.date {
+  color: #4285f4;
+}
+
+.topic,
+.accepted,
+.accept-button {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.text .comment {
+  font-size: 130%;
+}
+
+.likes {
+  margin-top: 20px;
+}
+
+i {
+  color: #4285f4;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.replies {
+  margin: 20px;
+  background-color: white;
+  padding: 10px;
+}
+
+/* Float formatting within individual forum element */
+
+.likes-label,
+.likes,
+.reply-button,
+.topic,
+.accepted,
+.accept-button,
+.expand-button,
+.response-form,
+#search h2,
+#search-input,
+#search-button {
+  float: left;
+  margin-right: 10px;
+}
+
+.user,
+.date {
+  float: right;
+  margin-left: 10px;
+}
+
+.text,
+.replies,
+#filters {
+  clear: both;
+}
+
+/* Formatting for search bar */
+
+#search-input {
+  margin-top: 20px;
+  border-radius: 20px;
+  outline: none;
+}
+
+#search-button {
+  border-radius: 35px;
+}

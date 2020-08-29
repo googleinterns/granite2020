@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Seniors Connect</title>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="stylesheet" href="styles/forum-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script type="module" src="scripts/forum-template.js"></script>
+    <script type="module" src="scripts/forum-script.js"></script>
+  </head>
+  <body>
+    <div id="nav-placeholder"></div>
+    <div id="header">
+      <h1>Forum</h1>
+      <p>Ask questions about using technology and read over other questions that have been asked.</p>
+    </div>
+    <div id="content">
+      <div id="content-left">
+        <iframe id="forum-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div id="content-right">
+        <div id="new-question">
+          <h2>Create a New Question</h2>
+          <form id="question-form" action="/forum?id=-1&amp;action=reply" method="POST">
+            <label for="topic-input">Topic:</label>
+            <select id="topic-input" name="topic">
+              <option value="Zoom">Zoom</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Hangouts">Google Hangouts</option>
+              <option value="Other">Other</option>
+            </select><br/>
+            <label for="text-input">Question:</label>
+            <input type="text" id="text-input" name="text"><br/>
+            <input id="primary-button" type="submit" value="Post">
+          </form>
+        </div>
+        <div id="new-question-logged-out">
+          <h2>Want to create a question?</h2>
+          <form action="login.html">
+            <!-- TODO: Need to get login url -->
+            <input type="submit" value="Login" />
+          </form>
+          <h2>Don't have an account?</h2>
+          <form action="signup.html">
+            <!-- TODO: Need to get signup url -->
+            <input type="submit" value="Sign Up" />
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="forum">
+      <div id="search">
+        <h2>Search:</h2>
+        <input type="text" id="search-input"></input>
+        <button id="search-button"><i class="fa fa-search"></i></button>
+      </div>
+      <div id="filters">
+        <form id="filter-form" action="/forum?action=filter" method="POST">
+          <label for="filter-topic-input">Topic:</label>
+          <select id="filter-topic-input" name="topic">
+            <option value="all">All Topics</option>
+            <option value="Zoom">Zoom</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Hangouts">Google Hangouts</option>
+          </select>
+          <label for="filter-sort-input">Sort By:</label>
+          <select id="filter-sort-input" name="sort">
+            <option value="timestamp">Date</option>
+            <option value="likes">Likes</option>
+          </select>
+          <input type="submit" value="Update">
+        </form>
+      </div>
+      <div id="forum-placeholder"></div>
+    </div>
+  </body>
+</html>
