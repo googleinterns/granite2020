@@ -4,6 +4,9 @@
   --backColor: white;
   --mainColor: #4285f4;
   --placeholder: #b7b7b7;
+  --gRed: #db4437;
+  --gLGray: #bdbdbd;
+  --gDGray: #666;
 }
 
 * {
@@ -18,8 +21,12 @@ body {
   margin-right: 10%;
   background-size: cover;
   min-width: 80%;
-  overflow-x: scroll;
-  position: absolute;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
 }
 
 h1 {
@@ -45,8 +52,17 @@ h4 {
   font-weight: normal;
 }
 
-.highlight {
+.highlight-blue {
   color: var(--mainColor);
+  font-weight: bold;
+}
+
+.highlight-red {
+  color: var(--gRed);
+  font-weight: bold;
+}
+
+.highlight {
   font-weight: bold;
 }
 
@@ -74,6 +90,7 @@ h4 {
   width: 40%;
   margin-left: 30%;
   margin-right: 30%;
+  border-radius: 10px;
 }
 
 .sign-in:hover {
@@ -82,16 +99,10 @@ h4 {
 }
 
 /* Navigation Bar Styling */
-#nav-placeholder {
-  margin-bottom: 5%;
-  margin-top: 2%;
-}
-
 #nav-placeholder a {
   display: block;
-  color: var(--mainColor);
-  background-color: var(--backColor);
-  border: medium solid var(--backColor);
+  color: var(--backColor);
+  background-color: var(--mainColor);
   text-align: center;
 
   /* Keeping padding below in px for formatting */
@@ -101,8 +112,18 @@ h4 {
 }
 
 #nav-placeholder a:hover {
+  background-color: var(--backColor);
+  color: var(--mainColor);
+}
+
+#nav-bar {
   background-color: var(--mainColor);
-  color: var(--backColor);
+  height: 10%;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  left: calc(-50vw + 50%);
+  box-shadow: 2px 7px 18px var(--gLGray);
 }
 
 #account-functions a:hover {
@@ -127,6 +148,7 @@ span.right {
   cursor: pointer;
   font-size: 150%;
   font-family: var(--gfont);
+  border-radius: 10px;
 }
 
 .button:hover {
@@ -135,8 +157,15 @@ span.right {
 }
 
 /* General two column design */
+
 #header {
+  margin-top: 4%;
+  margin-bottom: 1%;
   clear: both;
+}
+
+#header h1 {
+  font-size: 375%;
 }
 
 #content {
