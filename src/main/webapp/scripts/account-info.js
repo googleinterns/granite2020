@@ -3,7 +3,8 @@ const initPromise = init();
 
 
 const API_KEY = 'AIzaSyBD6cw2_iZrPpQlQJswditPC5n3-1I64B0';
-const CLIENT_ID = '757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com';
+const CLIENT_ID = '757099697912-i6jll98mfgochdo2vgjcovf64pepjesc'+
+    '.apps.googleusercontent.com';
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 
 // Authorization scopes required by the API; multiple scopes can be

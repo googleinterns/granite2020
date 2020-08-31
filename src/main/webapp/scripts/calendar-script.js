@@ -50,45 +50,55 @@ function addEventToPage(event) {
   leftDiv.appendChild(heading);
 
   // Time
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const monthNames = ['January', 'February', 'March', 'April', 'May',
+      'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const timeNode = document.createElement('h4');
   const start = new Date(startDateTime);
   const end = new Date(endDateTime);
-  const startDate = monthNames[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear();
-  const endDate = monthNames[end.getMonth()] + ' ' + end.getDate() + ', ' + end.getFullYear();
+  const startDate = monthNames[start.getMonth()] + ' ' +
+      start.getDate() + ', ' + start.getFullYear();
+  const endDate = monthNames[end.getMonth()] + ' ' +
+      end.getDate() + ', ' + end.getFullYear();
 
-  
+  /**
+   * Gets the time string from the Date object
+   * @param {Date} dateTime Date from which we receive the time string from
+   * @return {String} String which represents time
+   */
   function getTime(dateTime) {
     let time = '';
-    if((dateTime.getHours()%12)==0) {
-      time += '12'
+    if ((dateTime.getHours() % 12) == 0) {
+      time += '12';
     } else {
-      time += dateTime.getHours() % 12
-    }  
+      time += dateTime.getHours() % 12;
+    }
     time += ':';
     if (dateTime.getMinutes() < 10) {
       time += '0' + dateTime.getMinutes();
     } else {
       time+=dateTime.getMinutes();
     }
-    return time
+    return time;
   }
 
   const startTime = getTime(start);
   const endTime = getTime(end);
 
   if (startDate == endDate) {
-    timeNode.appendChild(document.createTextNode(startDate+ ' ' + startTime + ' - ' + endTime));
+    timeNode.appendChild(
+        document.createTextNode(
+            startDate+ ' ' + startTime + ' - ' + endTime));
   }
-  leftDiv.appendChild(timeNode);  
+  leftDiv.appendChild(timeNode);
 
 
   // description
   const descriptionNode = document.createElement('p');
-  if(description){
+  if (description) {
     descriptionNode.appendChild(document.createTextNode(description));
   } else {
-    descriptionNode.appendChild(document.createTextNode('No Description Available'));
+    descriptionNode.appendChild(
+        document.createTextNode('No Description Available'));
   }
   leftDiv.appendChild(descriptionNode);
   leftDiv.classList.add('summary');
@@ -98,10 +108,10 @@ function addEventToPage(event) {
   // button
   const button = document.createElement('button');
   button.appendChild(document.createTextNode('Add to Calendar'));
-  button.addEventListener('click', function(){
-    addEventToCalendar(event, 'primary')
+  button.addEventListener('click', function() {
+    addEventToCalendar(event, 'primary');
     this.disabled = true;
-    this.innerText='Event Added!'
+    this.innerText='Event Added!';
   });
 
   getPrimaryIds().then(function(primaryIds) {
@@ -109,8 +119,8 @@ function addEventToPage(event) {
       gapi.client.calendar.events.get({
         'calendarId': 'primary',
         'eventId': event.id,
-      }).execute(function(e){
-        if(e.status == 'confirmed') {
+      }).execute(function(e) {
+        if (e.status == 'confirmed') {
           button.disabled = true;
           button.innerText = 'Event Added!';
         }
@@ -118,11 +128,8 @@ function addEventToPage(event) {
     }
   }).then(function() {
     listElement.appendChild(button);
-  })
-
-
-  $("#open-events").append(listElement) ;
-
+  });
+  $('#open-events').append(listElement);
 }
 
 /**
