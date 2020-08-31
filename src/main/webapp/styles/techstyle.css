@@ -17,7 +17,7 @@
   display: inline-block;
 }
 
-.seperator {
+.separator {
   width: 1px;
   background: var(--gLGray);
   margin: 0 auto;
@@ -25,7 +25,7 @@
   bottom: 0%;
   position: absolute;
   left: 50%;
-  height: 100%;
+  height: 120%;
 }
 
 #buttons {
