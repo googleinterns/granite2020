@@ -110,7 +110,7 @@ function expandForum(placeholder, id, search) {
           if (userFilter ==='all' || elements[i].userId === userId) {
             if (!search || containsSearch(elements[i].text, search)) {
               createForumElement(placeholder, elements[i]);
-            } 
+            }
           }
         }
       });
@@ -154,7 +154,8 @@ function createForumElement(placeholder, element) {
     $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
     $('#' + elementId + ' .response-button').click(element.id, postComment);
     $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
-    $('#collapse-button-' + element.id.toString()).click(element.id, collapseReplies);
+    $('#collapse-button-' + element.id.toString())
+      .click(element.id, collapseReplies);
   });
 }
 
