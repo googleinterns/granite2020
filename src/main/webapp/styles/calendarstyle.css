@@ -1,0 +1,23 @@
+
+li {
+    overflow:hidden;
+    width:100%;
+    border: solid black 1px;
+    border-radius: 10px;
+    padding: 5%;
+}
+#open-events{
+    list-style-type: none;
+    overflow: hidden;
+    width: 70%;
+    margin: auto;
+}
+
+.summary{
+    float: left;
+}
+li button {
+    float: right;
+    height: 30%;
+    margin: 0 auto;
+}

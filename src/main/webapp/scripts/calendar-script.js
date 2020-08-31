@@ -42,11 +42,12 @@ function addEventToPage(event) {
   const description = event.description;
 
   const listElement = document.createElement("LI");
+  const leftDiv = document.createElement("div");
 
   //summary
   const heading = document.createElement("h3");
   heading.appendChild(document.createTextNode(summary));
-  listElement.appendChild(heading);
+  leftDiv.appendChild(heading);
 
   //Time
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -65,7 +66,7 @@ function addEventToPage(event) {
       time+=dateTime.getHours()%12
     }  
     time+=":";
-    if(start.getMinutes()<10){
+    if(dateTime.getMinutes()<10){
       time+="0"+dateTime.getMinutes();
     } else {
       time+=dateTime.getMinutes();
@@ -79,7 +80,7 @@ function addEventToPage(event) {
   if (startDate == endDate){
     timeNode.appendChild(document.createTextNode(startDate+ " " + startTime + " - " + endTime))
   }
-  listElement.appendChild(timeNode);  
+  leftDiv.appendChild(timeNode);  
 
 
   //description
@@ -90,7 +91,10 @@ function addEventToPage(event) {
     descriptionNode.appendChild(document.createTextNode("No Description Available"));
 
   }
-  listElement.appendChild(descriptionNode)
+  leftDiv.appendChild(descriptionNode)
+  leftDiv.classList.add("summary")
+
+  listElement.append(leftDiv)
 
   //button
   const button = document.createElement('button');
