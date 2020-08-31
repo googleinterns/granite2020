@@ -61,5 +61,5 @@ function signOut() {
 }
 
 
-export {profile, signIn, initPromise, signOut};
+export {profile, signIn, initPromise, signOut, CLIENT_ID};
 

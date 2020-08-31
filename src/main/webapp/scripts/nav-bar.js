@@ -5,6 +5,7 @@ $(document).ready(function() {
   $('#nav-placeholder').load('../nav.html', updateBar);
   initPromise.then(function() {
     const auth2 = gapi.auth2.getAuthInstance();
+    updateBar();
     auth2.isSignedIn.listen(updateBar);
   });
 });
