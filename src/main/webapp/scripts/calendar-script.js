@@ -1,28 +1,28 @@
-import {updateBar} from './nav-bar.js';
 import {initPromise} from './account-info.js';
 
-const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group.calendar.google.com';
+const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
+    '.calendar.google.com';
 
 initPromise.then(function() {
-  var auth2 = gapi.auth2.getAuthInstance();
   gapi.client.load('calendar', 'v3', function() { 
     getCalendarEvents(EVENTS_CALENDAR, false).then(function(events) {
       if (events.length > 0) {
         for (var i = 0; i < events.length; i++) {
-          var event = events[i];
+          const event = events[i];
           addEventToPage(event);
-        }  
+        }
       }
-    })
-  })
-})
+    });
+  });
+});
 
 
 /**
  * Gets events from a calendar with specified ID
  * @param {String} id ID of calendar we want events from
  * @param {Boolean} deleted Whether or not we want to include deleted events
- * @return {Promise} Promise which resolves after the events of the calendar are listed
+ * @return {Promise} Promise which resolves after the 
+ *    events of the calendar are listed
  */
 function getCalendarEvents(id, deleted) {
   return gapi.client.calendar.events.list({
