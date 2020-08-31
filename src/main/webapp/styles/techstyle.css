@@ -22,10 +22,7 @@
 }
 
 #buttons {
-  height: 200px;
-  margin: 0 auto;
   text-align: center;
-  width: 100%;
   display: flex;
 }
 
@@ -34,19 +31,20 @@
 }
 
 .tech-button {
-  background-color: white;
-  border: 2px solid #4285f4;
-  padding: 15px 32px;
-  text-decoration: none;
-  font-family: Google Sans, sans-serif;
-  text-align: center;
-  display: inline-block;
-  font-size: 200%;
-  margin: 4px 2px;
+  background-color: var(--mainColor);
+  color: var(--backColor);
+  border: medium solid var(--mainColor);
+  align-content: center;
   cursor: pointer;
-  justify-content: center;
+  padding: 2.5% 5%;
+  font-size: 200%;
   font-weight: bold;
-  color: #4285f4;
+  font-family: var(--gfont);
+}
+
+.tech-button:hover {
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 #page-content {
@@ -57,17 +55,7 @@
   text-align: center;
 }
 
-.tech-button:hover {
-  background-color: #4285f4;
-  color: white;
-}
-
-#right-forum-button iframe {
-  width: 560px;
-  height: 315px;
-}
-
-#left-tutorials-button iframe {
-  width: 560px;
-  height: 315px;
+#buttons iframe {
+  width: 90%;
+  height: 100%;
 }
