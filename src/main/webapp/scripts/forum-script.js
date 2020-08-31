@@ -106,7 +106,6 @@ function expandForum(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
-        console.log(elements.length);
         for (let i = 0; i < elements.length; i++) {
           if (userFilter ==='all' || elements[i].userId === userId) {
             if (!search || containsSearch(elements[i].text, search)) {
@@ -131,7 +130,6 @@ function createForumElement(placeholder, element) {
   const elementId = 'outer-element-' + element.id.toString();
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
-  console.log(elementId);
 
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
@@ -140,8 +138,6 @@ function createForumElement(placeholder, element) {
   }).then(function() {
     const rendered = Mustache.render(forumTemplate, data);
     elementDiv.html(rendered);
-
-    console.log(userLiked);
 
     /* Add onclick functionality to mustache render */
     if (signedIn && !userLiked.includes(element.id.toString())) {
@@ -177,7 +173,6 @@ function createElementData(element, userName) {
   let topicDisplay = 'none';
   let acceptedDisplay = 'none';
   let acceptButtonDisplay = 'none';
-  console.log(element.accepted);
 
   if (element.parentId == -1) {
     elementType = 'question';
@@ -350,8 +345,8 @@ function postComment(idHandler) {
   const elementId = 'element-' + id.toString();
   const text = $('#' + elementId + ' .text-input').val();
   $('#' + elementId + ' .text-input').val('');
-  const numReplies = parseInt($('#' + elementId + ' .num-rep').val());
-  $('#' + elementId + ' .num-rep').val(numReplies + 1);
+  const numReplies = parseInt($('#' + elementId + ' .num-rep').text());
+  $('#' + elementId + ' .num-rep').text((numReplies + 1).toString());
   $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
       '&userId=' + userId).then(function() {
     expandReplies(idHandler);
