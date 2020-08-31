@@ -106,13 +106,12 @@ function expandForum(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
+        console.log(elements.length);
         for (let i = 0; i < elements.length; i++) {
-          if (search) {
-            if (containsSearch(elements[i].text, search)) {
+          if (userFilter ==='all' || elements[i].userId === userId) {
+            if (!search || containsSearch(elements[i].text, search)) {
               createForumElement(placeholder, elements[i]);
-            }
-          } else if (userFilter ==='all' || elements[i].userId === userId) {
-            createForumElement(placeholder, elements[i]);
+            } 
           }
         }
       });
@@ -129,9 +128,10 @@ function expandForum(placeholder, id, search) {
 function createForumElement(placeholder, element) {
   /* Creates a new div and adds it to placeholder */
   const elementDiv = $('<div></div>');
-  const elementId = 'element-' + element.id.toString();
+  const elementId = 'outer-element-' + element.id.toString();
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
+  console.log(elementId);
 
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
@@ -141,22 +141,24 @@ function createForumElement(placeholder, element) {
     const rendered = Mustache.render(forumTemplate, data);
     elementDiv.html(rendered);
 
+    console.log(userLiked);
+
     /* Add onclick functionality to mustache render */
     if (signedIn && !userLiked.includes(element.id.toString())) {
       $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
       $('#' + elementId + ' .like-button').css('color', '#4285f4');
       $('#' + elementId + ' .like-button').css('cursor', 'pointer');
     } else {
-      $('#' + elementId + ' .like-button').css('color', 'gray');
+      $('#' + elementId + ' .like-button').css('color', '#666');
       $('#' + elementId + ' .like-button').css('cursor', 'auto');
       $('#' + elementId + ' .like-button').off('click');
     }
 
     $('#' + elementId + ' .reply-button').click(element.id, reply);
     $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
-    $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
     $('#' + elementId + ' .response-button').click(element.id, postComment);
     $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+    $('#collapse-button-' + element.id.toString()).click(element.id, collapseReplies);
   });
 }
 
@@ -175,10 +177,12 @@ function createElementData(element, userName) {
   let topicDisplay = 'none';
   let acceptedDisplay = 'none';
   let acceptButtonDisplay = 'none';
+  console.log(element.accepted);
+
   if (element.parentId == -1) {
     elementType = 'question';
     topicDisplay = 'inline-block';
-  } else if (element.accepted) {
+  } else if (element.accepted == true) {
     acceptedDisplay = 'inline-block';
   } else if (element.userId === userId) {
     acceptButtonDisplay = 'inline-block';
@@ -246,7 +250,7 @@ function incrementLikes(idHandler) {
   $.post('/account?action=liked&id=' + userId + '&elementId=' + id.toString());
   const likes = parseInt($('#' + elementId + ' .likes').text());
   $('#' + elementId + ' .likes').text(likes + 1);
-  $('#' + elementId + ' .like-button').css('color', 'gray');
+  $('#' + elementId + ' .like-button').css('color', '#666');
   $('#' + elementId + ' .like-button').css('cursor', 'auto');
   $('#' + elementId + ' .like-button').off('click');
 }
@@ -274,7 +278,7 @@ function expandReplies(idHandler) {
   placeholder.css('display', 'block');
   expandForum(placeholder, id, null);
   $('#' + elementId + ' .expand-button').css('display', 'none');
-  $('#' + elementId + ' .collapse-button').css('display', 'block');
+  $('#collapse-button-' + id.toString()).css('display', 'block');
 }
 
 /**
@@ -288,7 +292,7 @@ function collapseReplies(idHandler) {
   $('#replies-' + id.toString()).empty();
   $('#replies-' + id.toString()).css('display', 'none');
   $('#' + elementId + ' .expand-button').css('display', 'inline-block');
-  $('#' + elementId + ' .collapse-button').css('display', 'none');
+  $('#collapse-button-' + id.toString()).css('display', 'none');
 }
 
 /**
@@ -319,10 +323,7 @@ function containsSearch(text, search) {
   words = words.filter( function(word) {
     return ((!stopWords.includes(word)) && (lowerText.includes(word)));
   });
-  if (words.length > 0) {
-    return true;
-  }
-  return false;
+  return (words.length > 0);
 }
 
 /**
@@ -349,6 +350,8 @@ function postComment(idHandler) {
   const elementId = 'element-' + id.toString();
   const text = $('#' + elementId + ' .text-input').val();
   $('#' + elementId + ' .text-input').val('');
+  const numReplies = parseInt($('#' + elementId + ' .num-rep').val());
+  $('#' + elementId + ' .num-rep').val(numReplies + 1);
   $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
       '&userId=' + userId).then(function() {
     expandReplies(idHandler);

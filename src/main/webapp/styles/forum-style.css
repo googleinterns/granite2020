@@ -10,26 +10,24 @@
 #content-left,
 #content-right {
   text-align: center;
+  display: inline-block;
 }
 
 #content-left {
-  margin-top: 10%;
-}
-
-#content-right {
-  border-left-style: solid;
-  border-width: 0.07em;
-  border-color: var(--gDGray);
+  margin-top: 2%;
 }
 
 iframe {
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
 }
 
 #new-question,
 #new-question-logged-out {
-  margin-left: 30px;
+  border-left-style: solid;
+  border-width: 0.05em;
+  border-color: var(--gLGray);
+  padding-left: 5%;
   display: none;
 }
 
@@ -67,43 +65,36 @@ select {
 }
 
 .like-button {
-  color: var(--mainColor);
+  color: var(--gDGray);
 }
 
 /* Formatting for labels and textareas */
 
 textarea {
-  margin: 10px;
+  margin: 1%;
   border: 2px solid black;
 }
 
 label {
-  font-size: 130%;
+  font-size: 140%;
 }
 
 /* Formatting for search and filters */
 
 #search {
   justify-content: center;
-}
-
-#search-input {
-  margin-top: 20px;
+  padding: 1%;
 }
 
 #search-button {
-  margin-top: 20px;
   border-radius: 5px;
+  height: 100%;
 }
 
 #filters {
   text-align: center;
   background-color: var(--fGray);
-  padding: 10px;
-}
-
-#filter-topic-input {
-  width: 150px;
+  padding: 1%;
 }
 
 /* Overall formatting for forum section */
@@ -111,6 +102,10 @@ label {
 #forum {
   width: 80%;
   margin: auto;
+}
+
+#forum-placeholder {
+  margin-bottom: 10%;
 }
 
 /* Formatting for question and comment elements */
