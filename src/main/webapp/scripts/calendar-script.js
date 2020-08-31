@@ -99,7 +99,6 @@ function addEventToPage(event) {
     addEventToCalendar(event, "primary")
     this.disabled = true;
     this.innerText="Event Added!"
-    alert("Event Added!")
   })
 
   getPrimaryIds().then(function(primaryIds){
