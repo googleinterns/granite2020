@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Seniors Connect</title>
+    <script src="https://kit.fontawesome.com/888d0bd439.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/forum-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" defer></script>
     <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
@@ -15,10 +15,12 @@
     <script type="module" src="scripts/forum-script.js"></script>
   </head>
   <body>
-    <div id="nav-placeholder"></div>
+    <div id="nav-bar">
+      <div id="nav-placeholder"> </div>
+    </div>
     <div id="header">
       <h1>Forum</h1>
-      <p>Ask questions about using technology and read over other questions that have been asked.</p>
+      <h3>On our forum page, users can ask and answer questions regarding common technologies, such as Zoom and Facebook. We encourage users to like questions that are helpful and reply to questions where they know the answer.  Another place to look for information on how to use common technologies is our tutorials page.</h3>
     </div>
     <div id="content">
       <div id="content-left">
@@ -28,16 +30,20 @@
         <div id="new-question">
           <h2>Create a New Question</h2>
           <div id="question-form">
-            <label for="topic-input">Topic:</label>
-            <select id="topic-input" name="topic">
-              <option value="Zoom">Zoom</option>
-              <option value="Facebook">Facebook</option>
-              <option value="Hangouts">Google Hangouts</option>
-              <option value="Other">Other</option>
-            </select><br/>
-            <label for="text-input">Question:</label>
-            <input type="text" id="text-input" name="text"><br/>
-            <button id="primary-button">Post</button>
+            <div class="vert-line">
+              <label for="topic-input">Topic:</label>
+              <select id="topic-input" class="button" name="topic">
+                <option value="Zoom">Zoom</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Hangouts">Google Meet</option>
+                <option value="Other">Other</option>
+              </select>
+            </div><br/>
+            <div class="vert-line">
+              <label for="text-input">Question:</label>
+              <textarea id="text-input" name="text" rows="4" cols="30"></textarea>
+            </div><br/>
+            <button class="button big-button" id="question-button">Post</button>
           </div>
         </div>
         <div id="new-question-logged-out">
@@ -51,31 +57,31 @@
       </div>
     </div>
     <div id="forum">
-      <div id="search">
+      <div id="search" class="vert-line">
         <h2>Search:</h2>
-        <input type="text" id="search-input"></input>
-        <button id="search-button"><i class="fa fa-search"></i></button>
+        <textarea id="search-input" rows="1" cols="30"></textarea>
+        <button class="button small-button" id="search-button"><i class="fas fa-search fa-2x"></i></button>
       </div>
-      <div id="filters">
+      <div id="filters" class="vert-line">
         <form id="filter-form" action="/forum?action=filter" method="POST">
           <label for="filter-topic-input">Topic:</label>
-          <select id="filter-topic-input" name="topic">
+          <select id="filter-topic-input" class="button med-button" name="topic">
             <option value="all">All Topics</option>
             <option value="Zoom">Zoom</option>
             <option value="Facebook">Facebook</option>
-            <option value="Hangouts">Google Hangouts</option>
+            <option value="Hangouts">Google Meet</option>
           </select>
           <label for="filter-sort-input">Sort By:</label>
-          <select id="filter-sort-input" name="sort">
+          <select id="filter-sort-input" class="button med-button" name="sort">
             <option value="timestamp">Date</option>
             <option value="likes">Likes</option>
           </select>
           <label id="filter-user-label" for="filter-user-input">Users:</label>
-          <select id="filter-user-input" name="userId">
+          <select id="filter-user-input" class="button med-button" name="userId">
             <option value="all">All User Questions</option>
             <option value="my">My Questions</option>
           </select>
-          <input type="submit" value="Update">
+          <input type="submit" class="button med-button" value="Update">
         </form>
       </div>
       <div id="forum-placeholder"></div>
