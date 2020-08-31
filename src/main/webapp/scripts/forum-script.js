@@ -155,7 +155,7 @@ function createForumElement(placeholder, element) {
     $('#' + elementId + ' .response-button').click(element.id, postComment);
     $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
     $('#collapse-button-' + element.id.toString())
-      .click(element.id, collapseReplies);
+        .click(element.id, collapseReplies);
   });
 }
 
