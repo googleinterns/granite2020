@@ -1,12 +1,13 @@
 
 li {
-  overflow:hidden;
-  width:100%;
+  overflow: hidden;
+  width: 100%;
   border: solid black 1px;
   border-radius: 10px;
   padding: 5%;
 }
-#open-events{
+
+#open-events {
   list-style-type: none;
   overflow: hidden;
   width: 70%;
