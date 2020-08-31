@@ -2,12 +2,12 @@ import {updateBar} from './nav-bar.js';
 import {initPromise} from './account-info.js';
 
 
-initPromise.then(function(){
+initPromise.then(function() {
   var auth2 = gapi.auth2.getAuthInstance();
   updatePage();
   auth2.isSignedIn.listen(updatePage);
   gapi.client.load('calendar', 'v3', function(){
-    getCalendarEvents('c_96sboq7a00dhtc9c24pr7mpi3o@group.calendar.google.com', false).then(function(events){
+    getCalendarEvents('c_96sboq7a00dhtc9c24pr7mpi3o@group.calendar.google.com', false).then(function(events) {
       if (events.length > 0) {
         for (var i = 0; i < events.length; i++) {
           var event = events[i];
@@ -22,13 +22,13 @@ function updatePage(isSignedIn) {
   updateBar();
 }
 
-function getCalendarEvents(id, deleted){
+function getCalendarEvents(id, deleted) {
   return gapi.client.calendar.events.list({
     'calendarId': id,
     'timeMin': (new Date()).toISOString(),
     'showDeleted': deleted,
     'singleEvents': true,
-    'orderBy': 'startTime'
+    'orderBy': 'startTime',
   }).then(function(response) {
     var events = response.result.items;
     return events;
@@ -41,33 +41,33 @@ function addEventToPage(event) {
   const endDateTime = event.end.dateTime;
   const description = event.description;
 
-  const listElement = document.createElement("LI");
-  const leftDiv = document.createElement("div");
+  const listElement = document.createElement('LI');
+  const leftDiv = document.createElement('div');
 
-  //summary
-  const heading = document.createElement("h3");
+  // summary
+  const heading = document.createElement('h3');
   heading.appendChild(document.createTextNode(summary));
   leftDiv.appendChild(heading);
 
-  //Time
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  const timeNode = document.createElement("h4");
+  // Time
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const timeNode = document.createElement('h4');
   const start = new Date(startDateTime);
   const end = new Date(endDateTime);
-  const startDate = monthNames[start.getMonth()]+" "+start.getDate()+", "+start.getFullYear();
-  const endDate = monthNames[end.getMonth()]+" "+end.getDate()+", "+end.getFullYear();
+  const startDate = monthNames[start.getMonth()] + ' ' + start.getDate() + ', ' + start.getFullYear();
+  const endDate = monthNames[end.getMonth()] + ' ' + end.getDate() + ', ' + end.getFullYear();
 
   
-  function getTime(dateTime){
-    let time = "";
-    if((dateTime.getHours()%12)==0){
-      time+="12"
+  function getTime(dateTime) {
+    let time = '';
+    if((dateTime.getHours()%12)==0) {
+      time += '12'
     } else {
-      time+=dateTime.getHours()%12
+      time += dateTime.getHours() % 12
     }  
-    time+=":";
-    if(dateTime.getMinutes()<10){
-      time+="0"+dateTime.getMinutes();
+    time += ':';
+    if (dateTime.getMinutes() < 10) {
+      time += '0' + dateTime.getMinutes();
     } else {
       time+=dateTime.getMinutes();
     }
@@ -77,95 +77,100 @@ function addEventToPage(event) {
   const startTime = getTime(start);
   const endTime = getTime(end);
 
-  if (startDate == endDate){
-    timeNode.appendChild(document.createTextNode(startDate+ " " + startTime + " - " + endTime))
+  if (startDate == endDate) {
+    timeNode.appendChild(document.createTextNode(startDate+ ' ' + startTime + ' - ' + endTime));
   }
   leftDiv.appendChild(timeNode);  
 
 
-  //description
-  const descriptionNode = document.createElement("p");
+  // description
+  const descriptionNode = document.createElement('p');
   if(description){
     descriptionNode.appendChild(document.createTextNode(description));
   } else {
-    descriptionNode.appendChild(document.createTextNode("No Description Available"));
-
+    descriptionNode.appendChild(document.createTextNode('No Description Available'));
   }
-  leftDiv.appendChild(descriptionNode)
-  leftDiv.classList.add("summary")
+  leftDiv.appendChild(descriptionNode);
+  leftDiv.classList.add('summary');
 
-  listElement.append(leftDiv)
+  listElement.append(leftDiv);
 
-  //button
+  // button
   const button = document.createElement('button');
-  button.appendChild(document.createTextNode("Add to Calendar"))
-  button.addEventListener("click", function(){
-    addEventToCalendar(event, "primary")
+  button.appendChild(document.createTextNode('Add to Calendar'));
+  button.addEventListener('click', function(){
+    addEventToCalendar(event, 'primary')
     this.disabled = true;
-    this.innerText="Event Added!"
-  })
+    this.innerText='Event Added!'
+  });
 
-  getPrimaryIds().then(function(primaryIds){
-    if(primaryIds.has(event.id)){
+  getPrimaryIds().then(function(primaryIds) {
+    if (primaryIds.has(event.id)) {
       gapi.client.calendar.events.get({
-        "calendarId": "primary",
-        "eventId": event.id
+        'calendarId': 'primary',
+        'eventId': event.id,
       }).execute(function(e){
-        if(e.status == "confirmed"){
+        if(e.status == 'confirmed') {
           button.disabled = true;
-          button.innerText = "Event Added!";
+          button.innerText = 'Event Added!';
         }
-      })
+      });
     }
-  }).then(function(){
+  }).then(function() {
     listElement.appendChild(button);
-
   })
 
 
-  $("#open-events").append(listElement) 
+  $("#open-events").append(listElement) ;
 
 }
 
+/**
+ * Adds an event to calendar with given id
+ * @param {Event} eventToAdd Event to be added
+ * @param {String} calendarID ID of calendar that is targeted
+ */
 function addEventToCalendar(eventToAdd, calendarID) {
-  getPrimaryIds().then(function(primaryIds){
-    if (primaryIds.has(eventToAdd.id)){
-      var getRequest = gapi.client.calendar.events.get({
-        "calendarId": calendarID,
-        "eventId": eventToAdd.id  
+  getPrimaryIds().then(function(primaryIds) {
+    if (primaryIds.has(eventToAdd.id)) {
+      const getRequest = gapi.client.calendar.events.get({
+        'calendarId': calendarID,
+        'eventId': eventToAdd.id,
       });
-      getRequest.execute(function(e){
+      getRequest.execute(function(e) {
         console.log(e);
         gapi.client.calendar.events.patch({
-          "calendarId": calendarID,
+          'calendarId': calendarID,
           'eventId': e.id,
-          'status': 'confirmed'
-        }).execute()
+          'status': 'confirmed',
+        }).execute();
       });
-
     } else {
-      var request = gapi.client.calendar.events.insert({
+      const request = gapi.client.calendar.events.insert({
         'calendarId': calendarID,
-        'resource': eventToAdd
+        'resource': eventToAdd,
       });
-      
       request.execute(function(event) {
         console.log('Event created: ' + event.htmlLink);
       });
     }
-  })
+  });
 }
 
-function getPrimaryIds(){
-  return getCalendarEvents('primary', true).then(function(events){
-    let primaryIds = new Set();
+/**
+ * Gets the IDs of all of the events in the user's primary calendar
+ * @return {Promise} Promise which resolves after primary events are read
+ */
+function getPrimaryIds() {
+  return getCalendarEvents('primary', true).then(function(events) {
+    const primaryIds = new Set();
     if (events.length > 0) {
-      for (var i = 0; i < events.length; i++) {
-        var event = events[i];
+      for (let i = 0; i < events.length; i++) {
+        const event = events[i];
         primaryIds.add(event.id);
-      }  
+      }
     }
     console.log(primaryIds);
     return primaryIds;
-  })  
+  });
 }
