@@ -3,25 +3,28 @@ import {initPromise} from './account-info.js';
 
 
 initPromise.then(function() {
-  var auth2 = gapi.auth2.getAuthInstance();
+  const auth2 = gapi.auth2.getAuthInstance();
   updatePage();
   auth2.isSignedIn.listen(updatePage);
-  gapi.client.load('calendar', 'v3', function(){
-    getCalendarEvents('c_96sboq7a00dhtc9c24pr7mpi3o@group.calendar.google.com', false).then(function(events) {
+  gapi.client.load('calendar', 'v3', function() {
+    getCalendarEvents('c_96sboq7a00dhtc9c24pr7mpi3o@group.calendar.google.com', false)
+        .then(function(events) {
       if (events.length > 0) {
-        for (var i = 0; i < events.length; i++) {
-          var event = events[i];
+        for (let i = 0; i < events.length; i++) {
+          const event = events[i];
           addEventToPage(event);
-        }  
+        }
       }
-    })
-  })
-})
+    });
+  });
+});
 
-function updatePage(isSignedIn) {
-  updateBar();
-}
-
+/**
+ * Gets events from a calendar with specified ID
+ * @param {String} id ID of calendar we want events from
+ * @param {Boolean} deleted Whether or not we want to include deleted events
+ * @return {Promise} Promise which resolves after the events of the calendar are listed
+ */
 function getCalendarEvents(id, deleted) {
   return gapi.client.calendar.events.list({
     'calendarId': id,
@@ -30,11 +33,15 @@ function getCalendarEvents(id, deleted) {
     'singleEvents': true,
     'orderBy': 'startTime',
   }).then(function(response) {
-    var events = response.result.items;
+    const events = response.result.items;
     return events;
-  })
+  });
 }
 
+/**
+ * Adds an event to the webpage
+ * @param {Event} event Event to add
+ */
 function addEventToPage(event) {
   const summary = event.summary;
   const startDateTime = event.start.dateTime;
@@ -51,7 +58,7 @@ function addEventToPage(event) {
 
   // Time
   const monthNames = ['January', 'February', 'March', 'April', 'May',
-      'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const timeNode = document.createElement('h4');
   const start = new Date(startDateTime);
   const end = new Date(endDateTime);
