@@ -28,7 +28,6 @@ function getCalendarEvents(id, deleted){
     'timeMin': (new Date()).toISOString(),
     'showDeleted': deleted,
     'singleEvents': true,
-    'maxResults': 30,
     'orderBy': 'startTime'
   }).then(function(response) {
     var events = response.result.items;
@@ -58,31 +57,24 @@ function addEventToPage(event) {
   const endDate = monthNames[end.getMonth()]+" "+end.getDate()+", "+end.getFullYear();
 
   
-  let startTime = "";
-  if((start.getHours()%12)==0){
-    startTime+="12"
-  } else {
-    startTime+=start.getHours()%12
-  }  
-  startTime+=":";
-  if(start.getMinutes()<10){
-    startTime+="0"+start.getMinutes();
-  } else {
-    startTime+=start.getMinutes();
+  function getTime(dateTime){
+    let time = "";
+    if((dateTime.getHours()%12)==0){
+      time+="12"
+    } else {
+      time+=dateTime.getHours()%12
+    }  
+    time+=":";
+    if(start.getMinutes()<10){
+      time+="0"+dateTime.getMinutes();
+    } else {
+      time+=dateTime.getMinutes();
+    }
+    return time
   }
 
-  let endTime = "";
-  if((end.getHours()%12)==0){
-    endTime+="12"
-  } else {
-    endTime+=end.getHours()%12
-  }  
-  endTime+=":";
-  if(end.getMinutes()<10){
-    endTime+="0"+end.getMinutes();
-  } else {
-    endTime+=end.getMinutes();
-  }
+  const startTime = getTime(start);
+  const endTime = getTime(end);
 
   if (startDate == endDate){
     timeNode.appendChild(document.createTextNode(startDate+ " " + startTime + " - " + endTime))
@@ -109,23 +101,31 @@ function addEventToPage(event) {
     this.innerText="Event Added!"
     alert("Event Added!")
   })
-  listElement.appendChild(button);
+
+  getPrimaryIds().then(function(primaryIds){
+    if(primaryIds.has(event.id)){
+      gapi.client.calendar.events.get({
+        "calendarId": "primary",
+        "eventId": event.id
+      }).execute(function(e){
+        if(e.status == "confirmed"){
+          button.disabled = true;
+          button.innerText = "Event Added!";
+        }
+      })
+    }
+  }).then(function(){
+    listElement.appendChild(button);
+
+  })
+
 
   $("#open-events").append(listElement) 
 
 }
 
 function addEventToCalendar(eventToAdd, calendarID) {
-  getCalendarEvents('primary', true).then(function(events){
-    let primaryIds = new Set();
-    if (events.length > 0) {
-      for (var i = 0; i < events.length; i++) {
-        var event = events[i];
-        primaryIds.add(event.id);
-      }  
-    }
-    console.log(primaryIds);
-    console.log(eventToAdd.id);
+  getPrimaryIds().then(function(primaryIds){
     if (primaryIds.has(eventToAdd.id)){
       var getRequest = gapi.client.calendar.events.get({
         "calendarId": calendarID,
@@ -151,9 +151,18 @@ function addEventToCalendar(eventToAdd, calendarID) {
       });
     }
   })
+}
 
-
-
-
-
+function getPrimaryIds(){
+  return getCalendarEvents('primary', true).then(function(events){
+    let primaryIds = new Set();
+    if (events.length > 0) {
+      for (var i = 0; i < events.length; i++) {
+        var event = events[i];
+        primaryIds.add(event.id);
+      }  
+    }
+    console.log(primaryIds);
+    return primaryIds;
+  })  
 }
