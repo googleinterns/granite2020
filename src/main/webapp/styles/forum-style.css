@@ -66,6 +66,10 @@ select {
   text-align: center;
 }
 
+.like-button {
+  color: var(--mainColor);
+}
+
 /* Formatting for labels and textareas */
 
 textarea {

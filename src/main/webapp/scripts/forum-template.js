@@ -17,7 +17,7 @@ const forumTemplate =
   '<h2 class="text">{{text}}</h3>\n' +
   '<div class="options-element vert-line">\n' +
     '<p class="likes-label">Likes: </p>\n' +
-    '<i class="like-button fa fa-thumbs-up fa-2x button small-button"></i>\n' +
+    '<i class="like-button fas fa-thumbs-up fa-2x"></i>\n' +
     '<p class="likes">{{likes}}</p>\n' +
     '<button class="reply-button button small-button">Reply</button>\n' +
     '<div class="response-form" style="display: none">\n' +
@@ -29,20 +29,5 @@ const forumTemplate =
   '<div class="replies" id="replies-{{id}}" style="display: none"></div>\n' +
   '<button class="collapse-button button small-button" style="display: none">Hide Replies</button>\n' +
 '</div>';
-
-const data = {
-  elementType: elementType,
-  topicDisplay: topicDisplay,
-  acceptedDisplay: acceptedDisplay,
-  acceptButtonDisplay: acceptButtonDisplay,
-  topic: element.topic,
-  date: convertTimestampToDate(element.timestamp),
-  userName: userName,
-  text: element.text,
-  likes: element.likes,
-  id: element.id,
-  repliesDisplay: repliesDisplay,
-  numReplies: element.numberReplies,
-};
 
 export {forumTemplate};

@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <title>Seniors Connect</title>
+    <script src="https://kit.fontawesome.com/888d0bd439.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/general.css">
     <link rel="stylesheet" href="styles/forum-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/platform.js" defer></script>
     <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
@@ -15,10 +15,12 @@
     <script type="module" src="scripts/forum-script.js"></script>
   </head>
   <body>
-    <div id="nav-placeholder"></div>
+    <div id="nav-bar">
+      <div id="nav-placeholder"> </div>
+    </div>
     <div id="header">
       <h1>Forum</h1>
-      <p>Ask questions about using technology and read over other questions that have been asked.</p>
+      <h3>On our forum page, users can ask and answer questions regarding common technologies, such as Zoom and Facebook. We encourage users to like questions that are helpful and reply to questions where they know the answer.  Another place to look for information on how to use common technologies is our tutorials page.</h3>
     </div>
     <div id="content">
       <div id="content-left">
@@ -41,7 +43,7 @@
               <label for="text-input">Question:</label>
               <textarea id="text-input" name="text" rows="4" cols="30"></textarea>
             </div><br/>
-            <button class="button big-button">Post</button>
+            <button class="button big-button" id="question-button">Post</button>
           </div>
         </div>
         <div id="new-question-logged-out">
@@ -59,7 +61,7 @@
         <div id="search" class="vert-line">
           <h2>Search:</h2>
           <textarea id="search-input" rows="1" cols="30"></textarea>
-          <button class="button small-button" id="search-button"><i class="fa fa-search fa-2x"></i></button>
+          <button class="button small-button" id="search-button"><i class="fas fa-search fa-2x"></i></button>
         </div>
         <div id="filters" class="vert-line">
           <form id="filter-form" action="/forum?action=filter" method="POST">

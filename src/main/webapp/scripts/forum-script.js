@@ -26,7 +26,7 @@ $( document ).ready( function() {
   getFilters();
 
   // Add functionality to post question
-  $('#primary-button').click(postQuestion);
+  $('#question-button').click(postQuestion);
 });
 
 /**
@@ -146,6 +146,10 @@ function createForumElement(placeholder, element) {
       $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
       $('#' + elementId + ' .like-button').css('color', '#4285f4');
       $('#' + elementId + ' .like-button').css('cursor', 'pointer');
+    } else {
+      $('#' + elementId + ' .like-button').css('color', 'gray');
+      $('#' + elementId + ' .like-button').css('cursor', 'auto');
+      $('#' + elementId + ' .like-button').off('click');
     }
 
     $('#' + elementId + ' .reply-button').click(element.id, reply);
@@ -242,7 +246,7 @@ function incrementLikes(idHandler) {
   $.post('/account?action=liked&id=' + userId + '&elementId=' + id.toString());
   const likes = parseInt($('#' + elementId + ' .likes').text());
   $('#' + elementId + ' .likes').text(likes + 1);
-  $('#' + elementId + ' .like-button').css('color', 'black');
+  $('#' + elementId + ' .like-button').css('color', 'gray');
   $('#' + elementId + ' .like-button').css('cursor', 'auto');
   $('#' + elementId + ' .like-button').off('click');
 }
@@ -255,7 +259,7 @@ function incrementLikes(idHandler) {
 function reply(idHandler) {
   const id = idHandler.data;
   const elementId = 'element-' + id.toString();
-  $('#' + elementId + ' .response-form').css('display', 'inline-block');
+  $('#' + elementId + ' .response-form').css('display', 'flex');
 }
 
 /**
