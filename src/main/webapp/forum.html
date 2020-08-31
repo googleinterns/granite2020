@@ -56,37 +56,35 @@
         </div>
       </div>
     </div>
-    <div id="content">
-      <div id="forum">
-        <div id="search" class="vert-line">
-          <h2>Search:</h2>
-          <textarea id="search-input" rows="1" cols="30"></textarea>
-          <button class="button small-button" id="search-button"><i class="fas fa-search fa-2x"></i></button>
-        </div>
-        <div id="filters" class="vert-line">
-          <form id="filter-form" action="/forum?action=filter" method="POST">
-            <label for="filter-topic-input">Topic:</label>
-            <select id="filter-topic-input" class="button med-button" name="topic">
-              <option value="all">All Topics</option>
-              <option value="Zoom">Zoom</option>
-              <option value="Facebook">Facebook</option>
-              <option value="Hangouts">Google Meet</option>
-            </select>
-            <label for="filter-sort-input">Sort By:</label>
-            <select id="filter-sort-input" class="button med-button" name="sort">
-              <option value="timestamp">Date</option>
-              <option value="likes">Likes</option>
-            </select>
-            <label id="filter-user-label" for="filter-user-input">Users:</label>
-            <select id="filter-user-input" class="button med-button" name="userId">
-              <option value="all">All User Questions</option>
-              <option value="my">My Questions</option>
-            </select>
-            <input type="submit" class="button med-button" value="Update">
-          </form>
-        </div>
-        <div id="forum-placeholder"></div>
+    <div id="forum">
+      <div id="search" class="vert-line">
+        <h2>Search:</h2>
+        <textarea id="search-input" rows="1" cols="30"></textarea>
+        <button class="button small-button" id="search-button"><i class="fas fa-search fa-2x"></i></button>
       </div>
+      <div id="filters" class="vert-line">
+        <form id="filter-form" action="/forum?action=filter" method="POST">
+          <label for="filter-topic-input">Topic:</label>
+          <select id="filter-topic-input" class="button med-button" name="topic">
+            <option value="all">All Topics</option>
+            <option value="Zoom">Zoom</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Hangouts">Google Meet</option>
+          </select>
+          <label for="filter-sort-input">Sort By:</label>
+          <select id="filter-sort-input" class="button med-button" name="sort">
+            <option value="timestamp">Date</option>
+            <option value="likes">Likes</option>
+          </select>
+          <label id="filter-user-label" for="filter-user-input">Users:</label>
+          <select id="filter-user-input" class="button med-button" name="userId">
+            <option value="all">All User Questions</option>
+            <option value="my">My Questions</option>
+          </select>
+          <input type="submit" class="button med-button" value="Update">
+        </form>
+      </div>
+      <div id="forum-placeholder"></div>
     </div>
   </body>
 </html>
