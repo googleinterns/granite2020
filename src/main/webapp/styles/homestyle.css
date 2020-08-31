@@ -1,21 +1,27 @@
 /* Navigation adjustments for home page */
-#header {
-  margin-top: 10%;
-}
-
 #header h1 {
   text-align: center;
-  font-size: 500%;
+  margin-bottom: 3%;
 }
 
-#content-left h2 {
+#content h1 {
   font-size: 200%;
-  font-weight: normal;
+  color: var(--gRed);
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+#content-right {
+  border-left-style: solid;
+  border-width: 0.05em;
+  border-color: var(--gLGray);
+  padding-left: 4%;
 }
 
 #content-right h2 {
-  font-size: 200%;
+  font-size: 160%;
   font-weight: normal;
+  margin-bottom: 0%;
 }
 
 #for-whom h2 {
@@ -24,14 +30,15 @@
 }
 
 #content-right li {
-  font-size: 200%;
+  font-size: 160%;
   font-weight: normal;
   list-style-type: none;
   display: inline-block;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 #content-left iframe {
-  width: 87%;
-  height: 90%;
+  /* In pixels otherwise gets distorted when page is stretched */
+  width: 90%;
+  height: 350px;
 }
