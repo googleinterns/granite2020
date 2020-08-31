@@ -95,14 +95,29 @@ function getFilters() {
 
 /**
  *  Populates the replies for a forum element with the given id
- *  in the placeholder given
+ *  in the placeholder given with no search keywords
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {long} id the long that identifies the parent of the forum
  *  elements
  *  @param {String} search search text from user if applicable
  */
-function expandForum(placeholder, id, search) {
+function expandForum(placeholder, id) {
+  // Call expandForumWithSearch with the search parameter as null so that
+  // no search is considered
+  expandForumWithSearch(placeholder, id, null);
+}
+
+/**
+ *  Populates the replies for a forum element with the given id
+ *  in the placeholder given also based on search keywords if present
+ *
+ *  @param {S.fn.init} placeholder the div that will hold the forum elements
+ *  @param {long} id the long that identifies the parent of the forum
+ *  elements
+ *  @param {String} search search text from user if applicable
+ */
+function expandForumWithSearch(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
@@ -210,12 +225,7 @@ function createElementData(element, userName) {
  */
 function createSearch() {
   $('#search-button').click(search);
-  $('#search-button').keyup(function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      search();
-    }
-  });
+  $('#search-button').keyup(search);
 }
 
 /**
@@ -226,8 +236,10 @@ function createSearch() {
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
-  const indexOfYear = 16; // index before time so it is not included
-  return (date.toUTCString()).substring(0, indexOfYear);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Add one because the month is zero index
+  const year = date.getFullYear();
+  return (month + '/' + day + '/' + year);
 }
 
 /**
@@ -292,10 +304,9 @@ function collapseReplies(idHandler) {
  */
 function search() {
   const search = $('#search-input').val();
-  $('#search-input').val('');
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id, search);
+  expandForumWithSearch(placeholder, id, search);
 }
 
 /**
@@ -315,10 +326,7 @@ function containsSearch(text, search) {
   words = words.filter( function(word) {
     return ((!stopWords.includes(word)) && (lowerText.includes(word)));
   });
-  if (words.length > 0) {
-    return true;
-  }
-  return false;
+  return words.length > 0;
 }
 
 /**

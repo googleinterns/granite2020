@@ -4,6 +4,7 @@
   --backColor: white;
   --mainColor: #4285f4;
   --placeholder: #b7b7b7;
+  --gRed: #db4437;
 }
 
 * {
@@ -85,12 +86,15 @@ h4 {
 #nav-placeholder {
   margin-bottom: 5%;
   margin-top: 2%;
+  background-color: var(--mainColor);
+  width: 100%;
+  height: 10%;
 }
 
 #nav-placeholder a {
   display: block;
-  color: var(--mainColor);
-  background-color: var(--backColor);
+  color: var(--backColor);
+  background-color: var(--mainColor);
   border: medium solid var(--backColor);
   text-align: center;
 
@@ -101,8 +105,8 @@ h4 {
 }
 
 #nav-placeholder a:hover {
-  background-color: var(--mainColor);
-  color: var(--backColor);
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 #account-functions a:hover {
