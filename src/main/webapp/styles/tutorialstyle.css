@@ -106,28 +106,6 @@ h3::after {
   color: var(--mainColor);
 }
 
-textarea {
-  font-size: 120%;
-  font-family: var(--gfont);
-  border: 0.05em solid;
-  margin-bottom: 2%;
-  resize: vertical;
-  padding: 2%;
-  width: 90%;
-}
-
-textarea:focus {
-  outline: none !important;
-  border-color: var(--mainColor);
-  box-shadow: 0 0 8px var(--mainColor);
-}
-
-textarea::placeholder {
-  color: var(--placeholder);
-  font-size: 115%;
-  font-family: var(--gfont);
-}
-
 #account-functions {
   border-left-style: solid;
   border-width: 0.05em;
@@ -137,4 +115,8 @@ textarea::placeholder {
   margin-top: 5%;
   display: inline-block;
   box-sizing: border-box;
+}
+
+textarea {
+  width: 90%;
 }

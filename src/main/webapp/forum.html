@@ -28,16 +28,20 @@
         <div id="new-question">
           <h2>Create a New Question</h2>
           <div id="question-form">
-            <label for="topic-input">Topic:</label>
-            <select id="topic-input" name="topic">
-              <option value="Zoom">Zoom</option>
-              <option value="Facebook">Facebook</option>
-              <option value="Hangouts">Google Hangouts</option>
-              <option value="Other">Other</option>
-            </select><br/>
-            <label for="text-input">Question:</label>
-            <textarea id="text-input" name="text"></textarea><br/>
-            <button id="primary-button">Post</button>
+            <div class="vert-line">
+              <label for="topic-input">Topic:</label>
+              <select id="topic-input" class="button" name="topic">
+                <option value="Zoom">Zoom</option>
+                <option value="Facebook">Facebook</option>
+                <option value="Hangouts">Google Meet</option>
+                <option value="Other">Other</option>
+              </select>
+            </div><br/>
+            <div class="vert-line">
+              <label for="text-input">Question:</label>
+              <textarea id="text-input" name="text" rows="4" cols="30"></textarea>
+            </div><br/>
+            <button class="button big-button">Post</button>
           </div>
         </div>
         <div id="new-question-logged-out">
@@ -50,57 +54,36 @@
         </div>
       </div>
     </div>
-    <div id="forum">
-      <div id="search">
-        <h2>Search:</h2>
-        <textarea id="search-input"></textarea>
-        <button id="search-button"><i class="fa fa-search"></i></button>
-      </div>
-      <div id="filters">
-        <form id="filter-form" action="/forum?action=filter" method="POST">
-          <label for="filter-topic-input">Topic:</label>
-          <select id="filter-topic-input" name="topic">
-            <option value="all">All Topics</option>
-            <option value="Zoom">Zoom</option>
-            <option value="Facebook">Facebook</option>
-            <option value="Hangouts">Google Hangouts</option>
-          </select>
-          <label for="filter-sort-input">Sort By:</label>
-          <select id="filter-sort-input" name="sort">
-            <option value="timestamp">Date</option>
-            <option value="likes">Likes</option>
-          </select>
-          <label id="filter-user-label" for="filter-user-input">Users:</label>
-          <select id="filter-user-input" name="userId">
-            <option value="all">All User Questions</option>
-            <option value="my">My Questions</option>
-          </select>
-          <input type="submit" value="Update">
-        </form>
-      </div>
-      <div id="forum-placeholder">
-        <div class="forum-element question">
-          <div class="info-element">
-            <p class="topic" style="display: inline-block">Topic: {{topic}}</p>
-            <p class="accepted" style="display: inline-block">Accepted Answer</p>
-            <button class="accept-button" style="display: inline-block">Accept Answer</button>
-            <p class="date">{{date}}</p>
-            <p class="user">{{userName}}</p>
-          </div>
-          <h3 class="text">{{text}}</h3>
-          <div class="options-element">
-            <p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up"></i></p>
-            <p class="likes">{{likes}}</p>
-            <button class="reply-button">Reply</button>
-            <div class="response-form" style="display: none">
-              <textarea class="text-input" name="text"></textarea>
-              <button class="response-button">Post</button>
-            </div>
-            <button class="expand-button" style="display: inline-block">See {{numReplies}} Replies</button>
-          </div>
-          <div class="replies" id="replies-id" style="display: none"></div>
-          <button class="collapse-button" style="display: none">Hide Replies</button>
+    <div id="content">
+      <div id="forum">
+        <div id="search" class="vert-line">
+          <h2>Search:</h2>
+          <textarea id="search-input" rows="1" cols="30"></textarea>
+          <button class="button small-button" id="search-button"><i class="fa fa-search fa-2x"></i></button>
         </div>
+        <div id="filters" class="vert-line">
+          <form id="filter-form" action="/forum?action=filter" method="POST">
+            <label for="filter-topic-input">Topic:</label>
+            <select id="filter-topic-input" class="button med-button" name="topic">
+              <option value="all">All Topics</option>
+              <option value="Zoom">Zoom</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Hangouts">Google Meet</option>
+            </select>
+            <label for="filter-sort-input">Sort By:</label>
+            <select id="filter-sort-input" class="button med-button" name="sort">
+              <option value="timestamp">Date</option>
+              <option value="likes">Likes</option>
+            </select>
+            <label id="filter-user-label" for="filter-user-input">Users:</label>
+            <select id="filter-user-input" class="button med-button" name="userId">
+              <option value="all">All User Questions</option>
+              <option value="my">My Questions</option>
+            </select>
+            <input type="submit" class="button med-button" value="Update">
+          </form>
+        </div>
+        <div id="forum-placeholder"></div>
       </div>
     </div>
   </body>
