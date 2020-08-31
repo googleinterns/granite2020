@@ -18,7 +18,7 @@ const forumTemplate = '<div class="forum-element {{elementType}}">\n' +
 '<p class="likes">{{likes}}</p>\n' +
 '<button class="reply-button">Reply</button>\n' +
 '<div class="response-form" style="display: none">\n' +
-'<input type="text" class="text-input" name="text">\n' +
+'<textarea class="text-input" name="text"></textarea>\n' +
 '<button class="response-button">Post</button>\n' +
 '</div>\n' +
 '<button class="expand-button" style="display: {{repliesDisplay}}">' +

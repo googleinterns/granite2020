@@ -36,7 +36,7 @@
               <option value="Other">Other</option>
             </select><br/>
             <label for="text-input">Question:</label>
-            <input type="text" id="text-input" name="text"><br/>
+            <textarea id="text-input" name="text"></textarea><br/>
             <button id="primary-button">Post</button>
           </div>
         </div>
@@ -53,7 +53,7 @@
     <div id="forum">
       <div id="search">
         <h2>Search:</h2>
-        <input type="text" id="search-input"></input>
+        <textarea id="search-input"></textarea>
         <button id="search-button"><i class="fa fa-search"></i></button>
       </div>
       <div id="filters">
@@ -78,7 +78,30 @@
           <input type="submit" value="Update">
         </form>
       </div>
-      <div id="forum-placeholder"></div>
+      <div id="forum-placeholder">
+        <div class="forum-element question">
+          <div class="info-element">
+            <p class="topic" style="display: inline-block">Topic: {{topic}}</p>
+            <p class="accepted" style="display: inline-block">Accepted Answer</p>
+            <button class="accept-button" style="display: inline-block">Accept Answer</button>
+            <p class="date">{{date}}</p>
+            <p class="user">{{userName}}</p>
+          </div>
+          <h3 class="text">{{text}}</h3>
+          <div class="options-element">
+            <p class="likes-label">Likes: <i class="like-button fa fa-thumbs-up"></i></p>
+            <p class="likes">{{likes}}</p>
+            <button class="reply-button">Reply</button>
+            <div class="response-form" style="display: none">
+              <textarea class="text-input" name="text"></textarea>
+              <button class="response-button">Post</button>
+            </div>
+            <button class="expand-button" style="display: inline-block">See {{numReplies}} Replies</button>
+          </div>
+          <div class="replies" id="replies-id" style="display: none"></div>
+          <button class="collapse-button" style="display: none">Hide Replies</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>
