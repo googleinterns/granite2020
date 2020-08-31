@@ -4,10 +4,10 @@ const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
     '.calendar.google.com';
 
 initPromise.then(function() {
-  gapi.client.load('calendar', 'v3', function() { 
+  gapi.client.load('calendar', 'v3', function() {
     getCalendarEvents(EVENTS_CALENDAR, false).then(function(events) {
       if (events.length > 0) {
-        for (var i = 0; i < events.length; i++) {
+        for (let i = 0; i < events.length; i++) {
           const event = events[i];
           addEventToPage(event);
         }
@@ -21,7 +21,7 @@ initPromise.then(function() {
  * Gets events from a calendar with specified ID
  * @param {String} id ID of calendar we want events from
  * @param {Boolean} deleted Whether or not we want to include deleted events
- * @return {Promise} Promise which resolves after the 
+ * @return {Promise} Promise which resolves after the
  *    events of the calendar are listed
  */
 function getCalendarEvents(id, deleted) {
@@ -116,8 +116,8 @@ function addEventToPage(event) {
   button.appendChild(document.createTextNode('Add to Calendar'));
   button.addEventListener('click', function() {
     addEventToCalendar(event, 'primary');
-    this.disabled = true;
-    this.innerText='Event Added!';
+    button.disabled = true;
+    button.innerText='Event Added!';
   });
 
   getPrimaryIds().then(function(primaryIds) {
