@@ -47,11 +47,11 @@ function updatePage() {
   }
 }
 
+/**
+ * 
+ */
 export function onSignIn() {
   return signIn().then(function() {
     updatePage();
   });
 }
-
-
-
