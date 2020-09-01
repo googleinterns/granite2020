@@ -21,11 +21,11 @@
   width: 1px;
   background: var(--gLGray);
   margin: 0 auto;
-  top: 30%;
+  top: 40%;
   bottom: 0%;
   position: absolute;
   left: 50%;
-  height: 120%;
+  height: 80%;
 }
 
 #buttons {
