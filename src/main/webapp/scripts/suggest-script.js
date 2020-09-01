@@ -51,7 +51,7 @@ function updatePage() {
  * Updates page and nav bar after sign in
  * @return {Promise} Promise which resolves after page is updated
  */
- function onSignIn() {
+function onSignIn() {
   return signIn().then(function() {
     updatePage();
   });
