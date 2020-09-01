@@ -2,10 +2,11 @@
 #left-tutorials-button {
   flex: 1;
   width: 50%;
+  display: inline-block;
 }
 
-#left-tutorials-button li {
-  font-size: 120%;
+#buttons li {
+  font-size: 150%;
   display: inline-block;
   list-style-type: none;
 }
@@ -13,17 +14,31 @@
 #right-forum-button {
   flex: 1;
   width: 50%;
+  display: inline-block;
 }
 
-#right-forum-button li {
-  font-size: 120%;
-  display: inline-block;
-  list-style-type: none;
+.separator {
+  width: 1px;
+  background: var(--gLGray);
+  margin: 0 auto;
+  top: 30%;
+  bottom: 0%;
+  position: absolute;
+  left: 50%;
+  height: 120%;
 }
 
 #buttons {
   text-align: center;
   display: flex;
+}
+
+.tech-button h4 {
+  text-align: center;
+}
+
+#buttons h4 {
+  font-size: 150%;
 }
 
 .clearfix {
@@ -37,9 +52,10 @@
   align-content: center;
   cursor: pointer;
   padding: 2.5% 5%;
-  font-size: 200%;
+  font-size: 180%;
   font-weight: bold;
   font-family: var(--gfont);
+  border-radius: 10px;
 }
 
 .tech-button:hover {
@@ -49,10 +65,6 @@
 
 #page-content {
   clear: both;
-}
-
-.tech-button h4 {
-  text-align: center;
 }
 
 #buttons iframe {

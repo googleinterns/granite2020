@@ -29,61 +29,112 @@ public class UserDataServlet extends HttpServlet {
   private static final String LIKED_PROPERTY = "liked";
   private static final String COMMENT_PROPERTY = "comments";
   private static final String IMAGE_PROPERTY = "image";
-
   private static final String DATASTORE_USER = "User";
+  private static final String ACTION_PROPERTY = "action";
+  private static final String NEW_ACCOUNT_PROPERTY = "newAccount";
+  private static final String ELEMENT_ID_PROPERTY = "elementId";
+  private static final String ID_TOKEN_PROPERTY = "idtoken";
+
+  private static final String CLIENT_ID =
+      "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com";
 
   private String userId = "";
 
+  /** Get request to the Datastore and responds with user property given the id input */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/plain");
-    response.getWriter().println(userId);
+    String action = request.getParameter(ACTION_PROPERTY);
+    String userId = request.getParameter(ID_PROPERTY);
+
+    Entity entity = getUserEntity(userId);
+
+    if (action.equals(NAME_PROPERTY)) {
+      // Get user name based on id
+      response.setContentType("application/json;");
+      Gson gson = new Gson();
+      String name = (String) entity.getProperty(NAME_PROPERTY);
+      response.getWriter().println(gson.toJson(name));
+    }
+
+    if (action.equals(LIKED_PROPERTY)) {
+      // Get user likes based on id
+      response.setContentType("application/json;");
+      String liked = (String) entity.getProperty(LIKED_PROPERTY);
+      response.getWriter().println(liked);
+    }
   }
 
+  /** Post request to the Datastore to post new user or update likes */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String idTokenString = request.getParameter("idtoken");
-    UrlFetchTransport transport = new UrlFetchTransport();
+    String action = request.getParameter(ACTION_PROPERTY);
 
+    if (action.equals(LIKED_PROPERTY)) {
+      // Adds to user likes
+      String elementId = request.getParameter(ELEMENT_ID_PROPERTY);
+      String userId = request.getParameter(ID_PROPERTY);
+      Entity entity = getUserEntity(userId);
+
+      String json = (String) entity.getProperty(LIKED_PROPERTY);
+      ArrayList<String> liked = convertToArrayList(json);
+      liked.add(elementId);
+      String newJson = convertToJson(liked);
+      entity.setProperty(LIKED_PROPERTY, newJson);
+
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(entity);
+    }
+
+    if (action.equals(NEW_ACCOUNT_PROPERTY)) {
+      // Adds new user account
+      String idTokenString = request.getParameter(ID_TOKEN_PROPERTY);
+      GoogleIdToken idToken = getGoogleIdToken(idTokenString);
+      if (idToken != null) {
+        Payload payload = idToken.getPayload();
+        String userId = payload.getSubject();
+        String email = payload.getEmail();
+        String name = (String) payload.get("name");
+        String pictureUrl = (String) payload.get("picture");
+        String locale = (String) payload.get("locale");
+        String familyName = (String) payload.get("family_name");
+        String givenName = (String) payload.get("given_name");
+
+        Entity user = getUserEntity(userId);
+        if (user == null) {
+          addUser(userId, name, email, pictureUrl);
+        }
+      } else {
+        System.out.println("Invalid ID token for POST.");
+      }
+    }
+  }
+
+  /** Gets Google Id Token based on idtoken string */
+  private GoogleIdToken getGoogleIdToken(String idTokenString) {
+    UrlFetchTransport transport = new UrlFetchTransport();
     GsonFactory gsonFactory = new GsonFactory();
 
     GoogleIdTokenVerifier verifier =
         new GoogleIdTokenVerifier.Builder(UrlFetchTransport.getDefaultInstance(), gsonFactory)
-            .setAudience(
-                Collections.singletonList(
-                    "757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com"))
+            .setAudience(Collections.singletonList(CLIENT_ID))
             .build();
 
     GoogleIdToken idToken;
+
     try {
       idToken = verifier.verify(idTokenString);
-    } catch (GeneralSecurityException e) {
+    } catch (Exception e) {
       idToken = null;
     }
-    if (idToken != null) {
-      Payload payload = idToken.getPayload();
 
-      userId = payload.getSubject();
-      String email = payload.getEmail();
-      String name = (String) payload.get("name");
-      String pictureUrl = (String) payload.get("picture");
-      String locale = (String) payload.get("locale");
-      String familyName = (String) payload.get("family_name");
-      String givenName = (String) payload.get("given_name");
-
-      Entity user = getUserEntity(userId);
-      if (user == null) {
-        addUser(userId, name, email, pictureUrl);
-      }
-    } else {
-      System.out.println("Invalid ID token.");
-    }
+    return idToken;
   }
 
+  /** Gets user entity based on user id */
   private Entity getUserEntity(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query =
-        new Query("User")
+        new Query(DATASTORE_USER)
             .setFilter(new Query.FilterPredicate(ID_PROPERTY, Query.FilterOperator.EQUAL, id));
     PreparedQuery results = datastore.prepare(query);
 
@@ -92,6 +143,7 @@ public class UserDataServlet extends HttpServlet {
     return entity;
   }
 
+  /** Adds user to datastore based on properties */
   private void addUser(String id, String name, String email, String pictureUrl) {
     Entity userEntity = new Entity(DATASTORE_USER);
 
@@ -105,9 +157,18 @@ public class UserDataServlet extends HttpServlet {
     datastore.put(userEntity);
   }
 
+  /** Convert arrayList to Json */
   private String convertToJson(ArrayList<String> arrayList) {
     Gson gson = new Gson();
     String json = gson.toJson(arrayList);
     return json;
+  }
+
+  /** Convert Json to arrayList */
+  private ArrayList<String> convertToArrayList(String json) {
+    Gson gson = new Gson();
+    Type listType = new TypeToken<ArrayList<String>>() {}.getType();
+    ArrayList<String> liked = gson.fromJson(json, listType);
+    return liked;
   }
 }

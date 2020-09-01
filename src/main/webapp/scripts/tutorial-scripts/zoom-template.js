@@ -4,7 +4,6 @@ import {tutorialTemplate} from './tutorial-template.js';
 
 const zoomData = {
   toolName: 'Zoom',
-  toolDescription: 'Video Communication Tool',
   toolLink: 'https://zoom.us/',
   usefulLinks: [
     {linkTitle: 'Getting started with Zoom',
