@@ -127,7 +127,7 @@ h4 {
   border: none;
   outline: none;
   color: var(--backColor);
-  
+
   /* Keeping padding below in px for formatting */
   background-color: inherit;
   font-family: inherit;
@@ -155,7 +155,8 @@ h4 {
   color: var(--mainColor);
 }
 
-.navbar a:hover, .dropdown:hover {
+.navbar a:hover, 
+.dropdown:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
 }
