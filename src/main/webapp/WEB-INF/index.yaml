@@ -1,9 +1,26 @@
 indexes:
 - kind: ForumElement
   properties:
+  - name: parentId
+  - name: timestamp
+    direction: desc
+
+- kind: ForumElement
+  properties:
+  - name: parentId
+  - name: likes
+    direction: desc
+
+- kind: ForumElement
+  properties:
   - name: topic
   - name: parentId
   - name: timestamp
     direction: desc
+
+- kind: ForumElement
+  properties:
+  - name: topic
+  - name: parentId
   - name: likes
     direction: desc

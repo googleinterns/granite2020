@@ -144,6 +144,7 @@ public class ForumServlet extends HttpServlet {
 
     Query query =
         new Query("ForumElement").setFilter(filter).addSort(sort, SortDirection.DESCENDING);
+
     return query;
   }
 
