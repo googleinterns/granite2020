@@ -1,0 +1,31 @@
+
+li {
+  overflow: hidden;
+  width: 100%;
+  border-bottom: solid black 1px;
+  padding: 5%;
+}
+
+#open-events {
+  list-style-type: none;
+  overflow: hidden;
+  width: 70%;
+  margin: auto;
+}
+
+.summary {
+  float: left;
+}
+
+li button {
+  float: right;
+  height: 30%;
+  margin-top: 7%;
+  padding: 3%;
+}
+
+li button:disabled {
+  background-color: var(--gLGray);
+  color: var(--mainColor);
+  pointer-events: none;
+}
