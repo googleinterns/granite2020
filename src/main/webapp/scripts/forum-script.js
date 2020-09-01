@@ -205,6 +205,11 @@ function createElementData(element, userName) {
     repliesDisplay = 'none';
   }
 
+  let replyDisplay = 'none';
+  if (signedIn) {
+    replyDisplay = 'inline-block';
+  }
+
   /* Populate json data for the mustache render */
   const data = {
     elementType: elementType,
@@ -217,6 +222,7 @@ function createElementData(element, userName) {
     text: element.text,
     likes: element.likes,
     id: element.id,
+    replyDisplay: replyDisplay,
     repliesDisplay: repliesDisplay,
     numReplies: element.numberReplies,
   };
