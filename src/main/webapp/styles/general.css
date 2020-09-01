@@ -250,22 +250,3 @@ textarea::placeholder {
   font-size: 115%;
   font-family: var(--gfont);
 }
-
-#account-functions div {
-  width: 20%;
-  margin: auto;
-  background-color: white;
-  color: #4285f4;
-  border: 2px solid #4285f4;
-  align-content: center;
-  cursor: pointer;
-  padding: 16px 32px;
-  font-size: 110%;
-  font-family: Google Sans, sans-serif;
-  text-decoration: none;
-}
-
-#account-functions div:hover {
-  background-color: #4285f4;
-  color: white;
-}
