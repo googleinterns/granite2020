@@ -10,7 +10,9 @@ initPromise.then(function() {
   updatePage();
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(updatePage);
-});
+}).then( function () {
+  $('#suggestion-form').css('display', 'block');
+} )
 
 /**
  * Posts to server the suggestion made by the user
@@ -34,7 +36,7 @@ function updatePage() {
   const auth2 = gapi.auth2.getAuthInstance();
   if (auth2.isSignedIn.get()) {
     $('#account-functions').css('display', 'none');
-    $('#suggestion').css('display', 'block');
+    $('#suggestion').css('display', 'inline-block');
   } else {
     $('#account-functions').css('display', 'block');
     $('#suggestion').css('display', 'none');
