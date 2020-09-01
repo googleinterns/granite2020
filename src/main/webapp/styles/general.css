@@ -99,7 +99,18 @@ h4 {
 }
 
 /* Navigation Bar Styling */
-#nav-placeholder a {
+
+.navbar {
+  background-color: var(--mainColor);
+  height: 10%;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  left: calc(-50vw + 50%);
+  box-shadow: 2px 7px 18px var(--gLGray);
+}
+
+.navbar a {
   display: block;
   color: var(--backColor);
   background-color: var(--mainColor);
@@ -111,24 +122,46 @@ h4 {
   font-size: 130%;
 }
 
-#nav-placeholder a:hover {
-  background-color: var(--backColor);
-  color: var(--mainColor);
-}
-
-#nav-bar {
-  background-color: var(--mainColor);
-  height: 10%;
-  width: 100vw;
-  position: relative;
+.dropdown {
   overflow: hidden;
-  left: calc(-50vw + 50%);
-  box-shadow: 2px 7px 18px var(--gLGray);
+  border: none;
+  outline: none;
+  color: var(--backColor);
+  /* Keeping padding below in px for formatting */
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
 }
 
-#account-functions a:hover {
+.navbar a:hover, .dropdown:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
+}
+
+.dropdown-content {
+  display: none;
+  position: relative; /*change*/
+  background-color: var(--mainColor);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: var(--backColor);
+  padding: 14px 20px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--backColor);
+  color: var(--mainColor);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 span.left {
@@ -137,6 +170,13 @@ span.left {
 
 span.right {
   float: right;
+}
+
+/*End Styling nav section */
+
+#account-functions a:hover {
+  background-color: var(--backColor);
+  color: var(--mainColor);
 }
 
 /* general button styling */
