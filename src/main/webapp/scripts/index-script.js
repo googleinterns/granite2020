@@ -1,6 +1,5 @@
 
 import {signIn, initPromise} from './account-info.js';
-import {updateBar} from './nav-bar.js';
 initPromise.then(function() {
   updatePage();
 
@@ -19,7 +18,6 @@ initPromise.then(function() {
 export function onSignIn() {
   return signIn().then(function() {
     updatePage();
-    updateBar();
   });
 }
 
