@@ -27,7 +27,7 @@ function makeSuggestion() {
   additionElement.value = '';
 }
 
-/** 
+/**
  * Updates content on page
  */
 function updatePage() {
