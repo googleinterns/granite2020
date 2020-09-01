@@ -63,7 +63,7 @@ h3::after {
   text-align: center;
   box-sizing: border-box;
   overflow: hidden;
-  float: right;
+  margin-left: 10%;
 }
 
 #suggestion {

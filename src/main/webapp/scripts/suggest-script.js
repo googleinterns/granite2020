@@ -7,10 +7,9 @@ window.onload = function() {
   document.getElementById('make-suggestion').onclick = makeSuggestion;
 };
 initPromise.then(function(){
-  const auth2 = gapi.auth2.getAuthInstance
-  auth2.isSignedIn.listen(function(){
-    updatePage();
-  })
+  updatePage();
+  const auth2 = gapi.auth2.getAuthInstance();
+  auth2.isSignedIn.listen(updatePage);
 })
 
 /**
@@ -29,12 +28,13 @@ function makeSuggestion() {
 }
 
 function updatePage() {
+  const auth2 = gapi.auth2.getAuthInstance();
   if (auth2.isSignedIn.get()) {
     $('#account-functions').css('display', 'none');
-    $('#suggestion-form').css('display', 'block')
+    $('#suggestion').css('display', 'block')
   } else {
     $('#account-functions').css('display', 'block');
-    $('#suggestion-form').css('display', 'block')
+    $('#suggestion').css('display', 'none')
 
   }
 }
