@@ -11,11 +11,9 @@ iframe {
 
 /* Formatting for create new question */
 
-#new-question {
-  margin-left: 30px;
-}
-
+#new-question,
 #new-question-logged-out {
+  margin-left: 30px;
   display: none;
 }
 
@@ -39,6 +37,7 @@ input[type=submit] {
   padding: 8px 16px;
   font-size: 80%;
   font-family: Google Sans, sans-serif;
+  outline: none;
 }
 
 button:hover {
@@ -65,7 +64,6 @@ input[type=text] {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  height: 30px;
   border: 2px solid black;
 }
 
@@ -76,6 +74,7 @@ input[type=text] {
   margin: auto;
 }
 
+#search,
 #filters,
 #forum-placeholder {
   margin: 20px;
@@ -127,8 +126,7 @@ input[type=text] {
 }
 
 i {
-  color: #4285f4;
-  cursor: pointer;
+  font-size: 30px;
 }
 
 .replies {
@@ -146,7 +144,10 @@ i {
 .accepted,
 .accept-button,
 .expand-button,
-.response-form {
+.response-form,
+#search h2,
+#search-input,
+#search-button {
   float: left;
   margin-right: 10px;
 }
@@ -158,6 +159,20 @@ i {
 }
 
 .text,
-.replies {
+.replies,
+#filters {
   clear: both;
+}
+
+/* Formatting for search bar */
+
+#search-input {
+  margin-top: 20px;
+  border-radius: 20px;
+  outline: none;
+}
+
+#search-button {
+  margin-top: 20px;
+  border-radius: 35px;
 }

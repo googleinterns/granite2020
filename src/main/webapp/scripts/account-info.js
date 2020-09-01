@@ -1,5 +1,4 @@
 
-let auth2;
 let profile;
 const initPromise = init();
 
@@ -11,7 +10,7 @@ const initPromise = init();
 function init() {
   return new Promise(function(resolve, reject) {
     gapi.load('auth2', function() {
-      auth2 = gapi.auth2.init();
+      gapi.auth2.init();
       resolve();
     });
   });
@@ -22,8 +21,16 @@ function init() {
  * @return {Promise} Promise which resolves when profile is set
  */
 function signIn() {
+  const auth2 = gapi.auth2.getAuthInstance();
   return auth2.signIn().then(function() {
     profile = auth2.currentUser.get().getBasicProfile();
+    console.log(profile);
+    const idToken = auth2.currentUser.get().getAuthResponse().id_token;
+    // send idToken to server
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/account');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('action=newAccount&idtoken=' + idToken);
   });
 }
 
@@ -33,11 +40,14 @@ function signIn() {
  * signs out and profile is set to null
  */
 function signOut() {
+  const auth2 = gapi.auth2.getAuthInstance();
   return auth2.signOut().then(function() {
+    auth2.currentUser.get().disconnect();
+    auth2.disconnect();
     profile = null;
   });
 }
 
 
-export {auth2, profile, signIn, initPromise, signOut};
+export {profile, signIn, initPromise, signOut};
 

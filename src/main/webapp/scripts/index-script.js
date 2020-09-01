@@ -1,6 +1,5 @@
 
-import {auth2, signIn, initPromise} from './account-info.js';
-import {updateBar} from './nav-bar.js';
+import {signIn, initPromise} from './account-info.js';
 initPromise.then(function() {
   updatePage();
 
@@ -8,7 +7,7 @@ initPromise.then(function() {
   $('.sign-in').click(function() {
     onSignIn();
   });
-  auth2.isSignedIn.listen(updatePage);
+  gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
 });
 
 
@@ -19,7 +18,6 @@ initPromise.then(function() {
 export function onSignIn() {
   return signIn().then(function() {
     updatePage();
-    updateBar();
   });
 }
 
@@ -28,7 +26,9 @@ export function onSignIn() {
  * Updates content on webpage alone (not nav bar)
  */
 function updatePage() {
+  const auth2 = gapi.auth2.getAuthInstance();
   if (auth2.isSignedIn.get()) {
+    console.log('signedIn');
     $('#account-functions').css('display', 'none');
   } else {
     $('#account-functions').css('display', 'block');

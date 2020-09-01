@@ -4,13 +4,21 @@
   <meta charset="UTF-8">
   <title>Seniors Connect</title>
   <link type="text/css" rel="stylesheet" href="styles/tutorialstyle.css">
-  <link rel="stylesheet" href="styles/general.css">
-  <script src="scripts/login-script.js" defer></script>
-  <script src="scripts/suggest-script.js"></script>
+  <!-- On Every Page -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" defer></script>
+  <!-- Content URL obtained from credentials section under gcp dashboard -->
+  <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
+  <link rel="stylesheet" href="styles/general.css">
+  <script type="module" src="scripts/nav-bar.js" defer></script>
+
+  <script type="module" src="scripts/suggest-script.js" defer></script>
+
 </head>
 <body>
-  <div id="nav-placeholder"></div>
+  <div id="nav-bar">
+    <div id="nav-placeholder"> </div>
+  </div>
 
   <div id="header">
     <h1>Tutorials</h1>
@@ -24,7 +32,7 @@
       <li><a href="tutorials/facebook.html">Facebook</a></li>
       <li><a href="tutorials/googlemeet.html">Google Meet</a></li>
 
-      <h3> Watch the video to learn how to use this page </h3>
+      <h4> Watch the video to learn how to use this page </h4>
       <!-- Temporary video below, will contain video on how to navigate tutorials page-->
       <iframe class="tutorials-vid" src="https://www.youtube.com/embed/BDliEq_0qeQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -42,7 +50,7 @@
         </div>
 
         <div id="account-functions">
-          <h2>Can't find what you are looking for? Make a suggestion.</h2><br>
+          <h2>Can't find what you are looking for?<br/>Make a suggestion.</h2><br>
           <div class="sign-in">Log In</div>
           <h2>Don't have an account?</h2><br>
           <div class="sign-in">Sign Up</div>

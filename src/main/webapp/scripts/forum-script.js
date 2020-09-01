@@ -1,7 +1,68 @@
 import {forumTemplate} from './forum-template.js';
+import {signIn, initPromise} from './account-info.js';
+import {updateBar} from './nav-bar.js';
 
-$( document ).ready( getFilters );
-$( document ).ready( getForum );
+let signedIn;
+let userId;
+let userLiked;
+let userFilter = 'all';
+
+$( document ).ready( function() {
+  // Add user data to forum
+  initPromise.then(function() {
+    updatePage();
+    gapi.auth2.getAuthInstance().isSignedIn.listen(updatePage);
+    $('.sign-in').click(function() {
+      signIn().then(function() {
+        updatePage();
+      });
+    });
+  });
+
+  // Add search functionality
+  createSearch();
+
+  // Populates filters
+  getFilters();
+
+  // Add functionality to post question
+  $('#primary-button').click(postQuestion);
+});
+
+/**
+ *  Updates page based on whether the user is signed in
+ */
+function updatePage() {
+  updateBar();
+  const auth2 = gapi.auth2.getAuthInstance();
+
+  if (auth2.isSignedIn.get()) {
+    // The user is signed in
+    signedIn = true;
+    userId = auth2.currentUser.get().getBasicProfile().getId();
+
+    // Get user likes and generate forum
+    fetch('/account?action=liked&id=' + userId).then((response) =>
+      (response.json())).then((json) => {
+      userLiked = json;
+    }).then(getForum);
+
+    $('#new-question').css('display', 'inline-block');
+    $('#new-question-logged-out').css('display', 'none');
+    $('.reply-button').css('display', 'inline-block');
+    $('#filter-user-label').css('display', 'inline-block');
+    $('#filter-user-input').css('display', 'inline-block');
+  } else {
+    // The user is not signed in
+    signedIn = false;
+    getForum();
+    $('#new-question').css('display', 'none');
+    $('#new-question-logged-out').css('display', 'inline-block');
+    $('.reply-button').css('display', 'none');
+    $('#filter-user-label').css('display', 'none');
+    $('#filter-user-input').css('display', 'none');
+  }
+}
 
 /**
  *  Populates forum-placeholder with forum data
@@ -9,7 +70,7 @@ $( document ).ready( getForum );
 function getForum() {
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id);
+  expandForum(placeholder, id, null);
 }
 
 /**
@@ -25,22 +86,49 @@ function getFilters() {
     const sort = urlParams.get('sort');
     $('#filter-sort-input').val(sort).change();
   }
+  if (urlParams.has('userId')) {
+    const user = urlParams.get('userId');
+    $('#filter-user-input').val(user).change();
+    userFilter = user;
+  }
 }
 
 /**
  *  Populates the replies for a forum element with the given id
- *  in the placeholder given
+ *  in the placeholder given with no search keywords
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {long} id the long that identifies the parent of the forum
  *  elements
+ *  @param {String} search search text from user if applicable
  */
 function expandForum(placeholder, id) {
+  // Call expandForumWithSearch with the search parameter as null so that
+  // no search is considered
+  expandForumWithSearch(placeholder, id, null);
+}
+
+/**
+ *  Populates the replies for a forum element with the given id
+ *  in the placeholder given also based on search keywords if present
+ *
+ *  @param {S.fn.init} placeholder the div that will hold the forum elements
+ *  @param {long} id the long that identifies the parent of the forum
+ *  elements
+ *  @param {String} search search text from user if applicable
+ */
+function expandForumWithSearch(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
         for (let i = 0; i < elements.length; i++) {
-          createForumElement(placeholder, elements[i]);
+          if (search) {
+            if (containsSearch(elements[i].text, search)) {
+              createForumElement(placeholder, elements[i]);
+            }
+          } else if (userFilter ==='all' || elements[i].userId === userId) {
+            createForumElement(placeholder, elements[i]);
+          }
         }
       });
 }
@@ -60,19 +148,27 @@ function createForumElement(placeholder, element) {
   elementDiv.attr('id', elementId);
   placeholder.append(elementDiv);
 
-  const data = createElementData(element);
+  let data;
+  fetch('/account?action=name&id=' + element.userId).then((response) =>
+    (response.json())).then((json) => {
+    data = createElementData(element, json);
+  }).then(function() {
+    const rendered = Mustache.render(forumTemplate, data);
+    elementDiv.html(rendered);
 
-  const rendered = Mustache.render(forumTemplate, data);
-  elementDiv.html(rendered);
+    /* Add onclick functionality to mustache render */
+    if (signedIn && !userLiked.includes(element.id.toString())) {
+      $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
+      $('#' + elementId + ' .like-button').css('color', '#4285f4');
+      $('#' + elementId + ' .like-button').css('cursor', 'pointer');
+    }
 
-  /* Add onclick functionality to mustache render */
-  $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
-  $('#' + elementId + ' .reply-button').click(element.id, reply);
-  $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
-  $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
-  // TODO: Make posting a reply not a form that redirects the page but just
-  // adds to the current page
-  // TODO: create a method for accepting an answer, once user data is inputted
+    $('#' + elementId + ' .reply-button').click(element.id, reply);
+    $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
+    $('#' + elementId + ' .collapse-button').click(element.id, collapseReplies);
+    $('#' + elementId + ' .response-button').click(element.id, postComment);
+    $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+  });
 }
 
 /**
@@ -80,16 +176,23 @@ function createForumElement(placeholder, element) {
  *
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
+ *  @param {String} userName the name of the user who posted the element
  *  @return {Object} a populated json object
  */
-function createElementData(element) {
+function createElementData(element, userName) {
   /* If element is a comment or question and thus whether the topic should be
    * displayed */
   let elementType = 'comment';
   let topicDisplay = 'none';
+  let acceptedDisplay = 'none';
+  let acceptButtonDisplay = 'none';
   if (element.parentId == -1) {
     elementType = 'question';
     topicDisplay = 'inline-block';
+  } else if (element.accepted) {
+    acceptedDisplay = 'inline-block';
+  } else if (element.userId === userId) {
+    acceptButtonDisplay = 'inline-block';
   }
 
   /* If the element has replies, display expand button if not no display */
@@ -102,8 +205,11 @@ function createElementData(element) {
   const data = {
     elementType: elementType,
     topicDisplay: topicDisplay,
+    acceptedDisplay: acceptedDisplay,
+    acceptButtonDisplay: acceptButtonDisplay,
     topic: element.topic,
     date: convertTimestampToDate(element.timestamp),
+    userName: userName,
     text: element.text,
     likes: element.likes,
     id: element.id,
@@ -111,9 +217,15 @@ function createElementData(element) {
     numReplies: element.numberReplies,
   };
 
-  console.log(data);
-
   return data;
+}
+
+/**
+ *  Creates a search functionality when page is loaded
+ */
+function createSearch() {
+  $('#search-button').click(search);
+  $('#search-button').keyup(search);
 }
 
 /**
@@ -124,7 +236,10 @@ function createElementData(element) {
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
-  return date.toUTCString();
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Add one because the month is zero index
+  const year = date.getFullYear();
+  return (month + '/' + day + '/' + year);
 }
 
 /**
@@ -136,8 +251,12 @@ function incrementLikes(idHandler) {
   const id = idHandler.data;
   const elementId = 'element-' + id.toString();
   $.post('/forum?id=' + id.toString() + '&action=likes');
+  $.post('/account?action=liked&id=' + userId + '&elementId=' + id.toString());
   const likes = parseInt($('#' + elementId + ' .likes').text());
   $('#' + elementId + ' .likes').text(likes + 1);
+  $('#' + elementId + ' .like-button').css('color', 'black');
+  $('#' + elementId + ' .like-button').css('cursor', 'auto');
+  $('#' + elementId + ' .like-button').off('click');
 }
 
 /**
@@ -161,7 +280,7 @@ function expandReplies(idHandler) {
   const elementId = 'element-' + id.toString();
   const placeholder = $('#replies-' + id.toString());
   placeholder.css('display', 'block');
-  expandForum(placeholder, id);
+  expandForum(placeholder, id, null);
   $('#' + elementId + ' .expand-button').css('display', 'none');
   $('#' + elementId + ' .collapse-button').css('display', 'block');
 }
@@ -178,4 +297,77 @@ function collapseReplies(idHandler) {
   $('#replies-' + id.toString()).css('display', 'none');
   $('#' + elementId + ' .expand-button').css('display', 'inline-block');
   $('#' + elementId + ' .collapse-button').css('display', 'none');
+}
+
+/**
+ *  Onclick handler for a user searching to reload forum with search parameter
+ */
+function search() {
+  const search = $('#search-input').val();
+  const id = -1;
+  const placeholder = $('#forum-placeholder');
+  expandForumWithSearch(placeholder, id, search);
+}
+
+/**
+ *  Returns whether a word of the search is contained with in the text
+ *
+ *  @param {String} text contents of a question
+ *  @param {String} search contents of the user search
+ *
+ *  @return {Boolean} whether there is a word of the search within the text
+ */
+function containsSearch(text, search) {
+  const stopWords = ['a', 'to', 'and', 'how', 'the', 'when', 'what', 'why',
+    'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
+  const lowerText = text.toLowerCase();
+  const lowerSearch = search.toLowerCase();
+  let words = lowerSearch.split(' ');
+  words = words.filter( function(word) {
+    return ((!stopWords.includes(word)) && (lowerText.includes(word)));
+  });
+  return words.length > 0;
+}
+
+/**
+ *  Post question to datastore
+ */
+function postQuestion() {
+  const text = $('#question-form #text-input').val();
+  const topic = $('#question-form #topic-input').val();
+  $('#question-form #topic-input').val('Zoom');
+  $('#question-form #text-input').val('');
+  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic +
+      '&userId=' + userId).then(function() {
+    getForum();
+  });
+}
+
+/**
+ *  Post comment basedd on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function postComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  const text = $('#' + elementId + ' .text-input').val();
+  $('#' + elementId + ' .text-input').val('');
+  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
+      '&userId=' + userId).then(function() {
+    expandReplies(idHandler);
+  });
+}
+
+/**
+ *  Accepts comment based on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function acceptComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .accept-button').css('display', 'none');
+  $('#' + elementId + ' .accepted').css('display', 'inline-block');
+  $.post('/forum?id=' + id.toString() + '&action=accepted');
 }
