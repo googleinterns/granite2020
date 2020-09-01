@@ -308,10 +308,9 @@ function collapseReplies(idHandler) {
  */
 function search() {
   const search = $('#search-input').val();
-  $('#search-input').val('');
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id, search);
+  expandForumWithSearch(placeholder, id, search);
 }
 
 /**
@@ -364,90 +363,4 @@ function postComment(idHandler) {
       '&userId=' + userId).then(function() {
     expandReplies(idHandler);
   });
-}
-
-/**
- *  Accepts comment based on id in idHandler
- *
- *  @param {S.Event} idHandler onclick handler that contains the id data
- */
-function acceptComment(idHandler) {
-  const id = idHandler.data;
-  const elementId = 'element-' + id.toString();
-  $('#' + elementId + ' .accept-button').css('display', 'none');
-  $('#' + elementId + ' .accepted').css('display', 'inline-block');
-  $.post('/forum?id=' + id.toString() + '&action=accepted');
-}
-
-/**
- *  Onclick handler for a user searching to reload forum with search parameter
- */
-function search() {
-  const search = $('#search-input').val();
-  const id = -1;
-  const placeholder = $('#forum-placeholder');
-  expandForumWithSearch(placeholder, id, search);
-}
-
-/**
- *  Returns whether a word of the search is contained with in the text
- *
- *  @param {String} text contents of a question
- *  @param {String} search contents of the user search
- *
- *  @return {Boolean} whether there is a word of the search within the text
- */
-function containsSearch(text, search) {
-  const stopWords = ['a', 'to', 'and', 'how', 'the', 'when', 'what', 'why',
-    'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
-  const lowerText = text.toLowerCase();
-  const lowerSearch = search.toLowerCase();
-  let words = lowerSearch.split(' ');
-  words = words.filter( function(word) {
-    return ((!stopWords.includes(word)) && (lowerText.includes(word)));
-  });
-  return words.length > 0;
-}
-
-/**
- *  Post question to datastore
- */
-function postQuestion() {
-  const text = $('#question-form #text-input').val();
-  const topic = $('#question-form #topic-input').val();
-  $('#question-form #topic-input').val('Zoom');
-  $('#question-form #text-input').val('');
-  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic +
-      '&userId=' + userId).then(function() {
-    getForum();
-  });
-}
-
-/**
- *  Post comment basedd on id in idHandler
- *
- *  @param {S.Event} idHandler onclick handler that contains the id data
- */
-function postComment(idHandler) {
-  const id = idHandler.data;
-  const elementId = 'element-' + id.toString();
-  const text = $('#' + elementId + ' .text-input').val();
-  $('#' + elementId + ' .text-input').val('');
-  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
-      '&userId=' + userId).then(function() {
-    expandReplies(idHandler);
-  });
-}
-
-/**
- *  Accepts comment based on id in idHandler
- *
- *  @param {S.Event} idHandler onclick handler that contains the id data
- */
-function acceptComment(idHandler) {
-  const id = idHandler.data;
-  const elementId = 'element-' + id.toString();
-  $('#' + elementId + ' .accept-button').css('display', 'none');
-  $('#' + elementId + ' .accepted').css('display', 'inline-block');
-  $.post('/forum?id=' + id.toString() + '&action=accepted');
 }

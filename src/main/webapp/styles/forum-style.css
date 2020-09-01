@@ -163,16 +163,3 @@ label {
 .text {
   clear: both;
 }
-
-/* Formatting for search bar */
-
-#search-input {
-  margin-top: 20px;
-  border-radius: 20px;
-  outline: none;
-}
-
-#search-button {
-  margin-top: 20px;
-  border-radius: 35px;
-}
