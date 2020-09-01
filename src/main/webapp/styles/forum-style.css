@@ -17,6 +17,13 @@
   margin-top: 2%;
 }
 
+#content-right {
+  border-left-style: solid;
+  border-width: 0.05em;
+  border-color: var(--gLGray);
+  padding-left: 5%;
+}
+
 iframe {
   width: 90%;
   height: 90%;
@@ -24,13 +31,8 @@ iframe {
 
 #new-question,
 #new-question-logged-out {
-  border-left-style: solid;
-  border-width: 0.05em;
-  border-color: var(--gLGray);
-  padding-left: 5%;
   display: none;
 }
-
 #account-functions div {
   width: 30%;
 }
