@@ -19,7 +19,6 @@ initPromise.then(function() {
 export function onSignIn() {
   return signIn().then(function() {
     updatePage();
-    updateBar();
   });
 }
 

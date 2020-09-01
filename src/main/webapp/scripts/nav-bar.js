@@ -2,10 +2,7 @@
 import {auth2, signOut, signIn, initPromise} from './account-info.js';
 
 $(document).ready(function() {
-  $('#nav-placeholder').load('../nav.html', updateBar);
-  initPromise.then(function() {
-    auth2.isSignedIn.listen(updateBar);
-  });
+  $('#nav-placeholder').load('../nav.html', updateBarOnLoad);
 });
 
 /**
@@ -23,4 +20,10 @@ function updateBar() {
   }
 }
 
+function updateBarOnLoad(){
+  initPromise.then(function(){
+    updateBar();
+    auth2.isSignedIn.listen(updateBar)
+  })
+}
 export {updateBar};
