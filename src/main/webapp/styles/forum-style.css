@@ -7,6 +7,10 @@
 
 /* Formatting for video and new question section */
 
+#content {
+  margin-bottom: 15%;
+}
+
 #content-left,
 #content-right {
   text-align: center;
@@ -34,8 +38,8 @@ iframe {
   display: none;
 }
 
-#account-functions div {
-  width: 30%;
+#account-functions {
+  width: 120%;
 }
 
 /* Formatting for button types */

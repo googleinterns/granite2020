@@ -4,7 +4,6 @@
   --backColor: white;
   --mainColor: #4285f4;
   --placeholder: #b7b7b7;
-  --fGray: #f0f0ec;
   --gRed: #db4437;
   --gLGray: #bdbdbd;
   --gDGray: #666;
@@ -228,44 +227,4 @@ span.right {
 #content-right {
   flex: 1;
   width: 50%;
-}
-
-#account-functions div {
-  width: 20%;
-  margin: auto;
-  background-color: white;
-  color: #4285f4;
-  border: 2px solid #4285f4;
-  align-content: center;
-  cursor: pointer;
-  padding: 16px 32px;
-  font-size: 110%;
-  font-family: Google Sans, sans-serif;
-  text-decoration: none;
-}
-
-#account-functions div:hover {
-  background-color: #4285f4;
-  color: white;
-}
-
-textarea {
-  font-size: 120%;
-  font-family: var(--gfont);
-  border: 0.05em solid;
-  margin-bottom: 2%;
-  resize: vertical;
-  padding: 2%;
-}
-
-textarea:focus {
-  outline: none !important;
-  border-color: var(--mainColor);
-  box-shadow: 0 0 8px var(--mainColor);
-}
-
-textarea::placeholder {
-  color: var(--placeholder);
-  font-size: 115%;
-  font-family: var(--gfont);
 }
