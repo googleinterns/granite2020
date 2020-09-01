@@ -118,9 +118,11 @@ function expandForum(placeholder, id) {
  *  @param {String} search search text from user if applicable
  */
 function expandForumWithSearch(placeholder, id, search) {
+  console.log("expandForum");
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
+        console.log(elements.length);
         for (let i = 0; i < elements.length; i++) {
           if (userFilter ==='all' || elements[i].userId === userId) {
             if (!search || containsSearch(elements[i].text, search)) {
@@ -144,6 +146,7 @@ function createForumElement(placeholder, element) {
   const elementDiv = $('<div></div>');
   const elementId = 'outer-element-' + element.id.toString();
   elementDiv.attr('id', elementId);
+  console.log(elementId);
   placeholder.append(elementDiv);
 
   let data;
@@ -207,7 +210,7 @@ function createElementData(element, userName) {
 
   let replyDisplay  = 'none';
   if (signedIn) {
-    replyDispaly = 'inline-block';
+    replyDisplay = 'inline-block';
   }
 
   /* Populate json data for the mustache render */
