@@ -17,7 +17,7 @@
   display: inline-block;
 }
 
-separator {
+.separator {
   width: 1px;
   background: var(--gLGray);
   margin: 0 auto;
