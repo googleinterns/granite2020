@@ -2,8 +2,7 @@
 li {
   overflow: hidden;
   width: 100%;
-  border: solid black 1px;
-  border-radius: 10px;
+  border-bottom: solid black 1px;
   padding: 5%;
 }
 
@@ -21,5 +20,12 @@ li {
 li button {
   float: right;
   height: 30%;
-  margin: 0 auto;
+  margin-top: 7%;
+  padding: 3%;
+}
+
+li button:disabled {
+  background-color: var(--gLGray);
+  color: var(--mainColor);
+  pointer-events: none;
 }
