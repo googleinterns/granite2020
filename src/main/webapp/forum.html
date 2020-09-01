@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles/forum-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" defer></script>
+    <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
+    <script type="module" src="scripts/nav-bar.js"></script>
     <script src="https://unpkg.com/mustache@latest"></script>
     <script type="module" src="scripts/forum-template.js"></script>
     <script type="module" src="scripts/forum-script.js"></script>
@@ -24,7 +27,7 @@
       <div id="content-right">
         <div id="new-question">
           <h2>Create a New Question</h2>
-          <form id="question-form" action="/forum?id=-1&amp;action=reply" method="POST">
+          <div id="question-form">
             <label for="topic-input">Topic:</label>
             <select id="topic-input" name="topic">
               <option value="Zoom">Zoom</option>
@@ -34,20 +37,16 @@
             </select><br/>
             <label for="text-input">Question:</label>
             <input type="text" id="text-input" name="text"><br/>
-            <input id="primary-button" type="submit" value="Post">
-          </form>
+            <button id="primary-button">Post</button>
+          </div>
         </div>
         <div id="new-question-logged-out">
-          <h2>Want to create a question?</h2>
-          <form action="login.html">
-            <!-- TODO: Need to get login url -->
-            <input type="submit" value="Login" />
-          </form>
-          <h2>Don't have an account?</h2>
-          <form action="signup.html">
-            <!-- TODO: Need to get signup url -->
-            <input type="submit" value="Sign Up" />
-          </form>
+          <div id="account-functions">
+            <h2>Want to create a question?</h2>
+            <div class="sign-in" >Log In</div>
+            <h2>Don't have an account?</h2>
+            <div class="sign-in" >Sign Up</div>
+          </div>
         </div>
       </div>
     </div>
@@ -70,6 +69,11 @@
           <select id="filter-sort-input" name="sort">
             <option value="timestamp">Date</option>
             <option value="likes">Likes</option>
+          </select>
+          <label id="filter-user-label" for="filter-user-input">Users:</label>
+          <select id="filter-user-input" name="userId">
+            <option value="all">All User Questions</option>
+            <option value="my">My Questions</option>
           </select>
           <input type="submit" value="Update">
         </form>
