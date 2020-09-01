@@ -1,4 +1,4 @@
-import {initPromise} from './account-info.js';
+import {initPromise, signIn} from './account-info.js';
 
 /**
  * Gets executed when button is clicked
@@ -8,6 +8,10 @@ window.onload = function() {
 };
 initPromise.then(function() {
   updatePage();
+
+  $('.sign-in').click(function() {
+    onSignIn();
+  });
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(updatePage);
 }).then( function() {
@@ -43,4 +47,12 @@ function updatePage() {
   }
 }
 
-
+/**
+ * Updates page and nav bar after sign in
+ * @return {Promise} Promise which resolves after page is updated
+ */
+function onSignIn() {
+  return signIn().then(function() {
+    updatePage();
+  });
+}
