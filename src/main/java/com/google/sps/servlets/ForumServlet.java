@@ -93,9 +93,11 @@ public class ForumServlet extends HttpServlet {
     }
 
     if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       Entity entity = getEntity(id);
       entity.setProperty(ForumElement.ACCEPTED_PROPERTY, true);
+      datastore.put(entity);
     }
   }
 
