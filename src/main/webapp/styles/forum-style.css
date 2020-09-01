@@ -1,91 +1,117 @@
-/* Formatting for instructional youtube video */
+/* Formatting for vertically aligned lines */
+
+.vert-line {
+  display: flex;
+  align-items: center;
+}
+
+/* Formatting for video and new question section */
+
+#content-left,
+#content-right {
+  text-align: center;
+  display: inline-block;
+}
 
 #content-left {
-  text-align: center;
+  margin-top: 2%;
+}
+
+#content-right {
+  border-left-style: solid;
+  border-width: 0.05em;
+  border-color: var(--gLGray);
+  padding-left: 5%;
 }
 
 iframe {
-  width: 70%;
+  width: 90%;
   height: 90%;
 }
 
-/* Formatting for create new question */
-
 #new-question,
 #new-question-logged-out {
-  margin-left: 30px;
   display: none;
 }
 
-/* Standard formatting for labels and clickable features */
-
-label {
-  font-size: 130%;
-  margin-top: 16px;
-  margin-bottom: 16px;
+#account-functions div {
+  width: 30%;
 }
 
-button,
-select,
-input[type=submit] {
+/* Formatting for button types */
+
+.button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 10px;
-  background-color: white;
-  color: #4285f4;
-  border: 2px solid #4285f4;
-  align-content: center;
-  cursor: pointer;
-  padding: 8px 16px;
-  font-size: 80%;
-  font-family: Google Sans, sans-serif;
   outline: none;
 }
 
-button:hover {
-  background-color: #4285f4;
-  color: white;
+.big-button {
+  font-size: 170%;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-#primary-button {
-  background-color: #4285f4;
-  color: white;
-  padding: 10px 20px;
+.med-button {
+  font-size: 130%;
+}
+
+.small-button {
   font-size: 110%;
-  margin-left: 0;
 }
 
-#primary-button:hover {
-  background-color: white;
-  color: #4285f4;
+select {
+  text-align: center;
 }
 
-input[type=text] {
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
+.like-button {
+  color: var(--gDGray);
+}
+
+/* Formatting for labels and textareas */
+
+textarea {
+  margin: 1%;
   border: 2px solid black;
 }
 
-/* Formatting for filters and forum */
+label {
+  font-size: 140%;
+}
+
+/* Formatting for search and filters */
+
+#search {
+  justify-content: center;
+  padding: 1%;
+}
+
+#search-button {
+  border-radius: 5px;
+  height: 100%;
+}
+
+#filters {
+  text-align: center;
+  background-color: var(--fGray);
+  padding: 1%;
+}
+
+/* Overall formatting for forum section */
 
 #forum {
   width: 80%;
   margin: auto;
 }
 
-#search,
-#filters,
 #forum-placeholder {
-  margin: 20px;
+  margin-bottom: 10%;
 }
 
-#filters {
-  background-color: rgb(240, 236, 236);
-  padding: 10px;
-}
-
-/* Formatting for individual forum elements */
+/* Formatting for question and comment elements */
 
 .forum-element {
   overflow: auto;
@@ -94,62 +120,41 @@ input[type=text] {
 .question {
   margin-top: 20px;
   margin-bottom: 40px;
-  border-left: 5px solid #4285f4;
-  background-color: rgb(240, 236, 236);
-  padding: 20px;
-}
-
-.comment {
-  margin: 20px;
-  border-left: 5px solid rgb(240, 236, 236);
+  border-left: 5px solid var(--mainColor);
+  background-color: var(--fGray);
   padding: 10px;
 }
 
-.topic,
-.date {
-  color: #4285f4;
+.comment {
+  margin: 10px;
+  border-left: 5px solid var(--fGray);
+  padding: 10px;
 }
 
-.topic,
-.accepted,
-.accept-button {
-  margin-top: 16px;
-  margin-bottom: 16px;
+/* Formatting within individual forum elements */
+
+.info-element {
+  justify-content: space-between;
+}
+
+.question p {
+  font-size: 120%;
+  margin: 5px;
+}
+
+.comment p {
+  font-size: 110%;
+  margin: 5px;
 }
 
 .text .comment {
   font-size: 130%;
 }
 
-.likes {
-  margin-top: 20px;
-}
-
-i {
-  font-size: 30px;
-}
-
 .replies {
   margin: 20px;
-  background-color: white;
+  background-color: var(--backColor);
   padding: 10px;
-}
-
-/* Float formatting within individual forum element */
-
-.likes-label,
-.likes,
-.reply-button,
-.topic,
-.accepted,
-.accept-button,
-.expand-button,
-.response-form,
-#search h2,
-#search-input,
-#search-button {
-  float: left;
-  margin-right: 10px;
 }
 
 .user,
@@ -158,21 +163,6 @@ i {
   margin-left: 10px;
 }
 
-.text,
-.replies,
-#filters {
+.text {
   clear: both;
-}
-
-/* Formatting for search bar */
-
-#search-input {
-  margin-top: 20px;
-  border-radius: 20px;
-  outline: none;
-}
-
-#search-button {
-  margin-top: 20px;
-  border-radius: 35px;
 }
