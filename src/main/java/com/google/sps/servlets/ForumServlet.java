@@ -57,9 +57,7 @@ public class ForumServlet extends HttpServlet {
       /* Increments likes of element */
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       incrementProperty(ForumElement.LIKES_PROPERTY, id);
-    }
-
-    if (action.equals(REPLY_PROPERTY)) {
+    } else if (action.equals(REPLY_PROPERTY)) {
       /* Adds new forum element */
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       String userId = request.getParameter(ForumElement.USER_ID_PROPERTY);
@@ -79,9 +77,7 @@ public class ForumServlet extends HttpServlet {
       }
 
       response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter);
-    }
-
-    if (action.equals(FILTER_PROPERTY)) {
+    } else if (action.equals(FILTER_PROPERTY)) {
       /* Gets the new filter preferences */
       String topic = request.getParameter(ForumElement.TOPIC_PROPERTY);
       String sort = request.getParameter(SORT_PROPERTY);
@@ -90,9 +86,7 @@ public class ForumServlet extends HttpServlet {
       sortFilter = sort;
       response.sendRedirect(
           "/forum.html?topic=" + topicFilter + "&sort=" + sortFilter + "&userId=" + user);
-    }
-
-    if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {
+    } else if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
       Entity entity = getEntity(id);
