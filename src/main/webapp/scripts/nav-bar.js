@@ -24,11 +24,11 @@ function updateBar() {
 /**
  * Adds the nav bar only after initpromise is resolved
  */
-function updateBarOnLoad(){
-  initPromise.then(function(){
+function updateBarOnLoad() {
+  initPromise.then(function() {
     updateBar();
     const auth2 = gapi.auth2.getAuthInstance();
-    auth2.isSignedIn.listen(updateBar)
-  })
+    auth2.isSignedIn.listen(updateBar);
+  });
 }
 export {updateBar};
