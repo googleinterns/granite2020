@@ -95,14 +95,29 @@ function getFilters() {
 
 /**
  *  Populates the replies for a forum element with the given id
- *  in the placeholder given
+ *  in the placeholder given with no search keywords
  *
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {long} id the long that identifies the parent of the forum
  *  elements
  *  @param {String} search search text from user if applicable
  */
-function expandForum(placeholder, id, search) {
+function expandForum(placeholder, id) {
+  // Call expandForumWithSearch with the search parameter as null so that
+  // no search is considered
+  expandForumWithSearch(placeholder, id, null);
+}
+
+/**
+ *  Populates the replies for a forum element with the given id
+ *  in the placeholder given also based on search keywords if present
+ *
+ *  @param {S.fn.init} placeholder the div that will hold the forum elements
+ *  @param {long} id the long that identifies the parent of the forum
+ *  elements
+ *  @param {String} search search text from user if applicable
+ */
+function expandForumWithSearch(placeholder, id, search) {
   placeholder.empty();
   fetch('/forum?id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
@@ -178,7 +193,7 @@ function createElementData(element, userName) {
   if (element.parentId == -1) {
     elementType = 'question';
     topicDisplay = 'inline-block';
-  } else if (element.accepted == true) {
+  } else if (element.accepted) {
     acceptedDisplay = 'inline-block';
   } else if (element.userId === userId) {
     acceptButtonDisplay = 'inline-block';
@@ -214,12 +229,7 @@ function createElementData(element, userName) {
  */
 function createSearch() {
   $('#search-button').click(search);
-  $('#search-button').keyup(function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      search();
-    }
-  });
+  $('#search-button').keyup(search);
 }
 
 /**
@@ -230,8 +240,10 @@ function createSearch() {
  */
 function convertTimestampToDate(timestamp) {
   const date = new Date(timestamp);
-  const indexOfYear = 16; // index before time so it is not included
-  return (date.toUTCString()).substring(0, indexOfYear);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Add one because the month is zero index
+  const year = date.getFullYear();
+  return (month + '/' + day + '/' + year);
 }
 
 /**
@@ -348,6 +360,79 @@ function postComment(idHandler) {
   $('#' + elementId + ' .text-input').val('');
   const numReplies = parseInt($('#' + elementId + ' .num-rep').text());
   $('#' + elementId + ' .num-rep').text((numReplies + 1).toString());
+  $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
+      '&userId=' + userId).then(function() {
+    expandReplies(idHandler);
+  });
+}
+
+/**
+ *  Accepts comment based on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function acceptComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .accept-button').css('display', 'none');
+  $('#' + elementId + ' .accepted').css('display', 'inline-block');
+  $.post('/forum?id=' + id.toString() + '&action=accepted');
+}
+
+/**
+ *  Onclick handler for a user searching to reload forum with search parameter
+ */
+function search() {
+  const search = $('#search-input').val();
+  const id = -1;
+  const placeholder = $('#forum-placeholder');
+  expandForumWithSearch(placeholder, id, search);
+}
+
+/**
+ *  Returns whether a word of the search is contained with in the text
+ *
+ *  @param {String} text contents of a question
+ *  @param {String} search contents of the user search
+ *
+ *  @return {Boolean} whether there is a word of the search within the text
+ */
+function containsSearch(text, search) {
+  const stopWords = ['a', 'to', 'and', 'how', 'the', 'when', 'what', 'why',
+    'what', 'where', 'or', 'do', 'can', 'use', 'i', 'you', 'my', 'your'];
+  const lowerText = text.toLowerCase();
+  const lowerSearch = search.toLowerCase();
+  let words = lowerSearch.split(' ');
+  words = words.filter( function(word) {
+    return ((!stopWords.includes(word)) && (lowerText.includes(word)));
+  });
+  return words.length > 0;
+}
+
+/**
+ *  Post question to datastore
+ */
+function postQuestion() {
+  const text = $('#question-form #text-input').val();
+  const topic = $('#question-form #topic-input').val();
+  $('#question-form #topic-input').val('Zoom');
+  $('#question-form #text-input').val('');
+  $.post('/forum?id=-1&action=reply&text=' + text + '&topic=' + topic +
+      '&userId=' + userId).then(function() {
+    getForum();
+  });
+}
+
+/**
+ *  Post comment basedd on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function postComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  const text = $('#' + elementId + ' .text-input').val();
+  $('#' + elementId + ' .text-input').val('');
   $.post('/forum?id=' + id.toString() + '&action=reply&text=' + text +
       '&userId=' + userId).then(function() {
     expandReplies(idHandler);
