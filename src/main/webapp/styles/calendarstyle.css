@@ -20,12 +20,12 @@ li {
 li button {
   float: right;
   height: 30%;
-  margin-top:7%;
+  margin-top: 7%;
   padding: 3%;
 }
 
 li button:disabled {
   background-color: var(--gLGray);
   color: var(--mainColor);
-  pointer-events:none;
+  pointer-events: none;
 }
