@@ -156,7 +156,6 @@ h4 {
 }
 
 .navbar a:hover,
-
 .dropdown:hover {
   background-color: var(--backColor);
   color: var(--mainColor);
