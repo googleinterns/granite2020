@@ -1,6 +1,5 @@
 
 import {signIn, initPromise} from './account-info.js';
-import {updateBar} from './nav-bar.js';
 initPromise.then(function() {
   updatePage();
 
