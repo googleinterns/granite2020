@@ -23,7 +23,8 @@ const forumTemplate =
       <p class="likes-label">Likes: </p>
       <i class="like-button fas fa-thumbs-up fa-2x"></i>
       <p class="likes">{{likes}}</p>
-      <button class="reply-button button small-button">Reply</button>
+      <button class="reply-button button small-button" style="display: 
+        {{replyDisplay}}">Reply</button>
       <div class="response-form" style="display: none">
         <textarea class="text-input" name="text" rows="1" cols="30">
         </textarea>
