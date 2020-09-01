@@ -10,9 +10,9 @@ initPromise.then(function() {
   updatePage();
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(updatePage);
-}).then( function () {
+}).then( function() {
   $('#suggestion-form').css('display', 'block');
-} )
+});
 
 /**
  * Posts to server the suggestion made by the user
