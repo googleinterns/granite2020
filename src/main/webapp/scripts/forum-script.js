@@ -364,3 +364,16 @@ function postComment(idHandler) {
     expandReplies(idHandler);
   });
 }
+
+/**
+ *  Accepts comment based on id in idHandler
+ *
+ *  @param {S.Event} idHandler onclick handler that contains the id data
+ */
+function acceptComment(idHandler) {
+  const id = idHandler.data;
+  const elementId = 'element-' + id.toString();
+  $('#' + elementId + ' .accept-button').css('display', 'none');
+  $('#' + elementId + ' .accepted').css('display', 'inline-block');
+  $.post('/forum?id=' + id.toString() + '&action=accepted');
+}
