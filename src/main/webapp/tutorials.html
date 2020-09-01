@@ -4,13 +4,21 @@
   <meta charset="UTF-8">
   <title>Seniors Connect</title>
   <link type="text/css" rel="stylesheet" href="styles/tutorialstyle.css">
-  <link rel="stylesheet" href="styles/general.css">
-  <script src="scripts/login-script.js" defer></script>
-  <script src="scripts/suggest-script.js"></script>
+  <!-- On Every Page -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" defer></script>
+  <!-- Content URL obtained from credentials section under gcp dashboard -->
+  <meta name="google-signin-client_id" content="757099697912-i6jll98mfgochdo2vgjcovf64pepjesc.apps.googleusercontent.com">
+  <link rel="stylesheet" href="styles/general.css">
+  <script type="module" src="scripts/nav-bar.js" defer></script>
+
+  <script type="module" src="scripts/suggest-script.js" defer></script>
+
 </head>
 <body>
-  <div id="nav-placeholder"></div>
+  <div id="nav-bar">
+    <div id="nav-placeholder"> </div>
+  </div>
 
   <div id="header">
     <h1>Tutorials</h1>
