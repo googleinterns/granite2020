@@ -131,7 +131,7 @@ function expandForumWithSearch(placeholder, id, search) {
                   if (userFilter ==='all' || elements[i].userId === userId) {
                     if (!search || containsSearch(elements[i].text, search)) {
                       createForumElement(placeholder, elements[i],
-                        questionUserId);
+                          questionUserId);
                     }
                   }
                 }
@@ -159,7 +159,7 @@ function createForumElement(placeholder, element, questionUserId) {
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
     (response.json())).then((name) => {
-      data = createElementData(element, name, questionUserId);
+    data = createElementData(element, name, questionUserId);
   }).then(function() {
     const rendered = Mustache.render(forumTemplate, data);
     elementDiv.html(rendered);
