@@ -59,7 +59,6 @@ public class ForumServlet extends HttpServlet {
       response.setContentType("application/json;");
       response.getWriter().println(gson.toJson(elements));
     }
-    
   }
 
   /**
