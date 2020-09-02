@@ -90,8 +90,6 @@ public class ForumServlet extends HttpServlet {
       if (id != -1) {
         incrementProperty(ForumElement.NUMBER_REPLIES_PROPERTY, id);
       }
-
-      response.sendRedirect("/forum.html?topic=" + topicFilter + "&sort=" + sortFilter);
     } else if (action.equals(FILTER_PROPERTY)) {
       /* Gets the new filter preferences */
       String topic = request.getParameter(ForumElement.TOPIC_PROPERTY);
@@ -99,8 +97,6 @@ public class ForumServlet extends HttpServlet {
       String user = request.getParameter(ForumElement.USER_ID_PROPERTY);
       topicFilter = topic;
       sortFilter = sort;
-      response.sendRedirect(
-          "/forum.html?topic=" + topicFilter + "&sort=" + sortFilter + "&userId=" + user);
     } else if (action.equals(ForumElement.ACCEPTED_PROPERTY)) {
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));

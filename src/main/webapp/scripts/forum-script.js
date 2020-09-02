@@ -6,6 +6,8 @@ let signedIn;
 let userId;
 let userLiked;
 let userFilter = 'all';
+let topicFilter = 'all';
+let sortFilter = 'timestamp';
 
 $( document ).ready( function() {
   // Add user data to forum
@@ -19,8 +21,8 @@ $( document ).ready( function() {
     });
   });
 
-  // Add search functionality
-  createSearch();
+  // Add search and filters functionality
+  createSearchAndFilters();
 
   // Populates filters
   getFilters();
@@ -77,20 +79,9 @@ function getForum() {
  *  Sets value of select if there are set filters from the url parameters
  */
 function getFilters() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has('topic')) {
-    const topic = urlParams.get('topic');
-    $('#filter-topic-input').val(topic).change();
-  }
-  if (urlParams.has('sort')) {
-    const sort = urlParams.get('sort');
-    $('#filter-sort-input').val(sort).change();
-  }
-  if (urlParams.has('userId')) {
-    const user = urlParams.get('userId');
-    $('#filter-user-input').val(user).change();
-    userFilter = user;
-  }
+  $('#filter-topic-input').val(topicFilter).change();
+  $('#filter-sort-input').val(sortFilter).change();
+  $('#filter-user-input').val(userFilter).change();
 }
 
 /**
@@ -242,11 +233,26 @@ function createElementData(element, userName, questionUserId) {
 }
 
 /**
- *  Creates a search functionality when page is loaded
+ *  Creates search and filters functionality when page is loaded
  */
-function createSearch() {
+function createSearchAndFilters() {
   $('#search-button').click(search);
   $('#search-input').keyup(search);
+  $('#filter-button').click(filter);
+  $('#filter-form select').on('change', filter);
+}
+
+/**
+ *  Onclick handler for a user filtering to reload forum with filter parameters
+ */
+function filter() {
+  const topic = $('#filter-topic-input').val();
+  topicFilter = topic;
+  const sort = $('#filter-sort-input').val();
+  sortFilter = sort;
+  const user = $('#filter-user-input').val();
+  userFilter = user;
+  $.post('/forum?action=filter&topic=' + topic + '&userId=' + user + '&sort=' + sort).then(getForum);
 }
 
 /**
