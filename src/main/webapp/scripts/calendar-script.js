@@ -6,7 +6,7 @@ const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
 initPromise.then(function() {
   updatePage();
   const auth2 = gapi.auth2.getAuthInstance();
-  auth2.isSignedIn.listen(function(){
+  auth2.isSignedIn.listen(function() {
     updatePage();
   });
 });
