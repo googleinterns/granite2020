@@ -235,7 +235,7 @@ function createElementData(element, userName) {
  */
 function createSearch() {
   $('#search-button').click(search);
-  $('#search-button').keyup(search);
+  $('#search-input').keyup(search);
 }
 
 /**
