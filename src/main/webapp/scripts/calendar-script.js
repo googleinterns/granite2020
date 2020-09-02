@@ -4,18 +4,35 @@ const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
     '.calendar.google.com';
 
 initPromise.then(function() {
-  gapi.client.load('calendar', 'v3', function() {
-    getCalendarEvents(EVENTS_CALENDAR, false).then(function(events) {
-      if (events.length > 0) {
-        for (let i = 0; i < events.length; i++) {
-          const event = events[i];
-          addEventToPage(event);
-        }
-      }
-    });
+  updatePage();
+  const auth2 = gapi.auth2.getAuthInstance();
+  auth2.isSignedIn.listen(function() {
+    updatePage();
   });
 });
 
+/**
+ * Updates contents on the page
+ */
+function updatePage() {
+  const auth2 = gapi.auth2.getAuthInstance();
+  if (auth2.isSignedIn.get()) {
+    $('#open-events').empty();
+    $('#open-events').css('display', 'block');
+    gapi.client.load('calendar', 'v3', function() {
+      getCalendarEvents(EVENTS_CALENDAR, false).then(function(events) {
+        if (events.length > 0) {
+          for (let i = 0; i < events.length; i++) {
+            const event = events[i];
+            addEventToPage(event);
+          }
+        }
+      });
+    });
+  } else {
+    $('#open-events').css('display', 'none');
+  }
+}
 
 /**
  * Gets events from a calendar with specified ID
