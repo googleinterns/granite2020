@@ -4,12 +4,11 @@ const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
     '.calendar.google.com';
 
 initPromise.then(function() {
-  updatePage()
+  updatePage();
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(function(){
     updatePage();
-  })
-  
+  });
 });
 
 /**
