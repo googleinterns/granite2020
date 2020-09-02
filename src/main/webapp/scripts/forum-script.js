@@ -125,13 +125,13 @@ function expandForumWithSearch(placeholder, id, search) {
         if (elements.length > 0) {
           fetch('/forum?action=userId&id=' + elements[0].questionId.toString())
               .then((response) => (response.json())).then((user) => {
-                console.log("User " + user);
                 questionUserId = user;
               }).then( function() {
                 for (let i = 0; i < elements.length; i++) {
                   if (userFilter ==='all' || elements[i].userId === userId) {
                     if (!search || containsSearch(elements[i].text, search)) {
-                      createForumElement(placeholder, elements[i], questionUserId);
+                      createForumElement
+                        (placeholder, elements[i], questionUserId);
                     }
                   }
                 }
