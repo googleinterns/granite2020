@@ -31,6 +31,7 @@ public class ForumServlet extends HttpServlet {
   public static final String REPLY_PROPERTY = "reply";
   public static final String FILTER_PROPERTY = "filter";
   public static final String SORT_PROPERTY = "sort";
+  public static final String ELEMENTS_PROPERTY = "elements";
 
   /* Saved fields of the filters for questions */
   private String topicFilter = "all";
@@ -39,11 +40,26 @@ public class ForumServlet extends HttpServlet {
   /** Get request to the Datastore and responds with the forum elements with the id input */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String action = request.getParameter(ACTION_PROPERTY);
     long id = Long.parseLong(request.getParameter(ForumElement.ID_PROPERTY));
-    List<ForumElement> elements = getForumElements(id);
-    Gson gson = new Gson();
-    response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(elements));
+    if (action.equals(ForumElement.USER_ID_PROPERTY)) {
+      String userId;
+      if (id == -1) {
+        userId = "-1";
+      } else {
+        Entity entity = getEntity(id);
+        userId = (String) entity.getProperty(ForumElement.USER_ID_PROPERTY);
+      }
+      response.setContentType("application/json;");
+      Gson gson = new Gson();
+      response.getWriter().println(gson.toJson(userId));
+    } else if (action.equals(ELEMENTS_PROPERTY)) {
+      List<ForumElement> elements = getForumElements(id);
+      Gson gson = new Gson();
+      response.setContentType("application/json;");
+      response.getWriter().println(gson.toJson(elements));
+    }
+    
   }
 
   /**
