@@ -252,7 +252,8 @@ function filter() {
   sortFilter = sort;
   const user = $('#filter-user-input').val();
   userFilter = user;
-  $.post('/forum?action=filter&topic=' + topic + '&userId=' + user + '&sort=' + sort).then(getForum);
+  $.post('/forum?action=filter&topic=' + topic + '&userId=' + user +
+      '&sort=' + sort).then(getForum);
 }
 
 /**
