@@ -119,20 +119,25 @@ function expandForum(placeholder, id) {
  */
 function expandForumWithSearch(placeholder, id, search) {
   placeholder.empty();
-  let parentUserId = '';
-  fetch('/forum?action=userId&id=' + id.toString())
-      .then((response) => (response.json())).then((data) => {
-        parentUserId = data;
-      }).then(fetch('/forum?action=elements&id=' + id.toString())
-          .then((response) => (response.json())).then((elements) => {
-            for (let i = 0; i < elements.length; i++) {
-              if (userFilter ==='all' || elements[i].userId === userId) {
-                if (!search || containsSearch(elements[i].text, search)) {
-                  createForumElement(placeholder, elements[i], parentUserId);
+  let questionUserId = '';
+  fetch('/forum?action=elements&id=' + id.toString())
+      .then((response) => (response.json())).then((elements) => {
+        if (elements.length > 0) {
+          fetch('/forum?action=userId&id=' + elements[0].questionId.toString())
+              .then((response) => (response.json())).then((user) => {
+                console.log("User " + user);
+                questionUserId = user;
+              }).then( function() {
+                for (let i = 0; i < elements.length; i++) {
+                  if (userFilter ==='all' || elements[i].userId === userId) {
+                    if (!search || containsSearch(elements[i].text, search)) {
+                      createForumElement(placeholder, elements[i], questionUserId);
+                    }
+                  }
                 }
-              }
-            }
-          }));
+              });
+        }
+      });
 }
 
 /**
@@ -142,9 +147,9 @@ function expandForumWithSearch(placeholder, id, search) {
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
- *  @param {String} parentUserId the user id of the parent element
+ *  @param {String} questionUserId the user id of the question element
  */
-function createForumElement(placeholder, element, parentUserId) {
+function createForumElement(placeholder, element, questionUserId) {
   /* Creates a new div and adds it to placeholder */
   const elementDiv = $('<div></div>');
   const elementId = 'outer-element-' + element.id.toString();
@@ -153,30 +158,30 @@ function createForumElement(placeholder, element, parentUserId) {
 
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
-    (response.json())).then((json) => {
-    data = createElementData(element, json, parentUserId);
-  }).then(function() {
-    const rendered = Mustache.render(forumTemplate, data);
-    elementDiv.html(rendered);
+    (response.json())).then((name) => {
+      data = createElementData(element, name, questionUserId);
+    }).then(function() {
+      const rendered = Mustache.render(forumTemplate, data);
+      elementDiv.html(rendered);
 
-    /* Add onclick functionality to mustache render */
-    if (signedIn && !userLiked.includes(element.id.toString())) {
-      $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
-      $('#' + elementId + ' .like-button').css('color', '#4285f4');
-      $('#' + elementId + ' .like-button').css('cursor', 'pointer');
-    } else {
-      $('#' + elementId + ' .like-button').css('color', '#666');
-      $('#' + elementId + ' .like-button').css('cursor', 'auto');
-      $('#' + elementId + ' .like-button').off('click');
-    }
+      /* Add onclick functionality to mustache render */
+      if (signedIn && !userLiked.includes(element.id.toString())) {
+        $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
+        $('#' + elementId + ' .like-button').css('color', '#4285f4');
+        $('#' + elementId + ' .like-button').css('cursor', 'pointer');
+      } else {
+        $('#' + elementId + ' .like-button').css('color', '#666');
+        $('#' + elementId + ' .like-button').css('cursor', 'auto');
+        $('#' + elementId + ' .like-button').off('click');
+      }
 
-    $('#' + elementId + ' .reply-button').click(element.id, reply);
-    $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
-    $('#' + elementId + ' .response-button').click(element.id, postComment);
-    $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
-    $('#collapse-button-' + element.id.toString())
-        .click(element.id, collapseReplies);
-  });
+      $('#' + elementId + ' .reply-button').click(element.id, reply);
+      $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
+      $('#' + elementId + ' .response-button').click(element.id, postComment);
+      $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+      $('#collapse-button-' + element.id.toString())
+          .click(element.id, collapseReplies);
+    });
 }
 
 /**
@@ -185,10 +190,10 @@ function createForumElement(placeholder, element, parentUserId) {
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
  *  @param {String} userName the name of the user who posted the element
- *  @param {String} parentUserId the user id of the parent element
+ *  @param {String} questionUserId the user id of the question element
  *  @return {Object} a populated json object
  */
-function createElementData(element, userName, parentUserId) {
+function createElementData(element, userName, questionUserId) {
   /* If element is a comment or question and thus whether the topic should be
    * displayed */
   let elementType = 'comment';
@@ -201,7 +206,7 @@ function createElementData(element, userName, parentUserId) {
     topicDisplay = 'inline-block';
   } else if (element.accepted) {
     acceptedDisplay = 'inline-block';
-  } else if (parentUserId !== '-1' && parentUserId === userId) {
+  } else if (questionUserId !== '-1' && questionUserId === userId) {
     acceptButtonDisplay = 'inline-block';
   }
 
