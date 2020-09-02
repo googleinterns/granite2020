@@ -29,3 +29,7 @@ li button:disabled {
   color: var(--mainColor);
   pointer-events: none;
 }
+
+#account-functions h2 {
+  font-size: 200%;
+}
