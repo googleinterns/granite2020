@@ -130,8 +130,8 @@ function expandForumWithSearch(placeholder, id, search) {
                 for (let i = 0; i < elements.length; i++) {
                   if (userFilter ==='all' || elements[i].userId === userId) {
                     if (!search || containsSearch(elements[i].text, search)) {
-                      createForumElement
-                        (placeholder, elements[i], questionUserId);
+                      createForumElement(placeholder, elements[i],
+                        questionUserId);
                     }
                   }
                 }
@@ -160,28 +160,28 @@ function createForumElement(placeholder, element, questionUserId) {
   fetch('/account?action=name&id=' + element.userId).then((response) =>
     (response.json())).then((name) => {
       data = createElementData(element, name, questionUserId);
-    }).then(function() {
-      const rendered = Mustache.render(forumTemplate, data);
-      elementDiv.html(rendered);
+  }).then(function() {
+    const rendered = Mustache.render(forumTemplate, data);
+    elementDiv.html(rendered);
 
-      /* Add onclick functionality to mustache render */
-      if (signedIn && !userLiked.includes(element.id.toString())) {
-        $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
-        $('#' + elementId + ' .like-button').css('color', '#4285f4');
-        $('#' + elementId + ' .like-button').css('cursor', 'pointer');
-      } else {
-        $('#' + elementId + ' .like-button').css('color', '#666');
-        $('#' + elementId + ' .like-button').css('cursor', 'auto');
-        $('#' + elementId + ' .like-button').off('click');
-      }
+    /* Add onclick functionality to mustache render */
+    if (signedIn && !userLiked.includes(element.id.toString())) {
+      $('#' + elementId + ' .like-button').click(element.id, incrementLikes);
+      $('#' + elementId + ' .like-button').css('color', '#4285f4');
+      $('#' + elementId + ' .like-button').css('cursor', 'pointer');
+    } else {
+      $('#' + elementId + ' .like-button').css('color', '#666');
+      $('#' + elementId + ' .like-button').css('cursor', 'auto');
+      $('#' + elementId + ' .like-button').off('click');
+    }
 
-      $('#' + elementId + ' .reply-button').click(element.id, reply);
-      $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
-      $('#' + elementId + ' .response-button').click(element.id, postComment);
-      $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
-      $('#collapse-button-' + element.id.toString())
-          .click(element.id, collapseReplies);
-    });
+    $('#' + elementId + ' .reply-button').click(element.id, reply);
+    $('#' + elementId + ' .expand-button').click(element.id, expandReplies);
+    $('#' + elementId + ' .response-button').click(element.id, postComment);
+    $('#' + elementId + ' .accept-button').click(element.id, acceptComment);
+    $('#collapse-button-' + element.id.toString())
+        .click(element.id, collapseReplies);
+  });
 }
 
 /**
