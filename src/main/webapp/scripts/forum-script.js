@@ -119,14 +119,23 @@ function expandForum(placeholder, id) {
  */
 function expandForumWithSearch(placeholder, id, search) {
   placeholder.empty();
-  fetch('/forum?id=' + id.toString())
+  let questionUserId = '';
+  fetch('/forum?action=elements&id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
-        for (let i = 0; i < elements.length; i++) {
-          if (userFilter ==='all' || elements[i].userId === userId) {
-            if (!search || containsSearch(elements[i].text, search)) {
-              createForumElement(placeholder, elements[i]);
-            }
-          }
+        if (elements.length > 0) {
+          fetch('/forum?action=userId&id=' + elements[0].questionId.toString())
+              .then((response) => (response.json())).then((user) => {
+                questionUserId = user;
+              }).then( function() {
+                for (let i = 0; i < elements.length; i++) {
+                  if (userFilter ==='all' || elements[i].userId === userId) {
+                    if (!search || containsSearch(elements[i].text, search)) {
+                      createForumElement(placeholder, elements[i],
+                          questionUserId);
+                    }
+                  }
+                }
+              });
         }
       });
 }
@@ -138,8 +147,9 @@ function expandForumWithSearch(placeholder, id, search) {
  *  @param {S.fn.init} placeholder the div that will hold the forum elements
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
+ *  @param {String} questionUserId the user id of the question element
  */
-function createForumElement(placeholder, element) {
+function createForumElement(placeholder, element, questionUserId) {
   /* Creates a new div and adds it to placeholder */
   const elementDiv = $('<div></div>');
   const elementId = 'outer-element-' + element.id.toString();
@@ -148,8 +158,8 @@ function createForumElement(placeholder, element) {
 
   let data;
   fetch('/account?action=name&id=' + element.userId).then((response) =>
-    (response.json())).then((json) => {
-    data = createElementData(element, json);
+    (response.json())).then((name) => {
+    data = createElementData(element, name, questionUserId);
   }).then(function() {
     const rendered = Mustache.render(forumTemplate, data);
     elementDiv.html(rendered);
@@ -180,9 +190,10 @@ function createForumElement(placeholder, element) {
  *  @param {ForumElement} element the ForumElement that contains the data for
  *  the element
  *  @param {String} userName the name of the user who posted the element
+ *  @param {String} questionUserId the user id of the question element
  *  @return {Object} a populated json object
  */
-function createElementData(element, userName) {
+function createElementData(element, userName, questionUserId) {
   /* If element is a comment or question and thus whether the topic should be
    * displayed */
   let elementType = 'comment';
@@ -195,7 +206,7 @@ function createElementData(element, userName) {
     topicDisplay = 'inline-block';
   } else if (element.accepted) {
     acceptedDisplay = 'inline-block';
-  } else if (element.userId === userId) {
+  } else if (questionUserId !== '-1' && questionUserId === userId) {
     acceptButtonDisplay = 'inline-block';
   }
 
