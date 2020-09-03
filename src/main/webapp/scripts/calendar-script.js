@@ -1,23 +1,31 @@
-import {initPromise} from './account-info.js';
+import {initPromise, signIn} from './account-info.js';
 
 const EVENTS_CALENDAR = 'c_96sboq7a00dhtc9c24pr7mpi3o@group'+
     '.calendar.google.com';
 
 initPromise.then(function() {
   updatePage();
+
+  $('.sign-in').click(function() {
+    signIn();
+  });
+  
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(function() {
     updatePage();
   });
 });
 
+
 /**
  * Updates contents on the page
  */
 function updatePage() {
   const auth2 = gapi.auth2.getAuthInstance();
+  $('#open-events').empty();
   if (auth2.isSignedIn.get()) {
-    $('#open-events').empty();
+    $('#account-functions').css('display', 'none');
+
     $('#open-events').css('display', 'block');
     gapi.client.load('calendar', 'v3', function() {
       getCalendarEvents(EVENTS_CALENDAR, false).then(function(events) {
@@ -30,6 +38,7 @@ function updatePage() {
       });
     });
   } else {
+    $('#account-functions').css('display', 'block');
     $('#open-events').css('display', 'none');
   }
 }
