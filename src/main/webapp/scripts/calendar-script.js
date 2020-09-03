@@ -9,7 +9,6 @@ initPromise.then(function() {
   $('.sign-in').click(function() {
     signIn();
   });
-  
   const auth2 = gapi.auth2.getAuthInstance();
   auth2.isSignedIn.listen(function() {
     updatePage();
