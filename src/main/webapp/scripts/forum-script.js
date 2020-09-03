@@ -72,7 +72,7 @@ function updatePage() {
 function getForum() {
   const id = -1;
   const placeholder = $('#forum-placeholder');
-  expandForum(placeholder, id, null);
+  expandForum(placeholder, id);
 }
 
 /**
@@ -109,10 +109,10 @@ function expandForum(placeholder, id) {
  *  @param {String} search search text from user if applicable
  */
 function expandForumWithSearch(placeholder, id, search) {
-  placeholder.empty();
   let questionUserId = '';
   fetch('/forum?action=elements&id=' + id.toString())
       .then((response) => (response.json())).then((elements) => {
+        placeholder.empty();
         if (elements.length > 0) {
           fetch('/forum?action=userId&id=' + elements[0].questionId.toString())
               .then((response) => (response.json())).then((user) => {
@@ -308,7 +308,7 @@ function expandReplies(idHandler) {
   const elementId = 'element-' + id.toString();
   const placeholder = $('#replies-' + id.toString());
   placeholder.css('display', 'block');
-  expandForum(placeholder, id, null);
+  expandForum(placeholder, id);
   $('#' + elementId + ' .expand-button').css('display', 'none');
   $('#collapse-button-' + id.toString()).css('display', 'block');
 }
